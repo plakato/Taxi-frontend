@@ -21,4 +21,4 @@ $yellow-app-theme: mat-dark-theme($yellow-app-primary, $yellow-app-accent, $yell
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include angular-material-theme($yellow-app-theme);
+@include angular-material-theme($yellow-app-theme); 

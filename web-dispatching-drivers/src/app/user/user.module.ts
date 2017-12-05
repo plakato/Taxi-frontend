@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
+import { AuthenticationService } from './shared/authentication.service';
 import { MatButtonModule, MatFormFieldModule, MatInputModule, MatGridListModule } from '@angular/material';
 
 
@@ -12,6 +13,8 @@ import { MatButtonModule, MatFormFieldModule, MatInputModule, MatGridListModule 
      MatInputModule,
      MatGridListModule
   ],
-  declarations: [LoginComponent]
+  declarations: [LoginComponent],
+  providers: [AuthenticationService]
 })
+
 export class UserModule { }
