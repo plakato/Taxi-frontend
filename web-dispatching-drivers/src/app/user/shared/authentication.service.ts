@@ -25,4 +25,8 @@ export class AuthenticationService {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');
     }
+
+    confirm(password: string, token: string) {
+        return this.http.post<User>('employees/confirm', JSON.stringify({confirmation_token : token, password: password }));
+    }
 }

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class DomainInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const newReq = req.clone({url: 'api.taxiali.local/v2/' + req.url});
+    const newReq = req.clone({url: 'http://api.taxiali.local/v2/' + req.url});
     return next.handle(newReq);
   }
 }
@@ -24,7 +24,9 @@ export class JSONHeaderInterceptor implements HttpInterceptor {
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-   // req = req.clone({headers: req.headers.set('Authentication', 'token')});
+    if (localStorage.getItem('currentUser') != null) {
+      // req = req.clone({headers: req.headers.set('Authentication', 'token')});
+    }
        return next.handle(req);
   }
 }
