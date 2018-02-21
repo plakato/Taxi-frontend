@@ -7,8 +7,9 @@ import { AppRoutingModule } from './app-routing.module';
 
 
 import { UserModule } from './user/user.module';
+import { MenuModule } from './menu/menu.module';
+import { OrderModule } from './order/order.module';
 import { DomainInterceptor, JSONHeaderInterceptor } from './user/shared/domain.interceptor';
-
 
 @NgModule({
   declarations: [
@@ -19,7 +20,9 @@ import { DomainInterceptor, JSONHeaderInterceptor } from './user/shared/domain.i
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-    UserModule
+    UserModule,
+    MenuModule,
+    OrderModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: DomainInterceptor, multi: true },

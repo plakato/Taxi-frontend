@@ -9,6 +9,6 @@
             <input matInput type="password"  name="password"  [(ngModel)]="model.password" placeholder="Heslo" />
         </mat-form-field>
         <button mat-raised-button [disabled]="loading" (click)="login()">Přihlásit</button>
-        <mat-spinner *ngIf="loading"  [color]="accent" [mode]="indeterminate" ></mat-spinner>
+        <mat-spinner *ngIf="loading" [mode]="indeterminate" ></mat-spinner>
     </form>
 </div>

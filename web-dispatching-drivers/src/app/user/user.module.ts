@@ -3,7 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { AuthenticationService } from './shared/authentication.service';
-import { MatButtonModule, MatFormFieldModule, MatInputModule, MatGridListModule, MatProgressSpinnerModule } from '@angular/material';
+import { MatButtonModule,
+         MatFormFieldModule,
+         MatInputModule,
+         MatGridListModule,
+         MatProgressSpinnerModule,
+         MatSnackBarModule } from '@angular/material';
 import { PasswordConfirmationComponent } from './password-confirmation/password-confirmation.component';
 
 
@@ -16,7 +21,8 @@ import { PasswordConfirmationComponent } from './password-confirmation/password-
      MatFormFieldModule,
      MatInputModule,
      MatGridListModule,
-     MatProgressSpinnerModule
+     MatProgressSpinnerModule,
+     MatSnackBarModule
   ],
   declarations: [LoginComponent, PasswordConfirmationComponent],
   providers: [AuthenticationService]

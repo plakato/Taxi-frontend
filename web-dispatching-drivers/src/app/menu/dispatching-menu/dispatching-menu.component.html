@@ -1,0 +1,51 @@
+<mat-toolbar>Taxi Ali</mat-toolbar>
+<mat-sidenav-container class="example-container" autosize>
+  <mat-sidenav #sidenav class="example-sidenav" mode="side" opened="true">
+
+    <mat-nav-list>
+      <mat-list-item (click)="isExpanded = !isExpanded">
+        <mat-icon mat-list-icon>menu</mat-icon>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>
+       <mat-icon mat-list-icon>add</mat-icon>
+         <p matLine *ngIf="isExpanded">Nová objednávka</p>
+    <!--     <a [routerLink]:"[{ outlets: { dispatching-selected: ['new_order'] }}]">Contact</a>
+    -->  </mat-list-item>
+      <mat-list-item>
+        <mat-icon mat-list-icon>cached</mat-icon>
+          <p matLine *ngIf="isExpanded">Aktuální objednávky</p>
+       </mat-list-item>
+       <mat-list-item>
+        <mat-icon mat-list-icon>hourglass_empty</mat-icon>
+          <p matLine *ngIf="isExpanded">Termínované objednávky</p>
+       </mat-list-item>
+       <mat-list-item>
+        <mat-icon mat-list-icon>info</mat-icon>
+          <p matLine *ngIf="isExpanded">Historie objednávek</p>
+       </mat-list-item>
+       <mat-list-item>
+        <mat-icon mat-list-icon>star</mat-icon>
+          <p matLine *ngIf="isExpanded">Oblíbené místa</p>
+       </mat-list-item>
+       <mat-divider ></mat-divider>
+       <mat-list-item>
+        <mat-icon mat-list-icon>directions_car</mat-icon>
+          <p matLine *ngIf="isExpanded">Autá</p>
+       </mat-list-item>
+       <mat-list-item>
+        <mat-icon mat-list-icon>people</mat-icon>
+          <p matLine *ngIf="isExpanded">Vodiči a dispečeři</p>
+       </mat-list-item>
+       <mat-list-item>
+        <mat-icon mat-list-icon>person</mat-icon>
+          <p matLine *ngIf="isExpanded">Můj profil</p>
+       </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <div class="example-sidenav-content">
+    Main content that resizes properly
+    <router-outlet name="dispatching-selected"></router-outlet>
+  </div>
+</mat-sidenav-container>

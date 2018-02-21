@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { debug } from 'util';
+import { Router } from '@angular/router';
 import { AuthenticationService } from '../shared/authentication.service';
 
 export interface User {
@@ -17,7 +18,9 @@ export class LoginComponent implements OnInit {
   loading = false;
   model: any = { email: null, password: null};
 
-  constructor(private authenticationService: AuthenticationService) {
+  constructor(
+    private authenticationService: AuthenticationService,
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -30,6 +33,7 @@ export class LoginComponent implements OnInit {
         .subscribe(
           data => {
             localStorage.setItem('currentUser', JSON.stringify(data.token));
+            this.router.navigate(['dispatching']);
           },
           err => {
             this.loading = false;

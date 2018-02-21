@@ -1,0 +1,18 @@
+@import 'variables';
+
+.example-container {
+  width: 100%;
+  height: 100vh;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.example-sidenav-content {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+}
+
+mat-toolbar {
+  text-align: center;
+  background-color: $accent-yellow;
+}
