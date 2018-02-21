@@ -1,4 +1,3 @@
-@import 'variables';
 
 .example-container {
   width: 100%;
@@ -13,6 +12,5 @@
 }
 
 mat-toolbar {
-  text-align: center;
-  background-color: $accent-yellow;
+  align-content: center;
 }
