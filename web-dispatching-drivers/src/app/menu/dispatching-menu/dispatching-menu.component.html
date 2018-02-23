@@ -12,11 +12,10 @@
         <mat-icon mat-list-icon>menu</mat-icon>
       </mat-list-item>
       <mat-divider></mat-divider>
-      <mat-list-item>
+      <mat-list-item [routerLink]="[{ outlets: { 'menu-selected': ['new_order'] }}]">
        <mat-icon mat-list-icon>add</mat-icon>
          <p matLine *ngIf="isExpanded">Nová objednávka</p>
-    <!--     <a [routerLink]:"[{ outlets: { dispatching-selected: ['new_order'] }}]">Contact</a>
-    -->  </mat-list-item>
+      </mat-list-item>
       <mat-list-item>
         <mat-icon mat-list-icon>cached</mat-icon>
           <p matLine *ngIf="isExpanded">Aktuální objednávky</p>
@@ -34,7 +33,7 @@
           <p matLine *ngIf="isExpanded">Oblíbené místa</p>
        </mat-list-item>
        <mat-divider ></mat-divider>
-       <mat-list-item>
+       <mat-list-item [routerLink]="[{ outlets: { 'menu-selected': ['cars'] }}]">
         <mat-icon mat-list-icon>directions_car</mat-icon>
           <p matLine *ngIf="isExpanded">Autá</p>
        </mat-list-item>
@@ -50,7 +49,6 @@
   </mat-sidenav>
 
   <div class="example-sidenav-content">
-    Main content that resizes properly
-    <router-outlet name="dispatching-selected"></router-outlet>
+    <router-outlet name='menu-selected'></router-outlet>
   </div>
 </mat-sidenav-container>
