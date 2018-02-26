@@ -1,17 +1,37 @@
 
-.example-container {
-  width: 100%;
-  height: 100vh;
-  border: 1px solid rgba(0, 0, 0, 0.5);
-}
-
-.example-sidenav-content {
+.drawer-content {
   display: flex;
   height: 100%;
   justify-content: center;
 }
+mat-drawer{
+  width:65px;
+}
+.drawer-content , mat-drawer {
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -ms-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
 
 .toolbar_span {
   margin: 0 auto;
 }
 
+mat-drawer-container {
+  width: 100%;
+  height: 100vh;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+
+  // & refences this selector, having class expanded and selects its children with class drawer-content
+  &.expanded{
+    mat-drawer{
+      width: 275px;
+    }
+    .drawer-content {
+      margin-left: 210px;
+    }
+  }
+}

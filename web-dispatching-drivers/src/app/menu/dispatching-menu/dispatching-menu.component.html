@@ -4,10 +4,8 @@
   </span>
 </mat-toolbar>
 
-<button (click)="drawer.toggle()">toggle</button>
-
-<mat-drawer-container class="example-container" autosize="true">
-  <mat-drawer #drawer class="example-drawer" mode="side" >
+<mat-drawer-container [ngClass]="{ 'expanded': isExpanded }">
+  <mat-drawer mode="side" opened="true">
 
     <mat-nav-list>
       <mat-list-item (click)="isExpanded = !isExpanded">
@@ -50,7 +48,7 @@
     </mat-nav-list>
   </mat-drawer>
 
-  <div class="example-drawer-content">
+  <div class="drawer-content">
     <router-outlet></router-outlet>
   </div>
 </mat-drawer-container>
