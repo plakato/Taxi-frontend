@@ -12,8 +12,8 @@ const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'dispatching', component: DispatchingMenuComponent,
             children: [
-              { path: 'new_order', component: NewOrderComponent, outlet: 'menu-selected'},
-              { path: 'cars', component: CarsComponent, outlet: 'menu-selected'}
+              { path: 'new_order', component: NewOrderComponent},
+              { path: 'cars', component: CarsComponent}
             ]},
  // { path: '', redirectTo: 'login', pathMatch: 'full' },
     // otherwise redirect to home

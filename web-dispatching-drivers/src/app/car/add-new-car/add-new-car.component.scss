@@ -1,0 +1,21 @@
+mat-expansion-panel {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+mat-form-field {
+  display: block;
+}
+
+mat-checkbox {
+  display: block;
+  margin-bottom: 20px;
+}
+
+// Hide spinner in number type input.
+.no-spinners::-webkit-outer-spin-button,
+.no-spinners::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

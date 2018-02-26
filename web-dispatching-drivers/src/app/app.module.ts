@@ -10,7 +10,7 @@ import { UserModule } from './user/user.module';
 import { MenuModule } from './menu/menu.module';
 import { OrderModule } from './order/order.module';
 import { CarModule } from './car/car.module';
-import { DomainInterceptor, JSONHeaderInterceptor } from './user/shared/domain.interceptor';
+import { DomainInterceptor, JSONHeaderInterceptor, TokenInterceptor } from './interceptor/domain.interceptor';
 
 @NgModule({
   declarations: [
@@ -28,7 +28,8 @@ import { DomainInterceptor, JSONHeaderInterceptor } from './user/shared/domain.i
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: DomainInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: JSONHeaderInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: JSONHeaderInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

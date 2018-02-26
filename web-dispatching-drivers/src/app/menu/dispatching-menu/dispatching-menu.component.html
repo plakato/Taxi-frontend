@@ -4,15 +4,17 @@
   </span>
 </mat-toolbar>
 
-<mat-sidenav-container class="example-container" autosize>
-  <mat-sidenav #sidenav class="example-sidenav" mode="side" opened="true">
+<button (click)="drawer.toggle()">toggle</button>
+
+<mat-drawer-container class="example-container" autosize="true">
+  <mat-drawer #drawer class="example-drawer" mode="side" >
 
     <mat-nav-list>
       <mat-list-item (click)="isExpanded = !isExpanded">
         <mat-icon mat-list-icon>menu</mat-icon>
       </mat-list-item>
       <mat-divider></mat-divider>
-      <mat-list-item [routerLink]="[{ outlets: { 'menu-selected': ['new_order'] }}]">
+      <mat-list-item [routerLink]="['new_order']">
        <mat-icon mat-list-icon>add</mat-icon>
          <p matLine *ngIf="isExpanded">Nová objednávka</p>
       </mat-list-item>
@@ -33,7 +35,7 @@
           <p matLine *ngIf="isExpanded">Oblíbené místa</p>
        </mat-list-item>
        <mat-divider ></mat-divider>
-       <mat-list-item [routerLink]="[{ outlets: { 'menu-selected': ['cars'] }}]">
+       <mat-list-item [routerLink]="['cars']">
         <mat-icon mat-list-icon>directions_car</mat-icon>
           <p matLine *ngIf="isExpanded">Autá</p>
        </mat-list-item>
@@ -46,9 +48,9 @@
           <p matLine *ngIf="isExpanded">Můj profil</p>
        </mat-list-item>
     </mat-nav-list>
-  </mat-sidenav>
+  </mat-drawer>
 
-  <div class="example-sidenav-content">
-    <router-outlet name='menu-selected'></router-outlet>
+  <div class="example-drawer-content">
+    <router-outlet></router-outlet>
   </div>
-</mat-sidenav-container>
+</mat-drawer-container>

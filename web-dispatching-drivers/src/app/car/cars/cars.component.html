@@ -1,3 +1,41 @@
-<p>
-  cars works!
-</p>
+<div class="container">
+  <h1 class="title">
+      Auta
+  </h1>
+
+  <!-- List of cars -->
+  <div class="example-container mat-elevation-z8">
+      <mat-table #table [dataSource]="dataSource" matSort>
+
+        <!-- Number Column -->
+        <ng-container matColumnDef="number">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Číslo </mat-header-cell>
+          <mat-cell *matCellDef="let car"> {{car.number}} </mat-cell>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Jméno </mat-header-cell>
+          <mat-cell *matCellDef="let car"> {{car.name}} </mat-cell>
+        </ng-container>
+
+        <!-- Plate Column -->
+        <ng-container matColumnDef="plate">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> SPZ </mat-header-cell>
+          <mat-cell *matCellDef="let car"> {{car.plate}} </mat-cell>
+        </ng-container>
+
+        <!-- MaxPersons Column -->
+        <ng-container matColumnDef="max_persons">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Max. osob </mat-header-cell>
+          <mat-cell *matCellDef="let car"> {{car.max_persons}} </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+      <div *ngIf='listEmpty' class="empty-label">Nenanšla se žádná auta.</div>
+  </div>
+
+  <app-add-new-car></app-add-new-car>
+</div>

@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   MatIconModule,
-  MatSidenavModule,
   MatListModule,
   MatButtonModule,
   MatToolbarModule } from '@angular/material';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { DispatchingMenuComponent } from './dispatching-menu/dispatching-menu.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { RouterModule } from '@angular/router';
