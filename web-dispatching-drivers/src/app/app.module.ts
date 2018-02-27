@@ -10,6 +10,7 @@ import { UserModule } from './user/user.module';
 import { MenuModule } from './menu/menu.module';
 import { OrderModule } from './order/order.module';
 import { CarModule } from './car/car.module';
+import { ModalsModule } from './modals/modals.module';
 import { DomainInterceptor, JSONHeaderInterceptor, TokenInterceptor } from './interceptor/domain.interceptor';
 
 @NgModule({
@@ -24,7 +25,8 @@ import { DomainInterceptor, JSONHeaderInterceptor, TokenInterceptor } from './in
     UserModule,
     MenuModule,
     OrderModule,
-    CarModule
+    CarModule,
+    ModalsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: DomainInterceptor, multi: true },

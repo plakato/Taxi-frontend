@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { MatTable, MatCell, MatHeaderCell, MatTableDataSource, MatSort } from '@angular/material';
+import { MatHeaderCell, MatTableDataSource, MatSort, MatCheckbox, MatCheckboxChange, MatDialog } from '@angular/material';
 import { CarRetrievalService } from '../shared/car-retrieval.service';
+import { Car } from '../car.module';
+import { DeleteCarDialogComponent } from '../../modals/delete-car-dialog/delete-car-dialog.component';
 
 @Component({
   selector: 'app-cars',
@@ -9,7 +11,7 @@ import { CarRetrievalService } from '../shared/car-retrieval.service';
 })
 export class CarsComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource();
-  displayedColumns = ['number', 'name', 'plate', 'max_persons'/*, 'available'*/];
+  displayedColumns = ['image', 'number', 'name', 'plate', 'max_persons', 'available', 'delete'];
   listEmpty = false;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -17,21 +19,29 @@ export class CarsComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  constructor( private carService: CarRetrievalService) { }
+  constructor(
+    private carService: CarRetrievalService,
+    public dialog: MatDialog ) { }
 
   ngOnInit() {
-    this.carService.list()
-    .subscribe(
-      data => {
-        if (data.length === 0) {
-          this.listEmpty = true;
-        } else {
-          this.listEmpty = false;
-        }
-        this.dataSource.data = data;
-      },
-      err => {
-        console.log(err.error);
+    this.carService.cars.subscribe(
+      res => {
+        this.dataSource.data = res;
+      }
+    );
+  }
+
+  changeAvailable(car: Car, event: MatCheckboxChange) {
+    car.available = event.checked;
+    this.carService.update(car);
+  }
+
+  deleteCar(car: Car) {
+    const deleteDialog = this.dialog.open(DeleteCarDialogComponent, {width: '300px'});
+    deleteDialog.afterClosed().subscribe(
+      res => {
+        console.log('The dialog was closed.');
+        debugger;
       });
   }
 }

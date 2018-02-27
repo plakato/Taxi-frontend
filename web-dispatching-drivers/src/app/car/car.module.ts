@@ -7,7 +7,9 @@ import { MatTableModule,
         MatInputModule,
         MatButtonModule,
         MatExpansionModule,
-        MatCheckboxModule } from '@angular/material';
+        MatCheckboxModule,
+        MatIconModule,
+        MatDialogModule } from '@angular/material';
 import { CarRetrievalService } from './shared/car-retrieval.service';
 import { AddNewCarComponent } from './add-new-car/add-new-car.component';
 
@@ -20,6 +22,8 @@ import { AddNewCarComponent } from './add-new-car/add-new-car.component';
     MatButtonModule,
     MatExpansionModule,
     MatCheckboxModule,
+    MatIconModule,
+    MatDialogModule,
     FormsModule, ReactiveFormsModule
   ],
   declarations: [CarsComponent, AddNewCarComponent],
@@ -29,6 +33,7 @@ export class CarModule { }
 
 
 export interface Car {
+  id: number;
   name: string;
   number: number;
   plate: string;

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CarRetrievalService } from '../shared/car-retrieval.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CarsComponent } from '../cars/cars.component';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-add-new-car',
@@ -12,13 +14,14 @@ export class AddNewCarComponent implements OnInit {
 
   constructor(
     private carService: CarRetrievalService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder,
+    private snackbar: MatSnackBar) { }
 
   ngOnInit() {
     this.newCarForm = this.fb.group({
-      name: ['', [Validators.required]],
-      number: ['', [Validators.required]],
-      plate: ['', [Validators.required, Validators.pattern('[0-9A-Z- :]*')]],
+      name: ['favorit', [Validators.required]],
+      number: ['2', [Validators.required]],
+      plate: ['AA', [Validators.required, Validators.pattern('[0-9A-Z- :]*')]],
       max_persons: [4, [Validators.required, Validators.min(1)]],
       available: [true]
     });
@@ -27,14 +30,10 @@ export class AddNewCarComponent implements OnInit {
 
   addCar() {
     if (this.newCarForm.valid) {
-      this.carService.add(this.newCarForm)
-        .subscribe(
-          data => {
-          },
-          err => {
-            console.log(err.error);
-          });
-    this.newCarForm.reset();
+      this.carService.add(this.newCarForm.value);
+      this.newCarForm.reset(); // is there a better way - reset to default?
+    } else {
+      this.snackbar.open('Vyplňte správně všechny položky!', 'OK', {duration: 2000});
     }
   }
 }
