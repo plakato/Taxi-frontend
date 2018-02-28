@@ -38,6 +38,13 @@
 
       <!-- Available -->
       <mat-checkbox formControlName="available">Dostupné na jízdu</mat-checkbox>
+
+      <!-- Image -->
+      <div class="imageUploadDiv">
+       <button mat-raised-button *ngIf="noImageChosen" id="choose_picture_button" type="button" onclick="document.getElementById('imageUpload').click()"> Zvolit obrázek </button>
+       <input type="file" id="imageUpload" (change)="onImageLoad($event)" #fileInput/>
+      </div>
+
     </form>
-    <button mat-raised-button (click)="addCar()">Přidat</button>
+    <button mat-raised-button id="addButton" (click)="addCar()">Přidat</button>
 </mat-expansion-panel>

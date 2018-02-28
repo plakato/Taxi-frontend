@@ -29,7 +29,7 @@ export class CarRetrievalService {
           name: car.name,
           number: car.number,
           plate: car.plate,
-          image: null, // add image
+          image: car.image,
           max_persons: car.max_persons,
           available: car.available
     }})).subscribe(
@@ -62,5 +62,17 @@ export class CarRetrievalService {
         // TODO: errorz
       }
     );
+  }
+
+  delete(carID) {
+    this.http.delete('vehicles/' + carID) .subscribe(
+      res => {
+        const index = this.carsData.findIndex(car => car.id === carID);
+        this.carsData.splice(index);
+        this.carsEventSource.next(this.carsData);
+      },
+      err => {
+        // TODO
+      });
   }
 }

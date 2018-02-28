@@ -13,6 +13,26 @@ mat-checkbox {
   margin-bottom: 20px;
 }
 
+#imageUpload {
+  display:none;
+}
+
+#choose_picture_button {
+  margin: 20px;
+}
+
+#addButton {
+  margin-top: 20px;
+}
+
+.imageUploadDiv {
+  border-style: dashed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
 // Hide spinner in number type input.
 .no-spinners::-webkit-outer-spin-button,
 .no-spinners::-webkit-inner-spin-button {

@@ -36,13 +36,17 @@ export class CarsComponent implements OnInit, AfterViewInit {
     this.carService.update(car);
   }
 
+  /** Open dialog to make sure user wanted to delete this car. */
   deleteCar(car: Car) {
-    const deleteDialog = this.dialog.open(DeleteCarDialogComponent, {width: '300px'});
+    const deleteDialog = this.dialog.open(DeleteCarDialogComponent, {
+      width: '300px',
+      data: {car: car}});
     deleteDialog.afterClosed().subscribe(
       res => {
-        console.log('The dialog was closed.');
-        debugger;
+        console.log('The dialog was closed:' + res);
       });
   }
 }
+
+
 

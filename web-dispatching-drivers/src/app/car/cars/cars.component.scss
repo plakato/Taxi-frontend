@@ -28,3 +28,7 @@ img {
 .red {
   color: mat-color(map-get($yellow-app-theme, warn));
 }
+
+mat-icon {
+  cursor: pointer;
+}
