@@ -3,7 +3,7 @@
         <mat-panel-title>Přidat nové auto </mat-panel-title>
     </mat-expansion-panel-header>
     <form [formGroup]="newCarForm">
-
+      <div>
       <!-- Name -->
       <mat-form-field>
           <input matInput type="text" formControlName="name"  placeholder="Jméno" required/>
@@ -38,11 +38,12 @@
 
       <!-- Available -->
       <mat-checkbox formControlName="available">Dostupné na jízdu</mat-checkbox>
-
+      </div>
       <!-- Image -->
       <div class="imageUploadDiv">
        <button mat-raised-button *ngIf="noImageChosen" id="choose_picture_button" type="button" onclick="document.getElementById('imageUpload').click()"> Zvolit obrázek </button>
        <input type="file" id="imageUpload" (change)="onImageLoad($event)" #fileInput/>
+       <img src="{{imageEncoded}}" *ngIf="!noImageChosen" alt="uploaded_img"/>
       </div>
 
     </form>

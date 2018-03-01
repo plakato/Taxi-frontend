@@ -46,20 +46,15 @@ export class AddNewCarComponent implements OnInit {
   onImageLoad(event) {
     const reader = new FileReader();
     if (event.target.files && event.target.files.length > 0) {
-      const file: File = event.target.files[0];
-      debugger;
+      let file = event.target.files[0];
       reader.readAsDataURL(file);
       reader.onload = () => {
-        this.imageEncoded = 'data:' + file.type + '\;base64,' + reader.result.split(',')[1];
-       /* this.newCarForm.get('image').setValue({
-          filename: file.name,
-          filetype: file.type,
-          value: reader.result.split(',')[1]
-        });*/
+        this.imageEncoded = reader.result;
+        if (this.imageEncoded !== null) {
+          this.noImageChosen = false;
+        }
       };
     }
-    if (this.imageEncoded !== null) {
-      this.noImageChosen = false;
-    }
+
   }
 }
