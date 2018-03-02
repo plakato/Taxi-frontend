@@ -45,8 +45,9 @@ export class AddNewCarComponent implements OnInit {
   // event target has to be typed, otherwise property files cannot be accessed.
   onImageLoad(event) {
     const reader = new FileReader();
+    debugger;
     if (event.target.files && event.target.files.length > 0) {
-      let file = event.target.files[0];
+      const file = event.target.files[0];
       reader.readAsDataURL(file);
       reader.onload = () => {
         this.imageEncoded = reader.result;
@@ -55,6 +56,11 @@ export class AddNewCarComponent implements OnInit {
         }
       };
     }
+  }
+
+  deleteUploadedImage() {
+    this.imageEncoded = null;
+    this.noImageChosen = true;
 
   }
 }
