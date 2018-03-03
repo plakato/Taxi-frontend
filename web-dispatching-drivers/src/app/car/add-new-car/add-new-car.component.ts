@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { CarRetrievalService } from '../shared/car-retrieval.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CarsComponent } from '../cars/cars.component';
@@ -28,7 +28,6 @@ export class AddNewCarComponent implements OnInit {
       max_persons: [4, [Validators.required, Validators.min(1)]],
       available: [true]
     });
-
   }
 
   addCar() {
@@ -45,7 +44,6 @@ export class AddNewCarComponent implements OnInit {
   // event target has to be typed, otherwise property files cannot be accessed.
   onImageLoad(event) {
     const reader = new FileReader();
-    debugger;
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
       reader.readAsDataURL(file);
@@ -58,9 +56,13 @@ export class AddNewCarComponent implements OnInit {
     }
   }
 
+  /** Clears input of input file component, so that change event will be triggered on next file upload. */
+  clearInput(elem: HTMLInputElement) {
+    elem.value = null;
+  }
+
   deleteUploadedImage() {
     this.imageEncoded = null;
     this.noImageChosen = true;
-
   }
 }

@@ -1,9 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HttpRequest, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA, ErrorHandler } from '@angular/core';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { MatSnackBarModule } from '@angular/material';
 
 
 import { UserModule } from './user/user.module';
@@ -11,7 +12,10 @@ import { MenuModule } from './menu/menu.module';
 import { OrderModule } from './order/order.module';
 import { CarModule } from './car/car.module';
 import { ModalsModule } from './modals/modals.module';
-import { DomainInterceptor, JSONHeaderInterceptor, TokenInterceptor } from './interceptor/domain.interceptor';
+
+import { GlobalErrorHandler } from './error/global-error-handler';
+import { ErrorService } from './error/error.service';
+import { httpInterceptorProviders } from './interceptor/index';
 
 @NgModule({
   declarations: [
@@ -26,12 +30,13 @@ import { DomainInterceptor, JSONHeaderInterceptor, TokenInterceptor } from './in
     MenuModule,
     OrderModule,
     CarModule,
-    ModalsModule
+    ModalsModule,
+    MatSnackBarModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: DomainInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: JSONHeaderInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
+    ErrorService,
+    { provide: ErrorHandler,      useClass: GlobalErrorHandler },
+    httpInterceptorProviders
   ],
   bootstrap: [AppComponent]
 })

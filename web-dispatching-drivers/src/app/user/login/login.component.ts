@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
           },
           err => {
             this.loading = false;
-            err.error.errors.forEach(pair => {
+          /*  err.error.errors.forEach(pair => {
               this.snackbar.open(Object.values(pair)[0].toString(), 'OK', {duration: 2000});
             });
             if (err.error instanceof Error) {
@@ -55,6 +55,6 @@ export class LoginComponent implements OnInit {
               // The response body may contain clues as to what went wrong,
               console.log(`Backend returned code ${err.status}, body was: ${err.error}`);
             }
-          });
+          */});
     }
 }

@@ -1,4 +1,4 @@
-<mat-expansion-panel expanded="true">
+<mat-expansion-panel>
   <mat-expansion-panel-header>
       <mat-panel-title>Přidat nové auto </mat-panel-title>
   </mat-expansion-panel-header>
@@ -43,7 +43,7 @@
       <!-- Image -->
       <div class="imageUploadDiv">
         <button mat-raised-button *ngIf="noImageChosen" class="choose_picture_button" type="button" onclick="document.getElementById('imageUpload').click()">Zvolit obrázek </button>
-        <input type="file" id="imageUpload" name="imageUpload" (change)="onImageLoad($event)" #fileInput/>
+        <input type="file" id="imageUpload" name="imageUpload" (click)="clearInput(($event).target)" (change)="onImageLoad($event)" #fileInput/>
         <img src="{{imageEncoded}}" *ngIf="!noImageChosen" alt="uploaded_img" class="uploadedImage"/>
         <mat-icon *ngIf="!noImageChosen" class="closeImageIcon" (click)="deleteUploadedImage()">close</mat-icon>
       </div>
