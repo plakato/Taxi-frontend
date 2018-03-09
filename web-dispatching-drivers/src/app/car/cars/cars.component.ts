@@ -3,6 +3,7 @@ import { MatHeaderCell, MatTableDataSource, MatSort, MatCheckbox, MatCheckboxCha
 import { CarRetrievalService } from '../shared/car-retrieval.service';
 import { Car } from '../car.module';
 import { DeleteCarDialogComponent } from '../../modals/delete-car-dialog/delete-car-dialog.component';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-cars',
@@ -21,7 +22,9 @@ export class CarsComponent implements OnInit, AfterViewInit {
 
   constructor(
     private carService: CarRetrievalService,
-    public dialog: MatDialog ) { }
+    public dialog: MatDialog,
+    private router: Router,
+    private route: ActivatedRoute ) { }
 
   ngOnInit() {
     this.carService.cars.subscribe(
@@ -44,7 +47,14 @@ export class CarsComponent implements OnInit, AfterViewInit {
     deleteDialog.afterClosed().subscribe(
       res => {
         console.log('The dialog was closed:' + res);
+        if (this.dataSource.data.length === 0 ) {
+          this.listEmpty = true;
+        }
       });
+  }
+
+  editCar(car: Car) {
+    this.router.navigate(['edit/' + car.id], { relativeTo: this.route });
   }
 }
 

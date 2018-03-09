@@ -6,6 +6,8 @@ import { PasswordConfirmationComponent } from './user/password-confirmation/pass
 import { DispatchingMenuComponent } from './menu/dispatching-menu/dispatching-menu.component';
 import { NewOrderComponent } from './order/new-order/new-order.component';
 import { CarsComponent } from './car/cars/cars.component';
+import { ProfileDispatcherComponent } from './user/profile-dispatcher/profile-dispatcher.component';
+import { EditCarComponent } from './car/edit-car/edit-car.component';
 
 const appRoutes: Routes = [
     { path: 'password-confirmation/:confirmation_token', component: PasswordConfirmationComponent},
@@ -13,11 +15,15 @@ const appRoutes: Routes = [
     { path: 'dispatching', component: DispatchingMenuComponent,
             children: [
               { path: 'new_order', component: NewOrderComponent},
-              { path: 'cars', component: CarsComponent}
+              { path: 'profile', component: ProfileDispatcherComponent},
+              { path: 'cars', component: CarsComponent,
+                children: [
+                  { path: 'edit/:id', component: EditCarComponent}
+                ]}
             ]},
- // { path: '', redirectTo: 'login', pathMatch: 'full' },
+   { path: '', redirectTo: 'login', pathMatch: 'full' },
     // otherwise redirect to home
-   // { path: '**', redirectTo: 'login' }
+  // { path: '**', redirectTo: 'login' }
 ];
 
 @NgModule({

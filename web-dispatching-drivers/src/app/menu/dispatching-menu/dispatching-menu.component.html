@@ -33,17 +33,21 @@
           <p matLine *ngIf="isExpanded">Oblíbené místa</p>
        </mat-list-item>
        <mat-divider ></mat-divider>
-       <mat-list-item [routerLink]="['cars']">
+       <mat-list-item *ngIf="isAdmin" [routerLink]="['cars']">
         <mat-icon mat-list-icon>directions_car</mat-icon>
           <p matLine *ngIf="isExpanded">Autá</p>
        </mat-list-item>
-       <mat-list-item>
+       <mat-list-item *ngIf="isAdmin">
         <mat-icon mat-list-icon>people</mat-icon>
           <p matLine *ngIf="isExpanded">Vodiči a dispečeři</p>
        </mat-list-item>
-       <mat-list-item>
+       <mat-list-item [routerLink]="['profile']">
         <mat-icon mat-list-icon>person</mat-icon>
           <p matLine *ngIf="isExpanded">Můj profil</p>
+       </mat-list-item>
+       <mat-list-item (click)="logout()">
+        <mat-icon mat-list-icon>lock</mat-icon>
+          <p matLine *ngIf="isExpanded">Odhlásit se</p>
        </mat-list-item>
     </mat-nav-list>
   </mat-drawer>

@@ -1,16 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { debug } from 'util';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../shared/authentication.service';
 import { MatSnackBar } from '@angular/material';
-
-export interface User {
-  id: number;
-  token: string;
-  email: string;
-  confirmed: boolean;
-  role: string[];
-}
 
 @Component({
   selector: 'app-login',
@@ -39,7 +31,12 @@ export class LoginComponent implements OnInit {
         .subscribe(
           data => {
             // TODO: add check for admin
-            localStorage.setItem('currentUser', data.token);
+            data.employee_roles = data.employee_roles.map( x => x.role );
+            localStorage.setItem('currentUser', JSON.stringify({
+              token: data.token,
+              id: data.id,
+              roles: data.employee_roles }));
+
             this.router.navigate(['dispatching']);
           },
           err => {

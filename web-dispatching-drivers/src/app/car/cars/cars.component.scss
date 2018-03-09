@@ -1,11 +1,6 @@
 @import '~@angular/material/theming';
 @import '../../../yellow-app-theme.scss';
 
-.title {
-  text-align: left;
-  padding-top: 20px;
-}
-
 .container {
   height: 100%;
   max-width: 1000px;
@@ -32,3 +27,4 @@ img {
 mat-icon {
   cursor: pointer;
 }
+

@@ -22,9 +22,9 @@ export class AddNewCarComponent implements OnInit {
 
   ngOnInit() {
     this.newCarForm = this.fb.group({
-      name: ['Chevrolet', [Validators.required]],
-      number: ['5', [Validators.required]],
-      plate: ['AAA11', [Validators.required, Validators.pattern('[0-9A-Z- :]*')]],
+      name: ['', [Validators.required]],
+      number: ['', [Validators.required]],
+      plate: ['', [Validators.required, Validators.pattern('[0-9A-Z- :]*')]],
       max_persons: [4, [Validators.required, Validators.min(1)]],
       available: [true]
     });

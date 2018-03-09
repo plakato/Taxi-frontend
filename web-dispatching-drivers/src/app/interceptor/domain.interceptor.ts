@@ -24,9 +24,9 @@ export class JSONHeaderInterceptor implements HttpInterceptor {
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = localStorage.getItem('currentUser');
-    if ( token !== null) {
-       req = req.clone({headers: req.headers.set('Authorization', 'Token token=' + token)});
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+    if (user !== null) {
+       req = req.clone({headers: req.headers.set('Authorization', 'Token token=' + user.token)});
     }
        return next.handle(req);
   }

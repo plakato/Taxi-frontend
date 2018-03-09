@@ -1,5 +1,5 @@
-<div>
-    <img src="/assets/images/logo100.png"/>
+
+<app-simple-form-container>
     <h1 class="mat-display-1">Přihlášení</h1>
     <form>
         <mat-form-field>
@@ -11,4 +11,4 @@
         <button mat-raised-button [disabled]="loading" (click)="login()">Přihlásit</button>
         <mat-spinner *ngIf="loading" [mode]="indeterminate" ></mat-spinner>
     </form>
-</div>
+</app-simple-form-container>

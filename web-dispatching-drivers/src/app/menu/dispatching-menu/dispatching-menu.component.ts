@@ -6,6 +6,8 @@ import {
   MatListItem,
   MatListDivider,
   MatToolbar } from '@angular/material';
+import { AuthenticationService } from '../../user/shared/authentication.service';
+import { User } from '../../user/user.module';
 
 @Component({
   selector: 'app-dispatching-menu',
@@ -14,9 +16,17 @@ import {
 })
 export class DispatchingMenuComponent implements OnInit {
   isExpanded = false;
-  constructor() { }
+  isAdmin: boolean;
+
+  constructor( private authService: AuthenticationService ) { }
 
   ngOnInit() {
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+    this.isAdmin = (user.roles.indexOf('admin') > -1);
+  }
+
+  logout() {
+    this.authService.logout();
   }
 
 }

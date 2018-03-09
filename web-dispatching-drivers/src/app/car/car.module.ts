@@ -9,10 +9,12 @@ import { MatTableModule,
         MatExpansionModule,
         MatCheckboxModule,
         MatIconModule,
-        MatDialogModule } from '@angular/material';
+        MatDialogModule,
+        MatTooltipModule } from '@angular/material';
 import { CarRetrievalService } from './shared/car-retrieval.service';
 import { AddNewCarComponent } from './add-new-car/add-new-car.component';
 import { DeleteCarDialogComponent } from '../modals/delete-car-dialog/delete-car-dialog.component';
+import { EditCarComponent } from './edit-car/edit-car.component';
 
 @NgModule({
   imports: [
@@ -25,9 +27,10 @@ import { DeleteCarDialogComponent } from '../modals/delete-car-dialog/delete-car
     MatCheckboxModule,
     MatIconModule,
     MatDialogModule,
+    MatTooltipModule,
     FormsModule, ReactiveFormsModule
   ],
-  declarations: [CarsComponent, AddNewCarComponent],
+  declarations: [CarsComponent, AddNewCarComponent, EditCarComponent],
   entryComponents: [DeleteCarDialogComponent],
   providers: [CarRetrievalService]
 })

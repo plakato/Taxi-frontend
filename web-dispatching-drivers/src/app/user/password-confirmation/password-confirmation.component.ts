@@ -5,10 +5,6 @@ import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, Validators, FormGroupDirective, NgForm, FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 
-export interface User {
-  token: string;
-}
-
 /** This avoids showing errors before the form was edited (keeping it invalid). **/
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -29,36 +25,27 @@ export class PasswordConfirmationComponent implements OnInit {
   passwordForm: FormGroup;
   matcher = new MyErrorStateMatcher();
 
-
   constructor(
     private authenticationService: AuthenticationService,
-    private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private snackBar: MatSnackBar) {
+    private snackBar: MatSnackBar,
+    private fb: FormBuilder) {
   }
-
 
   ngOnInit() {
-    // Creates a group of the two passwords + adds validation to each and to the group
     this.passwordForm = this.fb.group({
-      password: ['', [Validators.required, Validators.minLength(6)] ],
-      passwordConfirm: ['', [Validators.required]]
-    }, { validator: this.areEqual });
+      password: [''],
+      passwordConfirm: ['']
+    });
   }
-
-
-  /** Custom validation function to determine that password and password confirmation are identical */
-  areEqual(group: AbstractControl)  {
-    if (group.get('password').value !== group.get('passwordConfirm').value) {
-      return  { 'passwordMismatch': {value: true}} ;
-    }
-    return null;
-  }
-
 
 /** Function sending confirmation token with new password to the server and repsonding to result. */
   confirm() {
+    if (!this.passwordForm.valid) {
+      this.snackBar.open('Vyplňte správně všechny údaje!', 'OK', {duration: 2000});
+      return;
+    }
     this.loading = true;
     const confirmation_token = this.route.snapshot.paramMap.get('confirmation_token');
     this.authenticationService.confirm(this.passwordForm.get('password').value, confirmation_token)
