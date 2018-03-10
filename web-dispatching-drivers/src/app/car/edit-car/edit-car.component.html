@@ -1,2 +1,9 @@
 <h1>Upravit auto</h1>
-<button mat-raised-button>Uložit změny</button>
+
+<app-car-detail-form
+  [carForm]="carForm"
+  (newImageUploaded)="newImageUploaded($event)"
+  [image]="image">
+</app-car-detail-form>
+
+<button mat-raised-button (click)="saveChanges()">Uložit změny</button>

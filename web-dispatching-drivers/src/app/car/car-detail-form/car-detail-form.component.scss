@@ -1,0 +1,63 @@
+@import '~@angular/material/theming';
+@import '../../../yellow-app-theme.scss';
+
+// Divs composition
+
+.inputFormContainer {
+  float: left;
+  flex-grow: 1;
+}
+
+form {
+  display: flex;
+  align-items: start;
+  flex-wrap: wrap;
+}
+
+.imageUploadDiv {
+  border-style: dashed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  margin-left: 20px;
+  position: relative;
+}
+
+// Components styling
+
+mat-form-field {
+  display: block;
+}
+
+mat-checkbox {
+  display: block;
+  margin-bottom: 20px;
+}
+
+#imageUpload {
+  display:none;
+}
+
+.uploadedImage {
+  height: 100%;
+}
+
+.choose_picture_button {
+  margin: 20px;
+}
+
+.closeImageIcon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: mat-color(map-get($yellow-app-theme, warn));
+  cursor: pointer;
+}
+
+// Hide spinner in number type input.
+.no-spinners::-webkit-outer-spin-button,
+.no-spinners::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

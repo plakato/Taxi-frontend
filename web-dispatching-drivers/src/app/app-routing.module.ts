@@ -16,8 +16,9 @@ const appRoutes: Routes = [
             children: [
               { path: 'new_order', component: NewOrderComponent},
               { path: 'profile', component: ProfileDispatcherComponent},
-              { path: 'cars', component: CarsComponent,
+              { path: 'cars',
                 children: [
+                  { path: '', component: CarsComponent},
                   { path: 'edit/:id', component: EditCarComponent}
                 ]}
             ]},

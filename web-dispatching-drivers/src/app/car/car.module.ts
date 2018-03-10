@@ -15,6 +15,7 @@ import { CarRetrievalService } from './shared/car-retrieval.service';
 import { AddNewCarComponent } from './add-new-car/add-new-car.component';
 import { DeleteCarDialogComponent } from '../modals/delete-car-dialog/delete-car-dialog.component';
 import { EditCarComponent } from './edit-car/edit-car.component';
+import { CarDetailFormComponent } from './car-detail-form/car-detail-form.component';
 
 @NgModule({
   imports: [
@@ -30,7 +31,7 @@ import { EditCarComponent } from './edit-car/edit-car.component';
     MatTooltipModule,
     FormsModule, ReactiveFormsModule
   ],
-  declarations: [CarsComponent, AddNewCarComponent, EditCarComponent],
+  declarations: [CarsComponent, AddNewCarComponent, EditCarComponent, CarDetailFormComponent],
   entryComponents: [DeleteCarDialogComponent],
   providers: [CarRetrievalService]
 })

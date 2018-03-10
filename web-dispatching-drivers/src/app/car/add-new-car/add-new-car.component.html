@@ -2,52 +2,9 @@
   <mat-expansion-panel-header>
       <mat-panel-title>Přidat nové auto </mat-panel-title>
   </mat-expansion-panel-header>
-    <form [formGroup]="newCarForm">
-      <div class="inputFormContainer">
-        <!-- Name -->
-        <mat-form-field>
-            <input matInput type="text" formControlName="name"  placeholder="Jméno" required/>
-            <mat-error *ngIf="newCarForm.get('name').hasError('required')">
-                        Tato položka je povinná.</mat-error>
-          </mat-form-field>
-
-        <!-- Number -->
-        <mat-form-field>
-            <input matInput type="number"  formControlName="number"  placeholder="Číslo" class="no-spinners" required/>
-            <mat-error *ngIf="newCarForm.get('number').hasError('required')">
-                        Tato položka je povinná.</mat-error>
-          </mat-form-field>
-
-        <!-- Plate -->
-        <mat-form-field>
-            <input matInput type="text"  formControlName="plate"  placeholder="SPZ" required/>
-            <mat-error *ngIf="newCarForm.get('plate').hasError('pattern')">
-                SPZ může obsahovat pouze čísla, kapitálky a znaky -:</mat-error>
-            <mat-error *ngIf="newCarForm.get('plate').hasError('required')">
-                Tato položka je povinná.</mat-error>
-            </mat-form-field>
-
-        <!-- Max persons -->
-        <mat-form-field>
-            <input matInput type="number"  formControlName="max_persons"  placeholder="Max. osob" class="no-spinners" required/>
-            <mat-error *ngIf="newCarForm.get('max_persons').hasError('required')">
-                Tato položka je povinná.</mat-error>
-            <mat-error *ngIf="newCarForm.get('max_persons').hasError('min')">
-                Počet osob musí být alespoň 1.</mat-error>
-          </mat-form-field>
-
-        <!-- Available -->
-        <mat-checkbox formControlName="available">Dostupné na jízdu</mat-checkbox>
-      </div>
-
-      <!-- Image -->
-      <div class="imageUploadDiv">
-        <button mat-raised-button *ngIf="noImageChosen" class="choose_picture_button" type="button" onclick="document.getElementById('imageUpload').click()">Zvolit obrázek </button>
-        <input type="file" id="imageUpload" name="imageUpload" (click)="clearInput(($event).target)" (change)="onImageLoad($event)" #fileInput/>
-        <img src="{{imageEncoded}}" *ngIf="!noImageChosen" alt="uploaded_img" class="uploadedImage"/>
-        <mat-icon *ngIf="!noImageChosen" class="closeImageIcon" (click)="deleteUploadedImage()">close</mat-icon>
-      </div>
-
-    </form>
+    <app-car-detail-form
+      [carForm]="carForm"
+      (newImageUploaded)="newImageUploaded($event)"
+      [image]="image"></app-car-detail-form>
     <button mat-raised-button class="addButton" (click)="addCar()">Přidat</button>
 </mat-expansion-panel>

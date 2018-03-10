@@ -12,8 +12,7 @@ export class NewPasswordInputComponent implements AfterViewChecked {
   @Input() passwordForm: FormGroup;
   @Input() matcher: ErrorStateMatcher;
 
-  constructor(
-    private fb: FormBuilder) { }
+  constructor() { }
 
     // Needs to be initialized after ngInit().
  ngAfterViewChecked() {

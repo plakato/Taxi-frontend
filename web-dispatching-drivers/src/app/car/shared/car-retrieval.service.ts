@@ -34,7 +34,7 @@ export class CarRetrievalService {
           available: car.available
     }})).subscribe(
       res => {
-        this.carsData.push(car);
+        this.carsData.push(res);
         this.carsEventSource.next(this.carsData);
       },
       err => {
@@ -43,8 +43,12 @@ export class CarRetrievalService {
     );
   }
 
+  show(carID: number) {
+    return this.http.get<Car>('vehicles/' + carID);
+  }
+
   update(car: Car) {
-    this.http.put<Car>('vehicles/' + car.id, JSON.stringify(
+    return this.http.put('vehicles/' + car.id, JSON.stringify(
       { vehicle: {
           name: car.name,
           number: car.number,
@@ -52,19 +56,16 @@ export class CarRetrievalService {
           image: car.image,
           max_persons: car.max_persons,
           available: car.available
-    }})).subscribe(
-      res => {
-        const editedIndex = this.carsData.findIndex(c => c.id === car.id);
-        this.carsData[editedIndex] = car;
+    }})).map(
+      (response: Response) => {
+        const index = this.carsData.findIndex(c => c.id === car.id);
+        this.carsData[index] = car;
         this.carsEventSource.next(this.carsData);
-      },
-      err => {
-        // TODO: errorz
       }
-    );
+    ); // add mapping to reflect changes
   }
 
-  delete(carID) {
+  delete(carID) {debugger;
     this.http.delete('vehicles/' + carID) .subscribe(
       res => {
         const index = this.carsData.findIndex(car => car.id === carID);

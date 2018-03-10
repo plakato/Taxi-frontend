@@ -30,7 +30,7 @@ mat-drawer{
 mat-drawer-container {
   flex-grow: 1;
   width: 100%;
-  height: 100vh;
+  overflow: auto;
   border: 1px solid rgba(0, 0, 0, 0.5);
 
   // & refences this selector, having class expanded and selects its children with class drawer-content
