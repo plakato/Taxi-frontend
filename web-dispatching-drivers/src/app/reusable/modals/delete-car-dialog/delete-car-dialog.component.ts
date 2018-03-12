@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatButton } from '@angular/material';
-import { CarRetrievalService } from '../../car/shared/car-retrieval.service';
-import { Car } from '../../car/car.module';
+import { CarRetrievalService } from '../../../car/shared/car-retrieval.service';
+import { Car } from '../../../car/car.module';
 
 @Component({
   selector: 'app-delete-car-dialog',

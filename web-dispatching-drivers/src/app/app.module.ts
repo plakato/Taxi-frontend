@@ -11,11 +11,12 @@ import { UserModule } from './user/user.module';
 import { MenuModule } from './menu/menu.module';
 import { OrderModule } from './order/order.module';
 import { CarModule } from './car/car.module';
-import { ModalsModule } from './modals/modals.module';
+import { ModalsModule } from './reusable/modals/modals.module';
+import { ImageModule } from './reusable/image/image.module';
 
-import { GlobalErrorHandler } from './error/global-error-handler';
-import { ErrorService } from './error/error.service';
-import { httpInterceptorProviders } from './interceptor/index';
+import { GlobalErrorHandler } from './general/error/global-error-handler';
+import { ErrorService } from './general/error/error.service';
+import { httpInterceptorProviders } from './general/interceptor/index';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { httpInterceptorProviders } from './interceptor/index';
     OrderModule,
     CarModule,
     ModalsModule,
+    ImageModule,
     MatSnackBarModule
   ],
   providers: [

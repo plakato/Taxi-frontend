@@ -11,9 +11,10 @@ import { MatTableModule,
         MatIconModule,
         MatDialogModule,
         MatTooltipModule } from '@angular/material';
+import { ImageModule } from '../reusable/image/image.module';
 import { CarRetrievalService } from './shared/car-retrieval.service';
 import { AddNewCarComponent } from './add-new-car/add-new-car.component';
-import { DeleteCarDialogComponent } from '../modals/delete-car-dialog/delete-car-dialog.component';
+import { DeleteCarDialogComponent } from '../reusable/modals/delete-car-dialog/delete-car-dialog.component';
 import { EditCarComponent } from './edit-car/edit-car.component';
 import { CarDetailFormComponent } from './car-detail-form/car-detail-form.component';
 
@@ -29,6 +30,7 @@ import { CarDetailFormComponent } from './car-detail-form/car-detail-form.compon
     MatIconModule,
     MatDialogModule,
     MatTooltipModule,
+    ImageModule,
     FormsModule, ReactiveFormsModule
   ],
   declarations: [CarsComponent, AddNewCarComponent, EditCarComponent, CarDetailFormComponent],

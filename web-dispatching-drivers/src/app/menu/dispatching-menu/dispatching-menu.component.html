@@ -37,7 +37,7 @@
         <mat-icon mat-list-icon>directions_car</mat-icon>
           <p matLine *ngIf="isExpanded">Autá</p>
        </mat-list-item>
-       <mat-list-item *ngIf="isAdmin">
+       <mat-list-item *ngIf="isAdmin" [routerLink]="['employees']">
         <mat-icon mat-list-icon>people</mat-icon>
           <p matLine *ngIf="isExpanded">Vodiči a dispečeři</p>
        </mat-list-item>

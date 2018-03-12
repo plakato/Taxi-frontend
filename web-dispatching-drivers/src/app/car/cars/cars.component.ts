@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatHeaderCell, MatTableDataSource, MatSort, MatCheckbox, MatCheckboxChange, MatDialog } from '@angular/material';
 import { CarRetrievalService } from '../shared/car-retrieval.service';
 import { Car } from '../car.module';
-import { DeleteCarDialogComponent } from '../../modals/delete-car-dialog/delete-car-dialog.component';
+import { DeleteCarDialogComponent } from '../../reusable/modals/delete-car-dialog/delete-car-dialog.component';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({

@@ -48,7 +48,7 @@ export class CarRetrievalService {
   }
 
   update(car: Car) {
-    return this.http.put('vehicles/' + car.id, JSON.stringify(
+    return this.http.put<Car>('vehicles/' + car.id, JSON.stringify(
       { vehicle: {
           name: car.name,
           number: car.number,
@@ -57,15 +57,15 @@ export class CarRetrievalService {
           max_persons: car.max_persons,
           available: car.available
     }})).map(
-      (response: Response) => {
+      (response: Car) => {
         const index = this.carsData.findIndex(c => c.id === car.id);
-        this.carsData[index] = car;
+        this.carsData[index] = response;
         this.carsEventSource.next(this.carsData);
       }
     ); // add mapping to reflect changes
   }
 
-  delete(carID) {debugger;
+  delete(carID) {
     this.http.delete('vehicles/' + carID) .subscribe(
       res => {
         const index = this.carsData.findIndex(car => car.id === carID);

@@ -1,0 +1,32 @@
+@import '~@angular/material/theming';
+@import '../../../yellow-app-theme.scss';
+
+.imageUploadDiv {
+  border-style: dashed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  margin-left: 20px;
+  position: relative;
+}
+
+#imageUpload {
+  display:none;
+}
+
+.uploadedImage {
+  height: 100%;
+}
+
+.choose_picture_button {
+  margin: 20px;
+}
+
+.closeImageIcon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: mat-color(map-get($yellow-app-theme, warn));
+  cursor: pointer;
+}

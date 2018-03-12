@@ -11,8 +11,6 @@ import { Car } from '../car.module';
   styleUrls: ['./add-new-car.component.scss']
 })
 export class AddNewCarComponent implements OnInit {
-  carForm: FormGroup;
-  image: string|any = null;
 
   constructor(
     private carService: CarRetrievalService,
@@ -20,29 +18,9 @@ export class AddNewCarComponent implements OnInit {
     private snackbar: MatSnackBar) { }
 
   ngOnInit() {
-    this.carForm = this.fb.group({
-      name: [''],
-      number: [''],
-      plate: [''],
-      max_persons: [4],
-      available: [true]
-    });
   }
 
-  addCar() {
-    if (this.carForm.valid) {
-      const car = this.carForm.value;
-      car.image = this.image;
+  addCar(car: Car) {
       this.carService.add(car);
-      this.carForm.reset(); // is there a better way - reset to default?
-      this.image = null;
-    } else {
-      this.snackbar.open('Vyplňte správně všechny položky!', 'OK', {duration: 2000});
-    }
-  }
-
-
-  newImageUploaded(image: string|any) {
-    this.image = image;
   }
 }

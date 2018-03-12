@@ -5,6 +5,7 @@ import { LoginComponent } from '../login/login.component';
 import 'rxjs/add/operator/map';
 import { Router } from '@angular/router';
 import { User } from '../user.module';
+import { tap } from 'rxjs/operators';
 
 
 
@@ -15,7 +16,11 @@ export class AuthenticationService {
       private router: Router) { }
 
     login(email: string, password: string) {
-        return this.http.post<User>('employees/login', JSON.stringify({ email: email, password: password }));
+        return this.http.post<User>('employees/login', JSON.stringify({ email: email, password: password }))
+        .pipe(tap<User>(
+          response => { response.employee_roles = response.employee_roles.map( x => x.role );
+                        return response; }
+        ));
             /*.map((response: Response) => {
                 // login successful if there's a jwt token in the response
                 const user = response.json();

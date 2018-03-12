@@ -31,7 +31,6 @@ export class LoginComponent implements OnInit {
         .subscribe(
           data => {
             // TODO: add check for admin
-            data.employee_roles = data.employee_roles.map( x => x.role );
             localStorage.setItem('currentUser', JSON.stringify({
               token: data.token,
               id: data.id,
