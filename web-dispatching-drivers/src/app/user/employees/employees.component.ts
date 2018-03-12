@@ -1,8 +1,9 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatSort, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatSort, MatDialog, MatSnackBar } from '@angular/material';
 import { UserService } from '../shared/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { User } from '../user.module';
+import { DeleteEmployeeDialogComponent } from '../../reusable/modals/delete-employee-dialog/delete-employee-dialog.component';
 
 @Component({
   selector: 'app-employees',
@@ -18,7 +19,8 @@ export class EmployeesComponent implements AfterViewInit, OnInit {
     private userService: UserService,
     public dialog: MatDialog,
     private router: Router,
-    private route: ActivatedRoute ) { }
+    private route: ActivatedRoute,
+    private snackBar: MatSnackBar ) { }
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
@@ -34,13 +36,20 @@ export class EmployeesComponent implements AfterViewInit, OnInit {
 
   /** Open dialog to make sure user wanted to delete this employee. */
   deleteEmployee(employee: User) {
-    /*const deleteDialog = this.dialog.open(DeleteCarDialogComponent, {
+    // Check if it's not the current user.
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (currentUser.id === employee.id) {
+      this.snackBar.open('Nemůžete smazat sám sebe!', '', {duration: 2000});
+      return;
+    }
+    // Open dialog to make sure user wanted to delete this employee.
+    const deleteDialog = this.dialog.open(DeleteEmployeeDialogComponent, {
       width: '300px',
-      data: {car: car}});
+      data: {employee: employee}});
     deleteDialog.afterClosed().subscribe(
       res => {
         console.log('The dialog was closed:' + res);
-      });*/
+      });
   }
 
   editEmployee(employee: User) {

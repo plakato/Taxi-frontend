@@ -30,7 +30,7 @@ export class UserService {
       });
   }
 
-  updateImage(userID: string, image: string) {
+  updateImage(userID: number, image: string) {
     return this.http.put<User>('employees/' + userID, JSON.stringify(
     { employee: {
       image: image
@@ -38,6 +38,24 @@ export class UserService {
       // name: user.name
     }}));
 }
+
+  update(user: User) {
+    this.http.put<User>('employees/' + user.id, JSON.stringify({
+      employee: {
+        email: user.email,
+        name: user.name,
+        image: user.image,
+        employee_role_attributes:  user.employee_roles.map(one => ({ role: one }))
+      }
+    })).subscribe(
+      employee => { employee.employee_roles = employee.employee_roles
+                                        .map( x => this.translated_roles[x.role]);
+                    const index = this.employeesData.findIndex( u => u.id === user.id);
+                    this.employeesData[index] = employee;
+                    this.employeesEventSource.next(this.employeesData);
+      }
+    );
+  }
 
   getUser(userID: string) {
     return this.http.get<User>('employees/' + userID);
@@ -58,6 +76,15 @@ export class UserService {
                 this.employeesEventSource.next(this.employeesData);
       }
     );
+  }
+
+  delete(userID: number) {
+    this.http.delete('employees/' + userID).subscribe(
+      success => { const index = this.employeesData.findIndex( u => u.id === userID);
+                   this.employeesData.splice(index);
+                   this.employeesEventSource.next(this.employeesData);
+                  }
+      );
   }
 
 }

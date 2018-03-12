@@ -1,9 +1,7 @@
+// Modules
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
-import { LoginComponent } from './login/login.component';
-import { AuthenticationService } from './shared/authentication.service';
-import { UserService } from './shared/user.service';
 import { MatButtonModule,
          MatFormFieldModule,
          MatInputModule,
@@ -15,6 +13,13 @@ import { MatButtonModule,
          MatIconModule,
          MatCheckboxModule } from '@angular/material';
 import { ImageModule } from '../reusable/image/image.module';
+
+// Services
+import { AuthenticationService } from './shared/authentication.service';
+import { UserService } from './shared/user.service';
+
+// Components
+import { LoginComponent } from './login/login.component';
 import { PasswordConfirmationComponent } from './password-confirmation/password-confirmation.component';
 import { ProfileDispatcherComponent } from './profile-dispatcher/profile-dispatcher.component';
 import { SimpleFormContainerComponent } from './simple-form-container/simple-form-container.component';
@@ -22,6 +27,8 @@ import { NewPasswordInputComponent } from './new-password-input/new-password-inp
 import { EmployeesComponent } from './employees/employees.component';
 import { AddNewEmployeeComponent } from './add-new-employee/add-new-employee.component';
 import { EmployeeFormComponent } from './employee-form/employee-form.component';
+import { DeleteEmployeeDialogComponent } from '../reusable/modals/delete-employee-dialog/delete-employee-dialog.component';
+import { EditEmployeeComponent } from './edit-employee/edit-employee.component';
 
 
 @NgModule({
@@ -48,14 +55,16 @@ import { EmployeeFormComponent } from './employee-form/employee-form.component';
     NewPasswordInputComponent,
     EmployeesComponent,
     AddNewEmployeeComponent,
-    EmployeeFormComponent],
+    EmployeeFormComponent,
+    EditEmployeeComponent],
+  entryComponents: [DeleteEmployeeDialogComponent],
   providers: [AuthenticationService, UserService]
 })
 
 export class UserModule { }
 
 export interface User {
-  id: string;
+  id: number;
   name: string;
   email: string;
   token: string;

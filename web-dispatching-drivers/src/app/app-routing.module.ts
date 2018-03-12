@@ -9,6 +9,7 @@ import { CarsComponent } from './car/cars/cars.component';
 import { ProfileDispatcherComponent } from './user/profile-dispatcher/profile-dispatcher.component';
 import { EditCarComponent } from './car/edit-car/edit-car.component';
 import { EmployeesComponent } from './user/employees/employees.component';
+import { EditEmployeeComponent } from './user/edit-employee/edit-employee.component';
 
 const appRoutes: Routes = [
     { path: 'password-confirmation/:confirmation_token', component: PasswordConfirmationComponent},
@@ -17,7 +18,11 @@ const appRoutes: Routes = [
             children: [
               { path: 'new_order', component: NewOrderComponent},
               { path: 'profile', component: ProfileDispatcherComponent},
-              { path: 'employees', component: EmployeesComponent },
+              { path: 'employees',
+                children: [
+                  { path: '', component: EmployeesComponent },
+                  { path: 'edit/:employeeID', component: EditEmployeeComponent }
+                ]},
               { path: 'cars',
                 children: [
                   { path: '', component: CarsComponent},

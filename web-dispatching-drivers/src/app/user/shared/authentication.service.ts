@@ -42,7 +42,7 @@ export class AuthenticationService {
         return this.http.post<User>('employees/confirm', JSON.stringify({confirmation_token : token, password: password }));
     }
 
-    updatePassword(id: string, newPassword: string) {
+    updatePassword(id: number, newPassword: string) {
       return this.http.put('employees/' + id, JSON.stringify({ password: newPassword }));
     }
 }
