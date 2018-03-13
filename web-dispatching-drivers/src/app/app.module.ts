@@ -17,6 +17,7 @@ import { ImageModule } from './reusable/image/image.module';
 import { GlobalErrorHandler } from './general/error/global-error-handler';
 import { ErrorService } from './general/error/error.service';
 import { httpInterceptorProviders } from './general/interceptor/index';
+import { AuthGuardService, AdminGuardService } from './general/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,9 @@ import { httpInterceptorProviders } from './general/interceptor/index';
   providers: [
     ErrorService,
     { provide: ErrorHandler,      useClass: GlobalErrorHandler },
-    httpInterceptorProviders
+    httpInterceptorProviders,
+    AuthGuardService,
+    AdminGuardService
   ],
   bootstrap: [AppComponent]
 })

@@ -10,20 +10,21 @@ import { ProfileDispatcherComponent } from './user/profile-dispatcher/profile-di
 import { EditCarComponent } from './car/edit-car/edit-car.component';
 import { EmployeesComponent } from './user/employees/employees.component';
 import { EditEmployeeComponent } from './user/edit-employee/edit-employee.component';
+import { AuthGuardService, AdminGuardService } from './general/auth-guard.service';
 
 const appRoutes: Routes = [
     { path: 'password-confirmation/:confirmation_token', component: PasswordConfirmationComponent},
     { path: 'login', component: LoginComponent },
-    { path: 'dispatching', component: DispatchingMenuComponent,
+    { path: 'dispatching', component: DispatchingMenuComponent, canActivate: [AuthGuardService],
             children: [
               { path: 'new_order', component: NewOrderComponent},
               { path: 'profile', component: ProfileDispatcherComponent},
-              { path: 'employees',
+              { path: 'employees', canActivate: [AdminGuardService],
                 children: [
                   { path: '', component: EmployeesComponent },
                   { path: 'edit/:employeeID', component: EditEmployeeComponent }
                 ]},
-              { path: 'cars',
+              { path: 'cars', canActivate: [AdminGuardService],
                 children: [
                   { path: '', component: CarsComponent},
                   { path: 'edit/:carID', component: EditCarComponent}
