@@ -40,14 +40,14 @@ export class UserService {
 }
 
   update(user: User) {
-    this.http.put<User>('employees/' + user.id, JSON.stringify({
+    return this.http.put<User>('employees/' + user.id, JSON.stringify({
       employee: {
         email: user.email,
         name: user.name,
         image: user.image,
         employee_role_attributes:  user.employee_roles.map(one => ({ role: one }))
       }
-    })).subscribe(
+    })).map(
       employee => { employee.employee_roles = employee.employee_roles
                                         .map( x => this.translated_roles[x.role]);
                     const index = this.employeesData.findIndex( u => u.id === user.id);
@@ -57,8 +57,11 @@ export class UserService {
     );
   }
 
-  getUser(userID: string) {
-    return this.http.get<User>('employees/' + userID);
+  getUser(userID: number) {
+    return this.http.get<User>('employees/' + userID)
+      .map(
+        user => {user.employee_roles = user.employee_roles.map( x => x.role);
+                 return user; });
   }
 
   add(user: User) {
