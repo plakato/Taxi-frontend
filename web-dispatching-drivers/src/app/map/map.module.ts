@@ -3,15 +3,19 @@ import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { AgmCoreModule } from '@agm/core';
 import { MapComponent } from './map/map.component';
-import { MatIconModule } from '@angular/material';
+import { MatIconModule, MatInputModule } from '@angular/material';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
     BrowserModule,
     MatIconModule,
+    MatInputModule,
+    ReactiveFormsModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyA-ESM4gOyIJqBJoxJqWain_kI_U-tsJJE'
+      apiKey: 'AIzaSyA-ESM4gOyIJqBJoxJqWain_kI_U-tsJJE',
+      libraries: ['places']
     })
   ],
   declarations: [ MapComponent ],
