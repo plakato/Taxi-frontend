@@ -17,7 +17,7 @@ const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'dispatching', component: DispatchingMenuComponent, canActivate: [AuthGuardService],
             children: [
-              { path: 'new_order', component: NewOrderComponent},
+              { path: 'new-order', component: NewOrderComponent},
               { path: 'profile', component: ProfileDispatcherComponent},
               { path: 'employees', canActivate: [AdminGuardService],
                 children: [

@@ -1,0 +1,12 @@
+   <!-- <div class="address">{{current_address}}</div> -->
+        <agm-map
+          [latitude]="center?.lat" [longitude]="center?.lng"  [zoom]=15
+          [zoomControl]=true [streetViewControl]=false
+          (mapReady)="initializeMap($event)">
+
+        <!-- <agm-circle *ngIf='user_location'
+            [latitude]="user_location.lat" [longitude]="user_location.lng" [radius]="user_location.accuracy"
+            [clickable]=false [fillColor]="'rgb(255, 229, 0)'" ></agm-circle> -->
+        </agm-map>
+        <!--<div class="marker"><mat-icon>location_on</mat-icon> </div>
+        </div> -->

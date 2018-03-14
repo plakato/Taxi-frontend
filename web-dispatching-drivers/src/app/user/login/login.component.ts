@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
               id: data.id,
               roles: data.employee_roles }));
 
-            this.router.navigate(['dispatching']);
+            this.router.navigate(['dispatching/new-order']);
           },
           err => {
             this.loading = false;

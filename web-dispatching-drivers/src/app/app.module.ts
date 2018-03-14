@@ -18,6 +18,7 @@ import { GlobalErrorHandler } from './general/error/global-error-handler';
 import { ErrorService } from './general/error/error.service';
 import { httpInterceptorProviders } from './general/interceptor/index';
 import { AuthGuardService, AdminGuardService } from './general/auth-guard.service';
+import { MapModule } from './map/map.module';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { AuthGuardService, AdminGuardService } from './general/auth-guard.servic
     CarModule,
     ModalsModule,
     ImageModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MapModule
   ],
   providers: [
     ErrorService,
