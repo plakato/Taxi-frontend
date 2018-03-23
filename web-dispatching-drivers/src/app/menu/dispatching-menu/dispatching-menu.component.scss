@@ -22,12 +22,18 @@ mat-drawer{
   transition: all 0.2s ease-in-out;
 }
 
+::ng-deep .mat-drawer-content {
+  flex-grow: 1;
+}
+
 
 .toolbar_span {
   margin: 0 auto;
 }
 
 mat-drawer-container {
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
   width: 100%;
   overflow: auto;

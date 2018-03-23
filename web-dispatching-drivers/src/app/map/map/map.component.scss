@@ -6,21 +6,36 @@
   display: flex;
   flex-direction: column;
 
-  .container {
-    display: block;
-    direction: column;
-    height: 100%;
-    width: 100%;
+  .map-with-marker {
+    flex-grow: 1;
+    position: relative;
 
-    agm-map {
-      flex: 1 1 auto;
-      height: 100%;
-      width: 100%;
-      display: block;
+    .map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+
+      agm-map {
+        flex: 1 1 auto;
+        height: 100%;
+        width: 100%;
+        display: block;
+      }
     }
+  }
 
-  .address{
-    width: 100%;
+  .address-with-plane {
+    display: flex;
+    align-items: center;
+
+    .address{
+      width: 100%;
+    }
+    mat-icon:hover {
+      color: $accent-yellow;
+    }
   }
 
     .marker {
@@ -40,12 +55,10 @@
         height: 50px;
         color: $yellow-app-background;
         position: relative;
-        top: 31px;
+        top: -18px;
         visibility: visible;
       }
     }
-
-  }
 
    /* .map-center{
       top: 50px;
@@ -56,4 +69,27 @@
     }*/
   }
 
+  mat-icon {
+    cursor: pointer;
+  }
 
+  .selected {
+    color: $accent-yellow;
+  }
+
+// Styling autocomplete elements.
+
+::ng-deep {
+  .pac-container  {
+  background-color: $yellow-app-background;
+  }
+
+  .pac-item-query {
+    color: $accent-yellow;
+  }
+
+  .pac-item:hover {
+    background-color: black;
+  }
+
+}

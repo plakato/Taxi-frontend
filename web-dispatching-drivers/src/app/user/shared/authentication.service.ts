@@ -39,7 +39,7 @@ export class AuthenticationService {
     }
 
     confirm(password: string, token: string) {
-        return this.http.post<User>('employees/confirm', JSON.stringify({confirmation_token : token, password: password }));
+        return this.http.patch<User>('employees/confirm', JSON.stringify({confirmation_token : token, password: password }));
     }
 
     updatePassword(id: number, newPassword: string) {

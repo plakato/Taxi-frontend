@@ -1,12 +1,53 @@
 <h1>Nová objednávka</h1>
 
-<form>
+<form [formGroup]="newOrderForm">
+
+  <!-- Phone number -->
   <mat-form-field class="margin-right">
     <input matInput type="number" formControlName="phoneNumber" placeholder="Telefónní číslo" class="no-spinners" required/>
   </mat-form-field>
+
+  <!-- Name -->
   <mat-form-field>
     <input matInput type="text" formControlName="name" placeholder="Jméno"/>
   </mat-form-field>
-</form>
 
-<app-map></app-map>
+  <!-- Maps - from, to -->
+<div class="maps">
+  <app-map placeholder="Odkud"></app-map>
+  <app-map placeholder="Kam"></app-map>
+</div>
+
+  <!-- Drivers -->
+  <mat-select placeholder="Řidič" [formControl]="driverControl" required>
+      <mat-option *ngFor="let driver of drivers" [value]="driver">
+          {{driver.name}}
+      </mat-option>
+  </mat-select>
+
+  <!-- Persons -->
+  <mat-form-field>
+    <input matInput type="number" formControlName="persons" placeholder="Počet osob"
+          class="no-spinners" (click)="$event.target.select()" required/>
+  </mat-form-field>
+
+  <!-- Flight number -->
+  <mat-form-field>
+      <input matInput type="text" formControlName="flightNumber" placeholder="Číslo letu"
+            class="no-spinners" (click)="$event.target.select()" required/>
+    </mat-form-field>
+
+  <!-- Date -->
+  <mat-form-field class="example-full-width">
+      <input matInput [matDatepickerFilter]="filterLaterThanToday" formControlName="date" [matDatepicker]="picker" placeholder="Datum vyzvednutí">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+  <!-- Time -->
+  <mat-form-field>
+      <input matInput formControlName="time" placeholder="Čas"
+            (click)="$event.target.select()" required/>
+    </mat-form-field>
+
+  </form>

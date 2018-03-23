@@ -5,6 +5,7 @@ import { AgmCoreModule } from '@agm/core';
 import { MapComponent } from './map/map.component';
 import { MatIconModule, MatInputModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MapService } from './map.service';
 
 @NgModule({
   imports: [
@@ -20,6 +21,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   declarations: [ MapComponent ],
   exports: [ MapComponent ],
-  bootstrap: [ ]
+  bootstrap: [ ],
+  providers: [MapService]
 })
 export class MapModule { }

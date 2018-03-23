@@ -1,8 +1,10 @@
-import { Component, OnInit, NgZone, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, NgZone, ViewChild, ElementRef, Input } from '@angular/core';
 import { LatLngLiteral, MapsAPILoader } from '@agm/core';
 import { FormControl } from '@angular/forms';
 // Needed for autocorrect to be correcly imported.
 import {} from '@types/googlemaps';
+import { MapService } from '../map.service';
+import { Constants } from '../../../assets/const';
 
 @Component({
   selector: 'app-map',
@@ -14,23 +16,35 @@ export class MapComponent implements OnInit {
   center: LatLngLiteral;
   userLocation: LatLngLiteral;
   addressControl: FormControl;
+  airportSelected = false;
 
   @ViewChild('address')
   public addressElementRef: ElementRef;
+  @Input() placeholder: string;
 
   constructor(
     private mapsAPILoader: MapsAPILoader,
-    private ngZone: NgZone ) {}
+    private ngZone: NgZone,
+    private mapService: MapService ) {}
 
   ngOnInit() {
-    this.userLocation = { lat: 50.421097, lng: 14.915461 };
+    this.userLocation = Constants.DEFAULT_ADDRESS;
     this.center = this.userLocation;
 
     this.addressControl = new FormControl();
 
     // Load Places Autocomplete.
     this.mapsAPILoader.load().then(() => {
+      // Create bounds to restrics search to selected area.
+      const bounds = new google.maps.LatLngBounds(
+        new google.maps.LatLng(49.959910, 14.266797),
+        new google.maps.LatLng(50.757167, 15.340711));
+      // Get autocomplete object.
       const autocomplete = new google.maps.places.Autocomplete(this.addressElementRef.nativeElement, {
+        componentRestrictions: { country: 'cz' },
+        bounds: bounds,
+        // Restrict to bounds even when viewport changes.
+        strictBounds: true,
         types: ['address']
       });
       autocomplete.addListener('place_changed', () => {
@@ -55,7 +69,23 @@ export class MapComponent implements OnInit {
     this.map = map;
   }
 
-  mapCenterChanged($event) {
+  mapCenterChanged(event) {
+    this.center = event;
+    this.mapService.getAddress(event).subscribe(
+      result => { if (result.formatted_address) {
+                      this.addressControl.setValue(result.formatted_address); }},
+      err => console.log(err)
+    );
+    // Deselect airport if address was changed.
+    if (this.airportSelected &&
+        (event.lat.toFixed(5) !== Constants.DEFAULT_AIRPORT_ADDRESS.lat.toFixed(5) ||
+        event.lng.toFixed(5) !== Constants.DEFAULT_AIRPORT_ADDRESS.lng.toFixed(5))) {
+      this.airportSelected = false;
+    }
+  }
 
+  selectAirport() {
+    this.airportSelected = true;
+    this.map.setCenter(Constants.DEFAULT_AIRPORT_ADDRESS);
   }
 }

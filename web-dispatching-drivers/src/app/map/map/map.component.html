@@ -1,17 +1,25 @@
-<div class="container">
-  <mat-form-field class="address" >
-    <input matInput type="text" placeholder="Adresa"  [formControl]="addressControl"
-      autocorrect="off" autocapitalize="off" spellcheck="off" #address/>
-  </mat-form-field>
-    <agm-map
-    [latitude]="center?.lat" [longitude]="center?.lng"  [zoom]=15
-    [zoomControl]=true [streetViewControl]=false
-    (mapReady)="initializeMap($event)"
-    (centerChange)="mapCenterChanged($event)">
+  <div class="address-with-plane">
+    <mat-form-field class="address" >
+      <input matInput type="text" placeholder="{{placeholder}}"  [formControl]="addressControl"
+        autocorrect="off" autocapitalize="off" spellcheck="off"
+        (click)="address.select()" #address/>
+    </mat-form-field>
+    <mat-icon *ngIf="airportSelected" (click)="airportSelected=false;" class="selected">airplanemode_active</mat-icon>
+    <mat-icon *ngIf="!airportSelected" (click)="selectAirport()">airplanemode_active</mat-icon>
+  </div>
 
-  <!-- <agm-circle *ngIf='user_location'
-      [latitude]="user_location.lat" [longitude]="user_location.lng" [radius]="user_location.accuracy"
-      [clickable]=false [fillColor]="'rgb(255, 229, 0)'" ></agm-circle> -->
-  </agm-map>
+<div class="map-with-marker">
+  <div class="map">
+      <agm-map
+      [latitude]="center?.lat" [longitude]="center?.lng"  [zoom]=15
+      [zoomControl]=true [streetViewControl]=false
+      (mapReady)="initializeMap($event)"
+      (centerChange)="mapCenterChanged($event)">
+  <agm-circle *ngIf="false"
+      [latitude]="center.lat" [longitude]="center.lng" [radius]="15"
+      [clickable]=false [fillColor]="'rgb(255, 229, 0)'" ></agm-circle>
+    </agm-map>
+  </div>
+
   <div class="marker"><mat-icon>location_on</mat-icon> </div>
 </div>

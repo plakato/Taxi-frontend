@@ -4,7 +4,7 @@ import { HttpClientModule, HttpRequest, HTTP_INTERCEPTORS } from '@angular/commo
 import { NgModule, NO_ERRORS_SCHEMA, ErrorHandler } from '@angular/core';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { MatSnackBarModule } from '@angular/material';
+import { MatSnackBarModule, MAT_DATE_LOCALE } from '@angular/material';
 
 
 import { UserModule } from './user/user.module';
@@ -41,6 +41,7 @@ import { MapModule } from './map/map.module';
   providers: [
     ErrorService,
     { provide: ErrorHandler,      useClass: GlobalErrorHandler },
+    {provide: MAT_DATE_LOCALE, useValue: 'cs'},
     httpInterceptorProviders,
     AuthGuardService,
     AdminGuardService
