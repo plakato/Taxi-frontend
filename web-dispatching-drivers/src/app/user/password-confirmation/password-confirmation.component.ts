@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../shared/authentication.service';
-import { ErrorStateMatcher } from '@angular/material/core';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, ErrorStateMatcher } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormControl, Validators, FormGroupDirective, NgForm, FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
+import { Validators, FormGroup, FormBuilder, AbstractControl, FormControl, FormGroupDirective, NgForm } from '@angular/forms';
 
 /** This avoids showing errors before the form was edited (keeping it invalid). **/
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -18,6 +17,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   templateUrl: './password-confirmation.component.html',
   styleUrls: ['./password-confirmation.component.scss']
 })
+
 
 export class PasswordConfirmationComponent implements OnInit {
 

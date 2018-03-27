@@ -11,7 +11,7 @@ import { MatButtonModule,
          MatExpansionModule,
          MatTableModule,
          MatIconModule,
-         MatCheckboxModule } from '@angular/material';
+         MatCheckboxModule} from '@angular/material';
 import { ImageModule } from '../reusable/image/image.module';
 
 // Services

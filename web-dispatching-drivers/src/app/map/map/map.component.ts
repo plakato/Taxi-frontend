@@ -12,17 +12,18 @@ import { Constants } from '../../../assets/const';
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit {
-  private map: any;
-  center: LatLngLiteral;
+  map: any;
   addressControl: FormControl;
   airportSelected = false;
-
   @ViewChild('address')
   public addressElementRef: ElementRef;
+
   @Input() placeholder: string;
   @Input() airport: boolean;
   @Input() airportEnabled: boolean;
   @Output() airportSelectedOutput = new EventEmitter<boolean>();
+  @Output() selectedAddress = new EventEmitter<LatLngLiteral>();
+
 
   constructor(
     private mapsAPILoader: MapsAPILoader,
@@ -30,7 +31,6 @@ export class MapComponent implements OnInit {
     private mapService: MapService ) {}
 
   ngOnInit() {
-    this.center = Constants.DEFAULT_ADDRESS;
     this.addressControl = new FormControl();
 
     // Load Places Autocomplete.
@@ -58,8 +58,9 @@ export class MapComponent implements OnInit {
           }
 
           // Set latitude, longitude.
-          this.center.lat = place.geometry.location.lat();
-          this.center.lng = place.geometry.location.lng();
+          const newLatLng = {lat: place.geometry.location.lat(), lng: place.geometry.location.lng()};
+          this.map.center = newLatLng;
+          this.selectedAddress.emit(newLatLng);
         });
       });
     });
@@ -67,13 +68,14 @@ export class MapComponent implements OnInit {
 
   initializeMap(map) {
     this.map = map;
+    this.map.center = Constants.DEFAULT_ADDRESS;
   }
 
   mapCenterChanged(event) {
-    this.center = event;
     this.mapService.getAddress(event).subscribe(
       result => { if (result.formatted_address) {
-                      this.addressControl.setValue(result.formatted_address); }},
+                      this.addressControl.setValue(result.formatted_address);
+                      this.selectedAddress.emit(event); }},
       err => console.log(err)
     );
     // Deselect airport if address was changed.
@@ -92,5 +94,11 @@ export class MapComponent implements OnInit {
     }
     this.airportSelected = true;
     this.map.setCenter(Constants.DEFAULT_AIRPORT_ADDRESS);
+  }
+
+  addressEdited() {
+    if (this.addressControl.value === '') {
+      this.selectedAddress.emit(null);
+    }
   }
 }

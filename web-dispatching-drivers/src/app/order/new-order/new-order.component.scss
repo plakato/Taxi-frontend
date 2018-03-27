@@ -1,3 +1,4 @@
+@import '../../../_variables.scss';
 
 form {
   display: flex;
@@ -19,6 +20,10 @@ app-list-all-drivers {
   }
 }
 
+.align-right {
+  float: right;
+}
+
 .twoColumns {
   display: flex;
   flex-wrap: wrap;
@@ -35,8 +40,16 @@ app-list-all-drivers {
 
   .formControls {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    .controlsInColumn {
+      width: 49%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
   }
 }
 

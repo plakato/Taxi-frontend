@@ -14,7 +14,7 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue.
 $yellow-app-primary: mat-palette($mat-yellow);
-$yellow-app-accent:  mat-palette($mat-deep-orange, A200, A100, A400);
+$yellow-app-accent:  mat-palette($mat-green, A400, A100, A700);
 
 // The warn palette is optional (defaults to red).
 $yellow-app-warn:    mat-palette($mat-red);

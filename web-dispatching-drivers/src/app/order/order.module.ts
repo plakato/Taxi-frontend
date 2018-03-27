@@ -11,12 +11,14 @@ import { MatFormFieldModule,
         MatRadioModule,
         MatIconModule,
         MatButtonModule,
-        MatButtonToggleModule
+        MatButtonToggleModule,
+        MatCheckboxModule
          } from '@angular/material';
 import { CustomerService } from './shared/customer.service';
 import { DriverService } from './shared/driver.service';
 import { OrderService } from './shared/order.service';
 import { ListAllDriversComponent } from './list-all-drivers/list-all-drivers.component';
+import { LatLngLiteral } from '@agm/core';
 
 @NgModule({
   imports: [
@@ -32,7 +34,8 @@ import { ListAllDriversComponent } from './list-all-drivers/list-all-drivers.com
     MatRadioModule,
     MatIconModule,
     MatButtonModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatCheckboxModule
   ],
   declarations: [NewOrderComponent, ListAllDriversComponent],
   providers: [CustomerService, DriverService, OrderService]
@@ -49,4 +52,16 @@ export interface Customer {
 export interface Driver {
   id: number;
   name: string;
+}
+
+export interface Order {
+  phoneNumber: string;
+  driver_id: number;
+  loc_start: LatLngLiteral;
+  loc_finish: LatLngLiteral;
+  passengers: number;
+  note: string;
+  VIP: boolean;
+  flightNumber: string;
+  pick_up_at: string;
 }

@@ -4,7 +4,7 @@ import { HttpClientModule, HttpRequest, HTTP_INTERCEPTORS } from '@angular/commo
 import { NgModule, NO_ERRORS_SCHEMA, ErrorHandler } from '@angular/core';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { MatSnackBarModule, MAT_DATE_LOCALE } from '@angular/material';
+import { MatSnackBarModule, MAT_DATE_LOCALE, ErrorStateMatcher } from '@angular/material';
 
 
 import { UserModule } from './user/user.module';
@@ -13,6 +13,7 @@ import { OrderModule } from './order/order.module';
 import { CarModule } from './car/car.module';
 import { ModalsModule } from './reusable/modals/modals.module';
 import { ImageModule } from './reusable/image/image.module';
+import { FormControl, FormGroupDirective, NgForm } from '@angular/forms';
 
 import { GlobalErrorHandler } from './general/error/global-error-handler';
 import { ErrorService } from './general/error/error.service';
@@ -49,3 +50,5 @@ import { MapModule } from './map/map.module';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+
