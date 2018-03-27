@@ -7,8 +7,16 @@ import { MatFormFieldModule,
         MatInputModule,
         MatSelectModule,
         MatDatepickerModule,
-        MatNativeDateModule
+        MatNativeDateModule,
+        MatRadioModule,
+        MatIconModule,
+        MatButtonModule,
+        MatButtonToggleModule
          } from '@angular/material';
+import { CustomerService } from './shared/customer.service';
+import { DriverService } from './shared/driver.service';
+import { OrderService } from './shared/order.service';
+import { ListAllDriversComponent } from './list-all-drivers/list-all-drivers.component';
 
 @NgModule({
   imports: [
@@ -20,8 +28,25 @@ import { MatFormFieldModule,
     FormsModule,
     ReactiveFormsModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatRadioModule,
+    MatIconModule,
+    MatButtonModule,
+    MatButtonToggleModule
   ],
-  declarations: [NewOrderComponent]
+  declarations: [NewOrderComponent, ListAllDriversComponent],
+  providers: [CustomerService, DriverService, OrderService]
 })
 export class OrderModule { }
+
+export interface Customer {
+  id: number;
+  telephone: string;
+  note: string;
+  name: string;
+}
+
+export interface Driver {
+  id: number;
+  name: string;
+}

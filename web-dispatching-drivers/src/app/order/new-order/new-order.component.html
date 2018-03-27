@@ -2,52 +2,98 @@
 
 <form [formGroup]="newOrderForm">
 
-  <!-- Phone number -->
-  <mat-form-field class="margin-right">
-    <input matInput type="number" formControlName="phoneNumber" placeholder="Telefónní číslo" class="no-spinners" required/>
-  </mat-form-field>
+  <div>
+    <!-- Phone number -->
+    <mat-form-field class="margin-right">
+      <input matInput type="tel" formControlName="phoneNumber" placeholder="Telefónní číslo" (change)="phoneNumberChanged()" required/>
+      <mat-error *ngIf="newOrderForm.get('phoneNumber').hasError('required')">Tato položka je povinná.</mat-error>
+      <mat-error *ngIf="newOrderForm.get('phoneNumber').hasError('pattern')">Tohle není validní telefónní číslo.</mat-error>
+      <mat-error *ngIf="newOrderForm.get('phoneNumber').hasError('maxLength')">Číslo je příliš dlouhé.</mat-error>
+    </mat-form-field>
 
-  <!-- Name -->
-  <mat-form-field>
-    <input matInput type="text" formControlName="name" placeholder="Jméno"/>
-  </mat-form-field>
+    <!-- Name -->
+    <mat-form-field>
+      <input matInput type="text" formControlName="name" placeholder="Jméno" value="{{customer?.name}}"/>
+    </mat-form-field>
+  </div>
+
+
+  <!-- Choose normal or flight -->
+  <mat-button-toggle-group #group="matButtonToggleGroup">
+    <mat-button-toggle value="classic" checked="true">
+      <mat-icon>directions_car</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle value="airport">
+      <mat-icon>airplanemode_active</mat-icon>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+
+ <!-- <mat-radio-group>
+    <mat-radio-button  class="invisible"></mat-radio-button>
+    <mat-icon>airplanemode_active</mat-icon>
+    <mat-radio-button  class="invisible"></mat-radio-button>
+    <mat-icon>directions_car</mat-icon>
+  </mat-radio-group> -->
 
   <!-- Maps - from, to -->
-<div class="maps">
-  <app-map placeholder="Odkud"></app-map>
-  <app-map placeholder="Kam"></app-map>
+<div class="maps twoColumns">
+  <app-map placeholder="Odkud"
+          [airport]="group.value === 'airport'"
+          [airportEnabled]="fromAirportEnabled"
+          (airportSelectedOutput)="enableFromAirport($event)" class="column"></app-map>
+  <app-map placeholder="Kam"
+          [airport]="group.value === 'airport'"
+          [airportEnabled]="!fromAirportEnabled"
+          (airportSelectedOutput)="enableFromAirport(!$event)" class="column"></app-map>
 </div>
 
-  <!-- Drivers -->
-  <mat-select placeholder="Řidič" [formControl]="driverControl" required>
-      <mat-option *ngFor="let driver of drivers" [value]="driver">
-          {{driver.name}}
-      </mat-option>
-  </mat-select>
+  <!-- Form continues -->
+  <div class="twoColumns">
+    <div class="column">
+      <!-- Choose driver -->
+      <button mat-raised-button *ngIf="group.value === 'airport' && !selectingDriver"
+          (click)="selectingDriver = true">Zvolit řidiče</button>
+      <button mat-raised-button *ngIf="group.value === 'classic' && !selectingDriver"
+          (click)="selectingDriver = true">Spočíst řidiče</button>
+      <app-list-all-drivers *ngIf="selectingDriver"></app-list-all-drivers>
+    </div>
 
-  <!-- Persons -->
-  <mat-form-field>
-    <input matInput type="number" formControlName="persons" placeholder="Počet osob"
-          class="no-spinners" (click)="$event.target.select()" required/>
-  </mat-form-field>
+    <div class="column formControls">
+      <!-- Persons -->
+      <mat-form-field>
+        <input matInput type="number" formControlName="persons" placeholder="Počet osob"
+              class="no-spinners" (click)="$event.target.select()" required/>
+        <mat-error *ngIf="newOrderForm.get('persons').hasError('required')">Tato položka je povinná.</mat-error>
+      </mat-form-field>
 
-  <!-- Flight number -->
-  <mat-form-field>
-      <input matInput type="text" formControlName="flightNumber" placeholder="Číslo letu"
-            class="no-spinners" (click)="$event.target.select()" required/>
-    </mat-form-field>
+      <!-- Flight number -->
+      <mat-form-field *ngIf="group.value === 'airport'">
+          <input matInput type="text" formControlName="flightNumber" placeholder="Číslo letu"
+                class="no-spinners" (click)="$event.target.select()" required/>
+          <mat-error *ngIf="newOrderForm.get('flightNumber').hasError('required')">Tato položka je povinná.</mat-error>
+      </mat-form-field>
 
-  <!-- Date -->
-  <mat-form-field class="example-full-width">
-      <input matInput [matDatepickerFilter]="filterLaterThanToday" formControlName="date" [matDatepicker]="picker" placeholder="Datum vyzvednutí">
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
+      <!-- Date -->
+      <mat-form-field class="example-full-width">
+          <input matInput [matDatepickerFilter]="filterLaterThanToday" formControlName="date" [matDatepicker]="picker" placeholder="Datum vyzvednutí">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="newOrderForm.get('date').hasError('required')">Tato položka je povinná.</mat-error>
+      </mat-form-field>
 
-  <!-- Time -->
-  <mat-form-field>
-      <input matInput formControlName="time" placeholder="Čas"
-            (click)="$event.target.select()" required/>
-    </mat-form-field>
+      <!-- Time -->
+      <mat-form-field>
+          <input matInput formControlName="time" placeholder="Čas"
+                (click)="$event.target.select()" required/>
+          <mat-error *ngIf="newOrderForm.get('time').hasError('required')">Tato položka je povinná.</mat-error>
+          <mat-error *ngIf="newOrderForm.get('time').hasError('pattern')">Zadejte čas ve formátu HH:MM</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div>
+    <button mat-raised-button color="primary" class="confirm"
+      (click)="confirmOrder()">Potvrdit objednávku</button>
+  </div>
 
   </form>

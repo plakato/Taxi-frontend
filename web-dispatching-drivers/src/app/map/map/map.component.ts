@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone, ViewChild, ElementRef, Input } from '@angular/core';
+import { Component, OnInit, NgZone, ViewChild, ElementRef, Input, EventEmitter, Output } from '@angular/core';
 import { LatLngLiteral, MapsAPILoader } from '@agm/core';
 import { FormControl } from '@angular/forms';
 // Needed for autocorrect to be correcly imported.
@@ -14,13 +14,15 @@ import { Constants } from '../../../assets/const';
 export class MapComponent implements OnInit {
   private map: any;
   center: LatLngLiteral;
-  userLocation: LatLngLiteral;
   addressControl: FormControl;
   airportSelected = false;
 
   @ViewChild('address')
   public addressElementRef: ElementRef;
   @Input() placeholder: string;
+  @Input() airport: boolean;
+  @Input() airportEnabled: boolean;
+  @Output() airportSelectedOutput = new EventEmitter<boolean>();
 
   constructor(
     private mapsAPILoader: MapsAPILoader,
@@ -28,9 +30,7 @@ export class MapComponent implements OnInit {
     private mapService: MapService ) {}
 
   ngOnInit() {
-    this.userLocation = Constants.DEFAULT_ADDRESS;
-    this.center = this.userLocation;
-
+    this.center = Constants.DEFAULT_ADDRESS;
     this.addressControl = new FormControl();
 
     // Load Places Autocomplete.
@@ -79,12 +79,17 @@ export class MapComponent implements OnInit {
     // Deselect airport if address was changed.
     if (this.airportSelected &&
         (event.lat.toFixed(5) !== Constants.DEFAULT_AIRPORT_ADDRESS.lat.toFixed(5) ||
-        event.lng.toFixed(5) !== Constants.DEFAULT_AIRPORT_ADDRESS.lng.toFixed(5))) {
+         event.lng.toFixed(5) !== Constants.DEFAULT_AIRPORT_ADDRESS.lng.toFixed(5))) {
       this.airportSelected = false;
     }
   }
 
   selectAirport() {
+    // Airport orders have only one end at the airport
+    // Disable airport if one end has already selected airport.
+    if (!this.airportEnabled) {
+     this.airportSelectedOutput.emit(true);
+    }
     this.airportSelected = true;
     this.map.setCenter(Constants.DEFAULT_AIRPORT_ADDRESS);
   }

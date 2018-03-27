@@ -1,21 +1,52 @@
 
-.maps {
+form {
   display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: flex-end;
+}
 
+mat-button-toggle-group {
+  align-self: flex-start;
+}
+
+app-list-all-drivers {
+  margin: 10px 0px;
+}
+
+.maps {
     app-map {
     height: 500px;
-    width: 49%;
-    flex-grow: 0;
-
-    @media (max-width: 600px) {
-        width: 100%;
-     }
   }
 }
 
+.twoColumns {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 
+  .column {
+    width: 49%;
+    flex-grow: 0;
+    margin-top: 10px;
+    @media (max-width: 600px) {
+      width: 100%;
+   }
+  }
+
+  .formControls {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.confirm {
+  float: right;
+}
+
+.invisible {
+  display:none;
+}
 
 .margin-right {
   margin-right: 10px;
@@ -27,3 +58,4 @@
   -webkit-appearance: none;
   margin: 0;
 }
+

@@ -4,8 +4,10 @@
         autocorrect="off" autocapitalize="off" spellcheck="off"
         (click)="address.select()" #address/>
     </mat-form-field>
-    <mat-icon *ngIf="airportSelected" (click)="airportSelected=false;" class="selected">airplanemode_active</mat-icon>
-    <mat-icon *ngIf="!airportSelected" (click)="selectAirport()">airplanemode_active</mat-icon>
+    <div *ngIf="airport">
+      <mat-icon *ngIf="airportSelected && airportEnabled" (click)="airportSelected=false;" class="selected">airplanemode_active</mat-icon>
+      <mat-icon *ngIf="!airportSelected || !airportEnabled" (click)="selectAirport()">airplanemode_active</mat-icon>
+    </div>
   </div>
 
 <div class="map-with-marker">

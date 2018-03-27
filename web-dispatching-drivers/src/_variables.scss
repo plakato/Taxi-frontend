@@ -24,5 +24,6 @@ $yellow-app-theme: mat-dark-theme($yellow-app-primary, $yellow-app-accent, $yell
 
 
 $yellow-app-background: #424242;
+$yellow-app-dark-background: #303030;
 
 $accent-yellow: mat-color(map-get($yellow-app-theme, primary));
