@@ -13,7 +13,7 @@ import { OrderModule } from './order/order.module';
 import { CarModule } from './car/car.module';
 import { ModalsModule } from './reusable/modals/modals.module';
 import { ImageModule } from './reusable/image/image.module';
-import { FormControl, FormGroupDirective, NgForm } from '@angular/forms';
+import { DirtyErrorStateMatcher } from './reusable/error-state-matcher/error-state-matcher.module';
 
 import { GlobalErrorHandler } from './general/error/global-error-handler';
 import { ErrorService } from './general/error/error.service';
@@ -37,7 +37,8 @@ import { MapModule } from './map/map.module';
     ModalsModule,
     ImageModule,
     MatSnackBarModule,
-    MapModule
+    MapModule,
+    DirtyErrorStateMatcher
   ],
   providers: [
     ErrorService,

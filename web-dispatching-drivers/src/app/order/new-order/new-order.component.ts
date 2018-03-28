@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { CustomerService } from '../shared/customer.service';
-import { Customer, Order } from '../order.module';
+import { Customer, Order, Driver } from '../order.module';
 import { OrderService } from '../shared/order.service';
 import { MatSnackBar } from '@angular/material';
 import { LatLngLiteral } from '@agm/core';
+import { DirtyErrorStateMatcher } from '../../reusable/error-state-matcher/error-state-matcher.module';
 
 @Component({
   selector: 'app-new-order',
@@ -12,13 +13,14 @@ import { LatLngLiteral } from '@agm/core';
   styleUrls: ['./new-order.component.scss']
 })
 export class NewOrderComponent implements OnInit {
-  drivers = [];
+  matcher = new DirtyErrorStateMatcher();
   newOrderForm: FormGroup;
   fromAirportEnabled = true;
   selectingDriver = false;
   customer: Customer;
   fromLatLng: LatLngLiteral;
   toLatLng: LatLngLiteral;
+  driverID: number = null;
 
   // Filter for datepicker - only later than today can be selected.
   filterLaterThanToday = (d: Date): boolean => {
@@ -57,6 +59,7 @@ export class NewOrderComponent implements OnInit {
         }
     order.loc_start = this.fromLatLng;
     order.loc_finish = this.toLatLng;
+    order.driver_id = this.driverID;
     // Send order.
     this.orderService.createOrder(order).subscribe(
       res => { this.snackbar.open('Objednávka úspěšně vytvořena!', '', {duration: 2000});
@@ -64,6 +67,10 @@ export class NewOrderComponent implements OnInit {
       err => this.snackbar.open(err, 'OK', {duration: 2000})
     );
 
+  }
+
+  selectDriver(driverID: number) {
+    this.driverID = driverID;
   }
 
   initializeForm() {
@@ -75,11 +82,12 @@ export class NewOrderComponent implements OnInit {
       passengers: ['1', Validators.required],
       flightNumber: [''],
       date: [ now, Validators.required],
-      time: [ '', Validators.pattern('[0-2]?[0-9]:[0-5][0-9]')],
+      time: [ '', Validators.pattern('[0-2]?[0-9]:[0-5][0-9]')], // TODO: validate that time is in the future.
       note: [''],
       VIP: [false]
     });
-    this.newOrderForm.markAsPristine();
+    this.selectingDriver = false;
+    this.newOrderForm.markAsUntouched();
   }
 
   enableFromAirport(yes: boolean) {

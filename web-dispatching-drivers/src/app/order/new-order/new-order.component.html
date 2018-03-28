@@ -5,7 +5,7 @@
   <div>
     <!-- Phone number -->
     <mat-form-field class="margin-right">
-      <input matInput type="tel" formControlName="phoneNumber" placeholder="Telefónní číslo" (change)="phoneNumberChanged()" required/>
+      <input matInput type="tel" formControlName="phoneNumber" placeholder="Telefónní číslo" (change)="phoneNumberChanged()" [errorStateMatcher]="matcher"/>
       <mat-error *ngIf="newOrderForm.get('phoneNumber').hasError('required')">Tato položka je povinná.</mat-error>
       <mat-error *ngIf="newOrderForm.get('phoneNumber').hasError('pattern')">Tohle není validní telefónní číslo.</mat-error>
       <mat-error *ngIf="newOrderForm.get('phoneNumber').hasError('maxLength')">Číslo je příliš dlouhé.</mat-error>
@@ -95,14 +95,14 @@
           (click)="selectingDriver = true">Zvolit řidiče</button>
       <button mat-raised-button *ngIf="group.value === 'classic' && !selectingDriver"
           (click)="selectingDriver = true">Spočíst řidiče</button>
-      <app-list-all-drivers *ngIf="selectingDriver"></app-list-all-drivers>
+      <app-list-all-drivers *ngIf="selectingDriver" (selectedDriver)="selectDriver($event)"></app-list-all-drivers>
     </div>
   </div>
 
 
   <div>
     <button mat-raised-button color="primary" class="confirm"
-      (click)="confirmOrder()" type="submit">Potvrdit objednávku</button>
+      (click)="confirmOrder()">Potvrdit objednávku</button>
   </div>
 
   </form>

@@ -2,15 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../shared/authentication.service';
 import { MatSnackBar, ErrorStateMatcher } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Validators, FormGroup, FormBuilder, AbstractControl, FormControl, FormGroupDirective, NgForm } from '@angular/forms';
-
-/** This avoids showing errors before the form was edited (keeping it invalid). **/
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-  }
-}
+import { Validators, FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
+import { DirtyErrorStateMatcher } from '../../reusable/error-state-matcher/error-state-matcher.module';
 
 @Component({
   selector: 'app-password-confirmation',
@@ -23,7 +16,7 @@ export class PasswordConfirmationComponent implements OnInit {
 
   loading = false;
   passwordForm: FormGroup;
-  matcher = new MyErrorStateMatcher();
+  matcher = new DirtyErrorStateMatcher();
 
   constructor(
     private authenticationService: AuthenticationService,

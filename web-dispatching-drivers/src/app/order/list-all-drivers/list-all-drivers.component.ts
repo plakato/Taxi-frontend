@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { DriverService } from '../shared/driver.service';
 import { FormControl, Validators } from '@angular/forms';
 import { Driver } from '../order.module';
@@ -12,6 +12,7 @@ export class ListAllDriversComponent implements OnInit {
 
   driverControl = new FormControl('', Validators.required);
   drivers: Driver[];
+  @Output() selectedDriver = new EventEmitter<number>();
 
   constructor(
     private driverService: DriverService ) { }
@@ -23,8 +24,8 @@ export class ListAllDriversComponent implements OnInit {
     );
   }
 
-  selectedDriver(driver: Driver) {
-
+  selectDriver(driver: Driver) {
+    this.selectedDriver.emit(driver.id);
   }
 
 }
