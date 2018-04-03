@@ -30,13 +30,18 @@ export class LoginComponent implements OnInit {
     this.authenticationService.login(this.model.email, this.model.password)
         .subscribe(
           data => {
-            // TODO: add check for admin
             localStorage.setItem('currentUser', JSON.stringify({
               token: data.token,
               id: data.id,
               roles: data.employee_roles }));
 
-            this.router.navigate(['dispatching/new-order']);
+            if (data.employee_roles.indexOf('dispatcher') > -1 ||
+                data.employee_roles.indexOf('admin') > -1) {
+                  this.router.navigate(['dispatching/orders/new']);
+                } else
+                if (data.employee_roles.indexOf('driver') > -1) {
+                  this.router.navigate(['drivers/choose-car']);
+              }
           },
           err => {
             this.loading = false;

@@ -13,10 +13,12 @@ import { MatTableModule,
         MatTooltipModule } from '@angular/material';
 import { ImageModule } from '../reusable/image/image.module';
 import { CarRetrievalService } from './shared/car-retrieval.service';
+import { CarService } from './shared/car.service';
 import { AddNewCarComponent } from './add-new-car/add-new-car.component';
 import { DeleteCarDialogComponent } from '../reusable/modals/delete-car-dialog/delete-car-dialog.component';
 import { EditCarComponent } from './edit-car/edit-car.component';
 import { CarDetailFormComponent } from './car-detail-form/car-detail-form.component';
+import { ChooseCarComponent } from './choose-car/choose-car.component';
 
 @NgModule({
   imports: [
@@ -33,9 +35,9 @@ import { CarDetailFormComponent } from './car-detail-form/car-detail-form.compon
     ImageModule,
     FormsModule, ReactiveFormsModule
   ],
-  declarations: [CarsComponent, AddNewCarComponent, EditCarComponent, CarDetailFormComponent],
+  declarations: [CarsComponent, AddNewCarComponent, EditCarComponent, CarDetailFormComponent, ChooseCarComponent],
   entryComponents: [DeleteCarDialogComponent],
-  providers: [CarRetrievalService]
+  providers: [CarRetrievalService, CarService]
 })
 export class CarModule { }
 
@@ -48,4 +50,5 @@ export interface Car {
   plate: string;
   max_persons: number;
   available: boolean;
+  driver_id: number;
 }

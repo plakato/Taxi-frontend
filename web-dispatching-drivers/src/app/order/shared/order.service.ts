@@ -32,4 +32,9 @@ export class OrderService {
       }
     ));
   }
+
+  listScheduledOrders(page: number, per_page: number) {
+    return this.http.get<Order[]>('orders/?page=' + page + '&per_page=' + per_page + '&scheduled');
+  }
 }
+

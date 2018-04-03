@@ -11,13 +11,21 @@ import { EditCarComponent } from './car/edit-car/edit-car.component';
 import { EmployeesComponent } from './user/employees/employees.component';
 import { EditEmployeeComponent } from './user/edit-employee/edit-employee.component';
 import { AuthGuardService, AdminGuardService } from './general/auth-guard.service';
+import { ChooseCarComponent } from './car/choose-car/choose-car.component';
+import { OrderHistoryComponent } from './order/order-history/order-history.component';
+import { ScheduledOrdersComponent } from './order/scheduled-orders/scheduled-orders.component';
 
 const appRoutes: Routes = [
     { path: 'password-confirmation/:confirmation_token', component: PasswordConfirmationComponent},
     { path: 'login', component: LoginComponent },
     { path: 'dispatching', component: DispatchingMenuComponent, canActivate: [AuthGuardService],
             children: [
-              { path: 'new-order', component: NewOrderComponent},
+              { path: 'orders',
+                children: [
+                  { path: 'new', component: NewOrderComponent },
+                  { path: 'history', component: OrderHistoryComponent },
+                  { path: 'scheduled', component: ScheduledOrdersComponent }
+                ]},
               { path: 'profile', component: ProfileDispatcherComponent},
               { path: 'employees', canActivate: [AdminGuardService],
                 children: [
@@ -29,6 +37,10 @@ const appRoutes: Routes = [
                   { path: '', component: CarsComponent},
                   { path: 'edit/:carID', component: EditCarComponent}
                 ]}
+            ]},
+    { path: 'drivers', canActivate: [AuthGuardService],
+            children: [
+              { path: 'choose-car', component: ChooseCarComponent}
             ]},
    { path: '', redirectTo: 'login', pathMatch: 'full' },
     // otherwise redirect to home

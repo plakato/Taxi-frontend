@@ -12,13 +12,17 @@ import { MatFormFieldModule,
         MatIconModule,
         MatButtonModule,
         MatButtonToggleModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatTableModule,
+        MatPaginatorModule
          } from '@angular/material';
 import { CustomerService } from './shared/customer.service';
 import { DriverService } from './shared/driver.service';
 import { OrderService } from './shared/order.service';
 import { ListAllDriversComponent } from './list-all-drivers/list-all-drivers.component';
 import { LatLngLiteral } from '@agm/core';
+import { OrderHistoryComponent } from './order-history/order-history.component';
+import { ScheduledOrdersComponent } from './scheduled-orders/scheduled-orders.component';
 
 @NgModule({
   imports: [
@@ -35,9 +39,11 @@ import { LatLngLiteral } from '@agm/core';
     MatIconModule,
     MatButtonModule,
     MatButtonToggleModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatTableModule,
+    MatPaginatorModule
   ],
-  declarations: [NewOrderComponent, ListAllDriversComponent],
+  declarations: [NewOrderComponent, ListAllDriversComponent, OrderHistoryComponent, ScheduledOrdersComponent],
   providers: [CustomerService, DriverService, OrderService]
 })
 export class OrderModule { }

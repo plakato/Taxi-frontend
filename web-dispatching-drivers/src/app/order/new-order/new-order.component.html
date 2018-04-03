@@ -73,7 +73,7 @@
       <div class="controlsInColumn">
         <h4>Termínovaná objednávka</h4>
         <!-- Date -->
-        <mat-form-field class="example-full-width">
+        <mat-form-field>
           <input matInput [matDatepickerFilter]="filterLaterThanToday" formControlName="date" [matDatepicker]="picker" placeholder="Datum vyzvednutí">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
