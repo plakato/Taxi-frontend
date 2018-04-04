@@ -32,4 +32,8 @@ export class ErrorService {
     }
   }
 
+  showMessageToUser(message: string) {
+    this.snackbar.open(message, '', {duration: 2000});
+  }
+
 }

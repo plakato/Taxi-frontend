@@ -24,6 +24,7 @@ import { LatLngLiteral } from '@agm/core';
 import { OrderHistoryComponent } from './order-history/order-history.component';
 import { ScheduledOrdersComponent } from './scheduled-orders/scheduled-orders.component';
 import { ScheduledOrdersService } from './scheduled-orders/data-source/scheduled-orders.service';
+import { ShiftService } from './shared/shift.service';
 
 @NgModule({
   imports: [
@@ -45,7 +46,7 @@ import { ScheduledOrdersService } from './scheduled-orders/data-source/scheduled
     MatPaginatorModule
   ],
   declarations: [NewOrderComponent, ListAllDriversComponent, OrderHistoryComponent, ScheduledOrdersComponent],
-  providers: [CustomerService, DriverService, OrderService, ScheduledOrdersService]
+  providers: [CustomerService, DriverService, OrderService, ScheduledOrdersService, ShiftService]
 })
 export class OrderModule { }
 

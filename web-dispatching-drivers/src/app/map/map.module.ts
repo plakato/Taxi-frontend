@@ -6,6 +6,7 @@ import { MapComponent } from './map/map.component';
 import { MatIconModule, MatInputModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MapService } from './map.service';
+import { LocationTrackingService } from './location-tracking.service';
 
 @NgModule({
   imports: [
@@ -22,6 +23,6 @@ import { MapService } from './map.service';
   declarations: [ MapComponent ],
   exports: [ MapComponent ],
   bootstrap: [ ],
-  providers: [MapService]
+  providers: [MapService, LocationTrackingService]
 })
 export class MapModule { }

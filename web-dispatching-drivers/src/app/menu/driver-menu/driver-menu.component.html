@@ -1,3 +1,15 @@
-<p>
-  driver-menu works!
-</p>
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <div class="space-children">
+      <mat-icon (click)="logout()">lock</mat-icon>
+      <mat-icon>restaurant</mat-icon>
+      <mat-icon>time_to_leave</mat-icon>
+      <mat-icon>phone</mat-icon>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<div class="center">
+  <div class="margin-bottom">Momentálne nemáte žádné objednávky.</div>
+  <button mat-raised-button class="margin-bottom">Objednávka z ulice</button>
+</div>

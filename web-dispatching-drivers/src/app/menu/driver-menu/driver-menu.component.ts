@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../../user/shared/authentication.service';
+import { ShiftService } from '../../order/shared/shift.service';
+import { ErrorService } from '../../general/error/error.service';
 
 @Component({
   selector: 'app-driver-menu',
@@ -7,9 +10,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DriverMenuComponent implements OnInit {
 
-  constructor() { }
+  constructor( private authService: AuthenticationService,
+              private shiftService: ShiftService,
+              private errorService: ErrorService ) { }
 
   ngOnInit() {
+  }
+
+  logout() {
+    this.shiftService.endShift().subscribe(
+      res =>  this.authService.logout(),
+      err =>  this.errorService.showMessageToUser('Odhlásení se nezdařilo.')
+    );
   }
 
 }
