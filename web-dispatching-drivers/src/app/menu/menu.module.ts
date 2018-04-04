@@ -9,6 +9,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { DispatchingMenuComponent } from './dispatching-menu/dispatching-menu.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { RouterModule } from '@angular/router';
+import { DriverMenuComponent } from './driver-menu/driver-menu.component';
 
 @NgModule({
   imports: [
@@ -23,6 +24,6 @@ import { RouterModule } from '@angular/router';
   ],
   exports: [
   ],
-  declarations: [DispatchingMenuComponent]
+  declarations: [DispatchingMenuComponent, DriverMenuComponent]
 })
 export class MenuModule {}

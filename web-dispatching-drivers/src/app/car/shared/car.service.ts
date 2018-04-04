@@ -13,4 +13,9 @@ export class CarService {
                     .filter(c => c.available && c.driver_id === null));
   }
 
+  startShiftWithCar(carID: number) {
+    return this.http.post('shifts/start', JSON.stringify({
+      vehicle_id: carID
+    }));
+  }
 }

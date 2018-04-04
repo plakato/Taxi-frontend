@@ -1,4 +1,9 @@
-<h2>Zvolte auto:</h2>
-<div *ngFor="let car of cars">
-  {{car.number}}
+<div class="container">
+  <h2>Zvolte auto:</h2>
+
+  <div *ngFor="let car of cars" class="car-box" (click)="selectCar(car)">
+    <div class="big-font"> {{car.number}}  </div>
+    <div> <img src="{{car.image}}" alt="obrázek auta" class="image-small" /> </div>
+    <div> {{car.name}} </div>
+  </div>
 </div>

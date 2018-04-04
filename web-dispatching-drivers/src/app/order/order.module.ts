@@ -23,6 +23,7 @@ import { ListAllDriversComponent } from './list-all-drivers/list-all-drivers.com
 import { LatLngLiteral } from '@agm/core';
 import { OrderHistoryComponent } from './order-history/order-history.component';
 import { ScheduledOrdersComponent } from './scheduled-orders/scheduled-orders.component';
+import { ScheduledOrdersService } from './scheduled-orders/data-source/scheduled-orders.service';
 
 @NgModule({
   imports: [
@@ -44,7 +45,7 @@ import { ScheduledOrdersComponent } from './scheduled-orders/scheduled-orders.co
     MatPaginatorModule
   ],
   declarations: [NewOrderComponent, ListAllDriversComponent, OrderHistoryComponent, ScheduledOrdersComponent],
-  providers: [CustomerService, DriverService, OrderService]
+  providers: [CustomerService, DriverService, OrderService, ScheduledOrdersService]
 })
 export class OrderModule { }
 
