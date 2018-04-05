@@ -7,6 +7,7 @@ import { MatIconModule, MatInputModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MapService } from './map.service';
 import { LocationTrackingService } from './location-tracking.service';
+import { StaticMarkerMapComponent } from './static-marker-map/static-marker-map.component';
 
 @NgModule({
   imports: [
@@ -20,8 +21,8 @@ import { LocationTrackingService } from './location-tracking.service';
       libraries: ['places']
     })
   ],
-  declarations: [ MapComponent ],
-  exports: [ MapComponent ],
+  declarations: [ MapComponent, StaticMarkerMapComponent ],
+  exports: [ MapComponent, StaticMarkerMapComponent ],
   bootstrap: [ ],
   providers: [MapService, LocationTrackingService]
 })

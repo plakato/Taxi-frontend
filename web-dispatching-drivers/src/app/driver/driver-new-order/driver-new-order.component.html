@@ -7,6 +7,12 @@
     <div class="left-margin">Standardní objednávka</div>
   </div>
 
-  <button mat-raised-button class="green">Přijmout</button>
-  <button mat-raised-button class="red">Odmítnout</button>
+
+    <app-static-marker-map placeholder="Místo vyzvednutí" [markerCoords]="order.loc_start"></app-static-marker-map>
+
+  <div class="row">
+    <mat-icon class="red">clear</mat-icon>
+    <mat-icon class="green" (click)="acceptOrder()">check</mat-icon>
+  </div>
+
 </div>

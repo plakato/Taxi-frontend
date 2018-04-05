@@ -60,6 +60,7 @@ export interface Customer {
 }
 
 export interface Order {
+  id: number;
   phoneNumber: string;
   driver_id: number;
   loc_start: LatLngLiteral;

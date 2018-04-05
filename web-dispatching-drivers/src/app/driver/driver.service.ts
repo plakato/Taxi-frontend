@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Driver } from './driver.module';
 import { User } from '../user/user.module';
 import { Observable } from 'rxjs/Observable';
+import { Order } from '../order/order.module';
 
 @Injectable()
 export class DriverService {
@@ -20,6 +21,10 @@ export class DriverService {
     } else {
       return this.http.get<Driver[]>('employees');
     }
+  }
+
+  acceptOrder(orderID: number) {
+    return this.http.patch<Order>('orders/' + orderID + '/confirm_by_driver', JSON.stringify({}));
   }
 
 }

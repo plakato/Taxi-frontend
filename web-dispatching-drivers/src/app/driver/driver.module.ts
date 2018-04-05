@@ -7,11 +7,13 @@ import { DriverService } from './driver.service';
 import { DriverNewOrderComponent } from './driver-new-order/driver-new-order.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule, MatIconModule, MatButtonModule } from '@angular/material';
+import { MapModule } from '../map/map.module';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    MapModule,
     MatSelectModule,
     MatIconModule,
     MatButtonModule
