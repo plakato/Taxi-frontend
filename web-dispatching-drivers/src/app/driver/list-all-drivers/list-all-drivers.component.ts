@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { DriverService } from '../shared/driver.service';
+import { DriverService } from '../driver.service';
 import { FormControl, Validators } from '@angular/forms';
-import { Driver } from '../order.module';
+import { Driver } from '../driver.module';
 
 @Component({
   selector: 'app-list-all-drivers',

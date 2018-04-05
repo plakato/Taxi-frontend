@@ -17,18 +17,19 @@ import { MatFormFieldModule,
         MatPaginatorModule
          } from '@angular/material';
 import { CustomerService } from './shared/customer.service';
-import { DriverService } from './shared/driver.service';
 import { OrderService } from './shared/order.service';
-import { ListAllDriversComponent } from './list-all-drivers/list-all-drivers.component';
 import { LatLngLiteral } from '@agm/core';
 import { OrderHistoryComponent } from './order-history/order-history.component';
 import { ScheduledOrdersComponent } from './scheduled-orders/scheduled-orders.component';
 import { ScheduledOrdersService } from './scheduled-orders/data-source/scheduled-orders.service';
 import { ShiftService } from './shared/shift.service';
+import { ListAllDriversComponent } from '../driver/list-all-drivers/list-all-drivers.component';
+import { DriverModule } from '../driver/driver.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    DriverModule,
     MapModule,
     MatFormFieldModule,
     MatInputModule,
@@ -45,8 +46,9 @@ import { ShiftService } from './shared/shift.service';
     MatTableModule,
     MatPaginatorModule
   ],
-  declarations: [NewOrderComponent, ListAllDriversComponent, OrderHistoryComponent, ScheduledOrdersComponent],
-  providers: [CustomerService, DriverService, OrderService, ScheduledOrdersService, ShiftService]
+  declarations: [NewOrderComponent, OrderHistoryComponent, ScheduledOrdersComponent],
+  providers: [CustomerService, OrderService, ScheduledOrdersService, ShiftService],
+  entryComponents: [ ListAllDriversComponent ]
 })
 export class OrderModule { }
 
@@ -54,11 +56,6 @@ export interface Customer {
   id: number;
   telephone: string;
   note: string;
-  name: string;
-}
-
-export interface Driver {
-  id: number;
   name: string;
 }
 

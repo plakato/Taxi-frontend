@@ -20,6 +20,7 @@ import { ErrorService } from './general/error/error.service';
 import { httpInterceptorProviders } from './general/interceptor/index';
 import { AuthGuardService, AdminGuardService } from './general/auth-guard.service';
 import { MapModule } from './map/map.module';
+import { DriverModule } from './driver/driver.module';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { MapModule } from './map/map.module';
     ImageModule,
     MatSnackBarModule,
     MapModule,
-    DirtyErrorStateMatcher
+    DirtyErrorStateMatcher,
+    DriverModule
   ],
   providers: [
     ErrorService,

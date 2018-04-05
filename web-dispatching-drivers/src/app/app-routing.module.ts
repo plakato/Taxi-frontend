@@ -15,6 +15,7 @@ import { ChooseCarComponent } from './car/choose-car/choose-car.component';
 import { OrderHistoryComponent } from './order/order-history/order-history.component';
 import { ScheduledOrdersComponent } from './order/scheduled-orders/scheduled-orders.component';
 import { DriverMenuComponent } from './menu/driver-menu/driver-menu.component';
+import { DriverNewOrderComponent } from './driver/driver-new-order/driver-new-order.component';
 
 const appRoutes: Routes = [
     { path: 'password-confirmation/:confirmation_token', component: PasswordConfirmationComponent},
@@ -42,7 +43,8 @@ const appRoutes: Routes = [
     { path: 'drivers', canActivate: [AuthGuardService],
             children: [
               { path: '', component: DriverMenuComponent },
-              { path: 'choose-car', component: ChooseCarComponent}
+              { path: 'choose-car', component: ChooseCarComponent},
+              { path: 'new-order', component: DriverNewOrderComponent }
             ]},
    { path: '', redirectTo: 'login', pathMatch: 'full' },
     // otherwise redirect to home

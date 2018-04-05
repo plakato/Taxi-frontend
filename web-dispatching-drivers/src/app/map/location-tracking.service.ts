@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { } from '@types/googlemaps';
 import { ErrorService } from '../general/error/error.service';
+import { Constants } from '../../assets/const';
 
 @Injectable()
 export class LocationTrackingService {
@@ -12,27 +13,28 @@ export class LocationTrackingService {
 
   startSharingLocation() {
     if (this.trackingInterval !== null) {
-      this.stopSharingLocation();
+      return;
     }
-    this.trackingInterval = global.setInterval(this.shareCurrentLocation, 30 * 1000);
+    this.trackingInterval = window.setInterval(() => this.shareCurrentLocation(), Constants.DRIVER_LOCATION_SHARING_INTERVAL);
   }
 
   stopSharingLocation() {
-    global.clearInterval(this.trackingInterval);
+    window.clearInterval(this.trackingInterval);
   }
 
   shareCurrentLocation() {
     if (navigator.geolocation) {
+      const http = this.http;
       navigator.geolocation.getCurrentPosition(
         (position) => {
-                        this.http.post('driver-locations', JSON.stringify({
+                        http.post('driver_locations', JSON.stringify({
                           recorded_at: (new Date(Date.now())).toISOString(),
-                          location: {
+                          loc: {
                             lat: position.coords.latitude,
                             lng: position.coords.longitude
                           }
                         })).subscribe(
-                          success => {},
+                          success => { console.log('location was shared!!!!'); },
                           err => this.errorService.showMessageToUser('Problém se zdílením lokace: ' + err)
                         );
       });

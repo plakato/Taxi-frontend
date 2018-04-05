@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Driver } from '../order.module';
-import { User } from '../../user/user.module';
+import { Driver } from './driver.module';
+import { User } from '../user/user.module';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()

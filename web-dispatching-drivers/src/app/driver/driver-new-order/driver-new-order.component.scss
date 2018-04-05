@@ -1,0 +1,29 @@
+@import '../../../_variables.scss';
+
+.container {
+  margin: 10px 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+
+  .order-type {
+    display: flex;
+    flex-direction: row;
+
+    .left-margin {
+      margin-left: 20px;
+    }
+  }
+
+  .red {
+    background-color: mat-color(map-get($yellow-app-theme, warn));
+  }
+  .green {
+    background-color: mat-color(map-get($yellow-app-theme, accent));
+  }
+  button {
+    width: 300px;
+  }
+}
+

@@ -17,6 +17,8 @@ export class ShiftService {
   }
 
   endShift() {
-    return this.http.post('shifts/stop', JSON.stringify({}));
+    return this.http.post('shifts/end', JSON.stringify({})).map(
+      success => this.locationTracking.stopSharingLocation()
+    );
   }
 }

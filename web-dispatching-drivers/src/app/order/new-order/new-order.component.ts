@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { CustomerService } from '../shared/customer.service';
-import { Customer, Order, Driver } from '../order.module';
+import { Customer, Order } from '../order.module';
 import { OrderService } from '../shared/order.service';
 import { MatSnackBar } from '@angular/material';
 import { LatLngLiteral } from '@agm/core';
 import { DirtyErrorStateMatcher } from '../../reusable/error-state-matcher/error-state-matcher.module';
+import { ListAllDriversComponent } from '../../driver/list-all-drivers/list-all-drivers.component';
 
 @Component({
   selector: 'app-new-order',
