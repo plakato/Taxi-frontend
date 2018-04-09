@@ -25,9 +25,13 @@ export class DriverNewOrderComponent implements OnInit {
     const locFinish: LatLngLiteral = {lat: 21.365282, lng: 54.285364};
     this.order = {
       id: 35,
-      phoneNumber: '+420111222333',
+      status: '',
+      contact_telephone: '+420111222333',
       loc_start: locStart,
       driver_id: 2,
+      driver: null,
+      vehicle_id: 2,
+      vehicle: null,
       loc_finish: locFinish,
       passengers: 2,
       note: null,

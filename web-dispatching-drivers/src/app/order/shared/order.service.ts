@@ -12,7 +12,7 @@ export class OrderService {
     return this.http.post('orders', JSON.stringify(
       {
         order: {
-          customer_telephone: order.phoneNumber,
+          customer_telephone: order.contact_telephone,
           driver_id: order.driver_id,
           dispatcher_id: user.id,
           loc_start: {

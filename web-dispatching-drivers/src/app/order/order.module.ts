@@ -23,8 +23,9 @@ import { OrderHistoryComponent } from './order-history/order-history.component';
 import { ScheduledOrdersComponent } from './scheduled-orders/scheduled-orders.component';
 import { ScheduledOrdersService } from './scheduled-orders/data-source/scheduled-orders.service';
 import { ListAllDriversComponent } from '../driver/list-all-drivers/list-all-drivers.component';
-import { DriverModule } from '../driver/driver.module';
+import { DriverModule, Driver } from '../driver/driver.module';
 import { MyOrdersService } from './shared/my-orders.service';
+import { Car } from '../car/car.module';
 
 @NgModule({
   imports: [
@@ -61,13 +62,18 @@ export interface Customer {
 
 export interface Order {
   id: number;
-  phoneNumber: string;
+  status: string;
   driver_id: number;
+  driver: Driver;
+  vehicle_id: number;
+  vehicle: Car;
   loc_start: LatLngLiteral;
   loc_finish: LatLngLiteral;
+
   passengers: number;
   note: string;
   VIP: boolean;
+  contact_telephone: string;
   flightNumber: string;
   pick_up_at: string;
 }

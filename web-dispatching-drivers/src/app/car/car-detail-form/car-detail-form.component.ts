@@ -37,7 +37,7 @@ export class CarDetailFormComponent implements OnInit {
     // Fill in car information.
     const carID = this.route.snapshot.paramMap.get('carID');
     if (carID != null) {
-      this.carService.show(Number(carID)).subscribe(
+      this.carService.get(Number(carID)).subscribe(
         car => { this.car = car;
                  this.originalImage = this.car.image; }
       );

@@ -6,9 +6,10 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class CarRetrievalService {
-  private carsEventSource: BehaviorSubject<Array<Car>> = new BehaviorSubject(Array());
-  public readonly cars: Observable<Array<Car>> = this.carsEventSource.asObservable();
-  private carsData: Car[];
+  private carsEventSource: BehaviorSubject<Map<number, Car>> = new BehaviorSubject( new Map());
+  // Extract values from the map to have it as an array of cars.
+  public readonly cars: Observable<Array<Car>> = this.carsEventSource.asObservable().map( map => Array.from(map.values()));
+  private carsData: Map<number, Car>;
 
   constructor( private http: HttpClient) {
     this.loadInitialData();
@@ -17,7 +18,9 @@ export class CarRetrievalService {
   loadInitialData() {
     this.http.get<Car[]>('vehicles').subscribe(
       res => {
-        this.carsData = res;
+        this.carsData = res.reduce((cars: Map<number, Car>, car: Car)  => {
+                                                    cars[car.id] = car;
+                                                    return cars; }, new Map());
         this.carsEventSource.next(this.carsData);
       }
     );
@@ -34,7 +37,7 @@ export class CarRetrievalService {
           available: car.available
     }})).subscribe(
       res => {
-        this.carsData.push(res);
+        this.carsData[res.id] = res;
         this.carsEventSource.next(this.carsData);
       },
       err => {
@@ -43,8 +46,14 @@ export class CarRetrievalService {
     );
   }
 
-  show(carID: number) {
+  /** Gets updated car info. */
+  get(carID: number) {
     return this.http.get<Car>('vehicles/' + carID);
+  }
+
+  /** Shows saved instance of car. */
+  show(carID: number) {
+    return this.cars[carID];
   }
 
   update(car: Car) {
@@ -58,8 +67,7 @@ export class CarRetrievalService {
           available: car.available
     }})).map(
       (response: Car) => {
-        const index = this.carsData.findIndex(c => c.id === car.id);
-        this.carsData[index] = response;
+        this.carsData[response.id] = response;
         this.carsEventSource.next(this.carsData);
       }
     ); // add mapping to reflect changes
@@ -68,8 +76,7 @@ export class CarRetrievalService {
   delete(carID) {
     this.http.delete('vehicles/' + carID) .subscribe(
       res => {
-        const index = this.carsData.findIndex(car => car.id === carID);
-        this.carsData.splice(index);
+        this.carsData.delete(carID);
         this.carsEventSource.next(this.carsData);
       },
       err => {
