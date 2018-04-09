@@ -9,7 +9,13 @@
   </mat-toolbar-row>
 </mat-toolbar>
 
-<div class="center">
+<!-- When there are no orders. -->
+<div class="center" *ngIf="(myOrders.orders | async)?.length===0">
   <div class="margin-bottom">Momentálne nemáte žádné objednávky.</div>
   <button mat-raised-button class="margin-bottom">Objednávka z ulice</button>
+</div>
+
+<!--When there is at least one order. -->
+<div *ngIf="(myOrders.orders | async)?.length!==0">
+
 </div>

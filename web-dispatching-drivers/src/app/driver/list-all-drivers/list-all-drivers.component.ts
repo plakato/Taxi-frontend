@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { DriverService } from '../driver.service';
+import { DriverService } from '../shared/driver.service';
 import { FormControl, Validators } from '@angular/forms';
 import { Driver } from '../driver.module';
 

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../user/shared/authentication.service';
-import { ShiftService } from '../../order/shared/shift.service';
 import { ErrorService } from '../../general/error/error.service';
 import { LocationTrackingService } from '../../map/location-tracking.service';
+import { ShiftService } from '../../driver/shared/shift.service';
+import { MyOrdersService } from '../../order/shared/my-orders.service';
 
 @Component({
   selector: 'app-driver-menu',
@@ -14,7 +15,8 @@ export class DriverMenuComponent implements OnInit {
   constructor( private authService: AuthenticationService,
               private shiftService: ShiftService,
               private errorService: ErrorService,
-              private trackingLocation: LocationTrackingService ) { }
+              private trackingLocation: LocationTrackingService,
+              public myOrders: MyOrdersService ) { }
 
   ngOnInit() {
     // Needs to be here, so that after refresh we'll start sharing location again.

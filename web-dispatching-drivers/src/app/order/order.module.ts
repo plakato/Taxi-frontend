@@ -22,9 +22,9 @@ import { LatLngLiteral } from '@agm/core';
 import { OrderHistoryComponent } from './order-history/order-history.component';
 import { ScheduledOrdersComponent } from './scheduled-orders/scheduled-orders.component';
 import { ScheduledOrdersService } from './scheduled-orders/data-source/scheduled-orders.service';
-import { ShiftService } from './shared/shift.service';
 import { ListAllDriversComponent } from '../driver/list-all-drivers/list-all-drivers.component';
 import { DriverModule } from '../driver/driver.module';
+import { MyOrdersService } from './shared/my-orders.service';
 
 @NgModule({
   imports: [
@@ -47,7 +47,7 @@ import { DriverModule } from '../driver/driver.module';
     MatPaginatorModule
   ],
   declarations: [NewOrderComponent, OrderHistoryComponent, ScheduledOrdersComponent],
-  providers: [CustomerService, OrderService, ScheduledOrdersService, ShiftService],
+  providers: [CustomerService, OrderService, ScheduledOrdersService, MyOrdersService],
   entryComponents: [ ListAllDriversComponent ]
 })
 export class OrderModule { }

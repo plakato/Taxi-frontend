@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Car } from '../car.module';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
-import { ShiftService } from '../../order/shared/shift.service';
+import { ShiftService } from '../../driver/shared/shift.service';
 import { CarService } from '../shared/car.service';
 
 @Component({

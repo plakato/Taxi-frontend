@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { ListAllDriversComponent } from './list-all-drivers/list-all-drivers.component';
 
-import { DriverService } from './driver.service';
+import { DriverService } from './shared/driver.service';
+import { ShiftService } from './shared/shift.service';
 import { DriverNewOrderComponent } from './driver-new-order/driver-new-order.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule, MatIconModule, MatButtonModule } from '@angular/material';
@@ -20,7 +21,7 @@ import { MapModule } from '../map/map.module';
   ],
   exports: [ ListAllDriversComponent ],
   declarations: [ ListAllDriversComponent, DriverNewOrderComponent ],
-  providers: [ DriverService ]
+  providers: [ DriverService, ShiftService ]
 })
 export class DriverModule { }
 
