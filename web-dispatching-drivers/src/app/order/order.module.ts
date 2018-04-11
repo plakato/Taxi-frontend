@@ -77,3 +77,8 @@ export interface Order {
   flightNumber: string;
   pick_up_at: string;
 }
+
+export interface Notification {
+  subject: string;
+  data: object;
+}

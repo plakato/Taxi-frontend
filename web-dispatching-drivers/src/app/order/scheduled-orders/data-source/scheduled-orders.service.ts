@@ -1,62 +1,51 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, concatMap, mergeMap } from 'rxjs/operators';
+import { of } from 'rxjs/observable/of';
+import 'rxjs/add/operator/mergeMap';
 import { Order } from '../../order.module';
 import { Observable } from 'rxjs/Observable';
 import { forkJoin } from 'rxjs/observable/forkJoin';
+import { from } from 'rxjs/observable/from';
 import { HttpClient } from '@angular/common/http';
 import { DriverService } from '../../../driver/shared/driver.service';
 import { CarService } from '../../../car/shared/car.service';
+import { OrderService } from '../../shared/order.service';
 
 @Injectable()
 export class ScheduledOrdersService {
 
   public ordersEventSource: BehaviorSubject<Array<Order>> = new BehaviorSubject(Array());
   private readonly orders: Observable<Array<Order>> = this.ordersEventSource.asObservable();
-  private orderData: Order[];
+  private orderData: Order[] = new Array();
 
   constructor( private http: HttpClient,
-              private driverService: DriverService,
-              private carService: CarService) {
+              private orderService: OrderService) {
     this.loadInitialData();
    }
 
   loadInitialData() {
-      const driverService = this.driverService;
-      const fillOrderDriver = function(order): Observable<Order>{
-        return driverService.getDriver(order.driver_id).map(driver => {
-          const o = order;
-          o.driver = driver;
-          return o;
-        });
-      };
-
+      // Fill in order driver and vehicle from id.
       this.http.get<Order[]>('orders/?page=1&per_page=10&scheduled')
-        .pipe(switchMap( rawOrders => {
-            return forkJoin(
-              ...rawOrders.map(fillOrderDriver)
+        .pipe(mergeMap( rawOrders => {
+            return from(rawOrders).pipe(
+              mergeMap( order => this.orderService.fillOrderDriver(order) ),
+              mergeMap( order => this.orderService.fillOrderVehicle(order) )
             );
-          })).subscribe(
+          })
+        ).subscribe(
             res => {
-              this.orderData = res;
+              this.orderData.push(res);
               this.ordersEventSource.next(this.orderData); }
           );
-
-// ORIGINAL
-    /*      .subscribe(
-          res => {
-            res = res.map( order => {
-                            this.driverService.getDriver(order.driver_id)
-                                              .subscribe( driver => { order.driver = driver; debugger;
-                                                                      return order;
-                                                                    });
-                            return order;
-            });debugger;
-            this.orderData = res;
-            this.ordersEventSource.next(this.orderData);
-          });
-        });*/
   }
+
+  // .mergeMap(order =>
+  //   this.orderService.fillOrderDriver(order).map(
+  //     orderWithDriver =>
+  //       this.orderService.fillOrderVehicle(orderWithDriver)
+  //   ))
+
 
   loadPage(page: number, per_page: number) {
     return this.http.get<Order[]>('orders/?page=' + page + '&per_page=' + per_page + '&scheduled').subscribe(

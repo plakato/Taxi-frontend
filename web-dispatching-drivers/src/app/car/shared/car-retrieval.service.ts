@@ -53,7 +53,11 @@ export class CarRetrievalService {
 
   /** Shows saved instance of car. */
   show(carID: number) {
-    return this.cars[carID];
+    if (this.cars[carID] != null) {
+      return this.cars[carID];
+    } else {
+      return this.get(carID);
+    }
   }
 
   update(car: Car) {

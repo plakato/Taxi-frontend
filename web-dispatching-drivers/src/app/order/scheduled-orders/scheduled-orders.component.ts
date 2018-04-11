@@ -37,10 +37,6 @@ export class ScheduledOrdersComponent implements AfterViewInit {
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
-
-  clicked() {
-    debugger; console.log('jee');
-  }
 }
 
 export class OrderDataSource extends MatTableDataSource<any> {
