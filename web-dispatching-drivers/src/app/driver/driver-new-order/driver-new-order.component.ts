@@ -37,7 +37,7 @@ export class DriverNewOrderComponent implements OnInit {
       note: null,
       VIP: false,
       flightNumber: null,
-      pick_up_at: '2018-04-05T11:12:52.051Z'
+      scheduled_pick_up_at: '2018-04-05T11:12:52.051Z'
     };
     // Play notification sound.
     const audio = new Audio('../../../assets/audio/chimes-glassy.mp3');

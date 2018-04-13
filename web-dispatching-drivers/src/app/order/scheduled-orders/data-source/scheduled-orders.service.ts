@@ -29,8 +29,8 @@ export class ScheduledOrdersService {
       this.http.get<Order[]>('orders/?page=1&per_page=10&scheduled')
         .pipe(mergeMap( rawOrders => {
             return from(rawOrders).pipe(
-              mergeMap( order => this.orderService.fillOrderDriver(order) ),
-              mergeMap( order => this.orderService.fillOrderVehicle(order) )
+              mergeMap( order => this.orderService.fillOrderDriver(order)),
+              mergeMap( order => this.orderService.fillOrderVehicle(order))
             );
           })
         ).subscribe(
@@ -39,12 +39,6 @@ export class ScheduledOrdersService {
               this.ordersEventSource.next(this.orderData); }
           );
   }
-
-  // .mergeMap(order =>
-  //   this.orderService.fillOrderDriver(order).map(
-  //     orderWithDriver =>
-  //       this.orderService.fillOrderVehicle(orderWithDriver)
-  //   ))
 
 
   loadPage(page: number, per_page: number) {

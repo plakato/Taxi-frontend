@@ -14,8 +14,8 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 })
 export class ScheduledOrdersComponent implements AfterViewInit {
 
-  displayedColumns = ['driver', 'car', 'start', 'finish', 'pickUpTime', 'note'];
-  dataSource = new OrderDataSource(this.scheduledOrderService);
+  displayedColumns = ['driver', 'car', 'start', 'finish', 'pickUpDate', 'pickUpTime', 'note'];
+  dataSource = new ScheduledOrderDataSource(this.scheduledOrderService);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -37,14 +37,38 @@ export class ScheduledOrdersComponent implements AfterViewInit {
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
+
+  getPickUpDate(order: Order): Date {
+    const unixDate: number = Date.parse(order.scheduled_pick_up_at);
+    const date: Date = new Date(unixDate);
+    return date;
+  }
 }
 
-export class OrderDataSource extends MatTableDataSource<any> {
+export class ScheduledOrderDataSource extends MatTableDataSource<any> {
+
+  // Override filter predicate to read properties recursively.
+  // (otherwise the function matches the original.)
+  filterPredicate: ((data: Order, filter: string) => boolean) =
+    (data: Order, filter: string): boolean => {
+    // Transform the data into a lowercase string of all property values.
+    const accumulator = (currentTerm, value) => {
+      if (typeof(value) === 'object' && value != null) {
+        return currentTerm += Object.values(value).reduce(accumulator, currentTerm);
+      } else {
+        return currentTerm + value;
+      }
+    };
+    const dataStr = Object.values(data).reduce(accumulator, '').toLowerCase();
+
+    // Transform the filter by converting it to lowercase and removing whitespace.
+    const transformedFilter = filter.trim().toLowerCase();
+
+    return dataStr.indexOf(transformedFilter) !== -1;
+  }
+
   constructor(private scheduledOrderService: ScheduledOrdersService) {
     super();
+    this.scheduledOrderService.ordersEventSource.subscribe(data => this.data = data);
   }
-  connect(): BehaviorSubject<Array<Order>> {
-    return this.scheduledOrderService.ordersEventSource;
-  }
-  disconnect() {}
 }

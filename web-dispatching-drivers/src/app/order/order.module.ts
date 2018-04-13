@@ -75,7 +75,7 @@ export interface Order {
   VIP: boolean;
   contact_telephone: string;
   flightNumber: string;
-  pick_up_at: string;
+  scheduled_pick_up_at: string;
 }
 
 export interface Notification {
