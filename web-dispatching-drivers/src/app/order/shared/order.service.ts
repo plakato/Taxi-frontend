@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Order } from '../order.module';
 import { Observable } from 'rxjs/Observable';
+import { mergeMap } from 'rxjs/operators';
+import { from } from 'rxjs/observable/from';
 import { DriverService } from '../../driver/shared/driver.service';
 import { CarService } from '../../car/shared/car.service';
 import { CarRetrievalService } from '../../car/shared/car-retrieval.service';
@@ -13,7 +15,7 @@ export class OrderService {
               private driverService: DriverService,
               private carService: CarRetrievalService ) { }
 
-  fillOrderDriver(order: Order): Observable<Order> {
+  private fillOrderDriver(order: Order): Observable<Order> {
     return this.driverService.getDriver(order.driver_id).map(driver => {
       const o = order;
       o.driver = driver;
@@ -21,12 +23,23 @@ export class OrderService {
     });
   }
 
-  fillOrderVehicle(order: Order): Observable<Order>  {
+  private fillOrderVehicle(order: Order): Observable<Order>  {
     return this.carService.show(order.vehicle_id).map(car => {
       const o = order;
       o.vehicle = car;
       return o;
     });
+  }
+
+  fillInDriverAndVehicle(orders: Observable<Order[]>): Observable<Order> {
+    return orders
+      .pipe(mergeMap( rawOrders => {
+        return from(rawOrders).pipe(
+          mergeMap( order => this.fillOrderDriver(order)),
+          mergeMap( order => this.fillOrderVehicle(order))
+        );
+      })
+    );
   }
 
   createOrder(order: Order) {
@@ -49,7 +62,7 @@ export class OrderService {
           note: order.note,
           VIP: order.VIP,
           flight_number: order.flightNumber,
-          pick_up_at: order.scheduled_pick_up_at
+          scheduled_pick_up_at: order.scheduled_pick_up_at
         }
       }
     ));

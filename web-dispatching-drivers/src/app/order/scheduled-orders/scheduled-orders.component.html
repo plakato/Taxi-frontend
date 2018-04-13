@@ -59,5 +59,6 @@
     </mat-row>
   </mat-table>
 
-  <mat-paginator [pageSizeOptions]="[10, 25, 100, 200]"></mat-paginator>
+  <mat-paginator [pageSizeOptions]="[10, 25, 100, 200]"
+                 (page)="onPageChange($event)" [length]="totalOrdersCount.value"></mat-paginator>
 </div>

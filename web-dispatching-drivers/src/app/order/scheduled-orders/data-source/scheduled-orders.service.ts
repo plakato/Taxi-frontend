@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { switchMap, concatMap, mergeMap } from 'rxjs/operators';
+import { mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
-import 'rxjs/add/operator/mergeMap';
 import { Order } from '../../order.module';
 import { Observable } from 'rxjs/Observable';
-import { forkJoin } from 'rxjs/observable/forkJoin';
 import { from } from 'rxjs/observable/from';
 import { HttpClient } from '@angular/common/http';
 import { DriverService } from '../../../driver/shared/driver.service';
@@ -14,7 +12,7 @@ import { OrderService } from '../../shared/order.service';
 
 @Injectable()
 export class ScheduledOrdersService {
-
+  public totalCount: BehaviorSubject<number> = new BehaviorSubject(0);
   public ordersEventSource: BehaviorSubject<Array<Order>> = new BehaviorSubject(Array());
   private readonly orders: Observable<Array<Order>> = this.ordersEventSource.asObservable();
   private orderData: Order[] = new Array();
@@ -25,15 +23,16 @@ export class ScheduledOrdersService {
    }
 
   loadInitialData() {
+    const This = this;
+    const orders$ = this.http.get<OrderRequest>('orders/?page=1&per_page=10&scheduled').map(
+      res => {
+        This.totalCount.next(res.total_count);
+        return res.items;
+      }
+    );
       // Fill in order driver and vehicle from id.
-      this.http.get<Order[]>('orders/?page=1&per_page=10&scheduled')
-        .pipe(mergeMap( rawOrders => {
-            return from(rawOrders).pipe(
-              mergeMap( order => this.orderService.fillOrderDriver(order)),
-              mergeMap( order => this.orderService.fillOrderVehicle(order))
-            );
-          })
-        ).subscribe(
+      this.orderService.fillInDriverAndVehicle(orders$)
+           .subscribe(
             res => {
               this.orderData.push(res);
               this.ordersEventSource.next(this.orderData); }
@@ -42,10 +41,26 @@ export class ScheduledOrdersService {
 
 
   loadPage(page: number, per_page: number) {
-    return this.http.get<Order[]>('orders/?page=' + page + '&per_page=' + per_page + '&scheduled').subscribe(
-      res => {
-        this.orderData.concat(res);
-        this.ordersEventSource.next(this.orderData);
+    const thisService = this;
+    let iterator = 0;
+    const orders$ = this.http.get<OrderRequest>('orders/?page=' + (page + 1) + '&per_page=' + per_page + '&scheduled')
+                    .map(
+                      res => {
+                        thisService.totalCount.next(res.total_count);
+                        return res.items;
+                      });
+    // At server pages are numbered starting from 1 (not 0!).
+    return thisService.orderService
+      .fillInDriverAndVehicle(orders$)
+      .subscribe(
+        res => {
+          thisService.orderData.splice(page * per_page + iterator++, 1, res);
+          thisService.ordersEventSource.next(this.orderData);
       });
   }
+}
+
+export interface OrderRequest {
+  items: Order[];
+  total_count: number;
 }

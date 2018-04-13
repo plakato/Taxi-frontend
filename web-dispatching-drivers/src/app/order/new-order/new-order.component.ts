@@ -61,6 +61,7 @@ export class NewOrderComponent implements OnInit {
     order.loc_start = this.fromLatLng;
     order.loc_finish = this.toLatLng;
     order.driver_id = this.driverID;
+    order.contact_telephone = this.customer.telephone;
     // Send order.
     this.orderService.createOrder(order).subscribe(
       res => { this.snackbar.open('Objednávka úspěšně vytvořena!', '', {duration: 2000});
@@ -101,8 +102,15 @@ export class NewOrderComponent implements OnInit {
       if (formattedNumber[0] !== '+') {
         formattedNumber = '+420' + formattedNumber;
       }
+      const getThis = this;
       this.customerService.getCustomer(formattedNumber).subscribe(
-        customer => this.customer = customer
+        customer => getThis.customer = customer,
+        err => {
+          if (err.status === 404) {
+            getThis.customer = { telephone: getThis.newOrderForm.get('phoneNumber').value,
+                                id: null, name: null, note: null};
+          }
+        }
       );
     }
   }
