@@ -14,18 +14,21 @@ import { MatFormFieldModule,
         MatButtonToggleModule,
         MatCheckboxModule,
         MatTableModule,
-        MatPaginatorModule
+        MatPaginatorModule,
+        MatSortModule
          } from '@angular/material';
 import { CustomerService } from './shared/customer.service';
 import { OrderService } from './shared/order.service';
 import { LatLngLiteral } from '@agm/core';
 import { OrderHistoryComponent } from './order-history/order-history.component';
 import { ScheduledOrdersComponent } from './scheduled-orders/scheduled-orders.component';
-import { ScheduledOrdersService } from './scheduled-orders/data-source/scheduled-orders.service';
+import { OrdersPollingService } from './shared/data-source/orders-polling.service';
 import { ListAllDriversComponent } from '../driver/list-all-drivers/list-all-drivers.component';
 import { DriverModule, Driver } from '../driver/driver.module';
 import { MyOrdersService } from './shared/my-orders.service';
 import { Car } from '../car/car.module';
+import { OngoingOrdersComponent } from './ongoing-orders/ongoing-orders.component';
+import { OrdersTableComponent } from './orders-table/orders-table.component';
 
 @NgModule({
   imports: [
@@ -45,10 +48,11 @@ import { Car } from '../car/car.module';
     MatButtonToggleModule,
     MatCheckboxModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSortModule
   ],
-  declarations: [NewOrderComponent, OrderHistoryComponent, ScheduledOrdersComponent],
-  providers: [CustomerService, OrderService, ScheduledOrdersService, MyOrdersService],
+  declarations: [NewOrderComponent, OrderHistoryComponent, ScheduledOrdersComponent, OngoingOrdersComponent, OrdersTableComponent],
+  providers: [CustomerService, OrderService, OrdersPollingService, MyOrdersService],
   entryComponents: [ ListAllDriversComponent ]
 })
 export class OrderModule { }
@@ -75,7 +79,7 @@ export interface Order {
   VIP: boolean;
   contact_telephone: string;
   flightNumber: string;
-  scheduled_pick_up_at: string;
+  scheduled_pick_up_at: Date;
 }
 
 export interface Notification {

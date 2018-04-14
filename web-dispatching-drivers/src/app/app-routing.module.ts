@@ -16,6 +16,7 @@ import { OrderHistoryComponent } from './order/order-history/order-history.compo
 import { ScheduledOrdersComponent } from './order/scheduled-orders/scheduled-orders.component';
 import { DriverMenuComponent } from './menu/driver-menu/driver-menu.component';
 import { DriverNewOrderComponent } from './driver/driver-new-order/driver-new-order.component';
+import { OngoingOrdersComponent } from './order/ongoing-orders/ongoing-orders.component';
 
 const appRoutes: Routes = [
     { path: 'password-confirmation/:confirmation_token', component: PasswordConfirmationComponent},
@@ -26,7 +27,8 @@ const appRoutes: Routes = [
                 children: [
                   { path: 'new', component: NewOrderComponent },
                   { path: 'history', component: OrderHistoryComponent },
-                  { path: 'scheduled', component: ScheduledOrdersComponent }
+                  { path: 'scheduled', component: ScheduledOrdersComponent },
+                  { path: 'ongoing', component: OngoingOrdersComponent }
                 ]},
               { path: 'profile', component: ProfileDispatcherComponent},
               { path: 'employees', canActivate: [AdminGuardService],

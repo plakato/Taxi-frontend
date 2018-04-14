@@ -62,7 +62,7 @@ export class OrderService {
           note: order.note,
           VIP: order.VIP,
           flight_number: order.flightNumber,
-          scheduled_pick_up_at: order.scheduled_pick_up_at
+          scheduled_pick_up_at: order.scheduled_pick_up_at.toISOString()
         }
       }
     ));

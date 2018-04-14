@@ -56,7 +56,7 @@ export class NewOrderComponent implements OnInit {
           const pickUp: Date = this.newOrderForm.get('date').value;
           pickUp.setHours(Number(time[0]));
           pickUp.setMinutes(Number(time[1]));
-          order.scheduled_pick_up_at = pickUp.toISOString();
+          order.scheduled_pick_up_at = pickUp;
         }
     order.loc_start = this.fromLatLng;
     order.loc_finish = this.toLatLng;

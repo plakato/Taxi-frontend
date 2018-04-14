@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { MatTableDataSource, MatSort, MatPaginatorIntl, MatPaginator } from '@angular/material';
+import { MatTableDataSource, MatSort, MatPaginatorIntl, MatPaginator, PageEvent } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { Order } from '../order.module';
 import { OrderService } from '../shared/order.service';
-import { ScheduledOrdersService } from './data-source/scheduled-orders.service';
+import { OrdersPollingService, OrderRequestParams } from '../shared/data-source/orders-polling.service';
 import { DataSource } from '@angular/cdk/table';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-scheduled-orders',
@@ -15,15 +16,15 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 export class ScheduledOrdersComponent implements AfterViewInit {
 
   displayedColumns = ['driver', 'car', 'start', 'finish', 'pickUpDate', 'pickUpTime', 'note'];
-  dataSource = new ScheduledOrderDataSource(this.scheduledOrderService);
+  dataSource = new OrderDataSource(this.ordersPollingService);
   paginatorIntl = new MatPaginatorIntl();
   totalOrdersCount: BehaviorSubject<number>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor( private scheduledOrderService: ScheduledOrdersService) {
-    this.totalOrdersCount = this.scheduledOrderService.totalCount;
+  constructor( private ordersPollingService: OrdersPollingService) {
+    this.totalOrdersCount = this.ordersPollingService.totalCount;
   }
 
   ngAfterViewInit() {
@@ -37,6 +38,9 @@ export class ScheduledOrdersComponent implements AfterViewInit {
     this.paginator._intl = this.paginatorIntl;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+
+    this.onPageChange({pageIndex: this.dataSource.paginator.pageIndex,
+                      pageSize: this.dataSource.paginator.pageSize, length: null});
   }
 
   applyFilter(filterValue: string) {
@@ -46,20 +50,22 @@ export class ScheduledOrdersComponent implements AfterViewInit {
   }
 
   getPickUpDate(order: Order): Date {
-    const unixDate: number = Date.parse(order.scheduled_pick_up_at);
-    const date: Date = new Date(unixDate);
-    return date;
+    // const unixDate: number = Date.parse(order.scheduled_pick_up_at);
+    // const date: Date = new Date(unixDate);
+    return order.scheduled_pick_up_at;
   }
 
-  onPageChange(event) {
-    this.scheduledOrderService.loadPage(event.pageIndex, event.pageSize);
+  onPageChange(event: PageEvent) {
+    const params: OrderRequestParams = new OrderRequestParams(event.pageIndex, event.pageSize);
+    params.scheduled = true;
+    this.ordersPollingService.loadPage(params);
   }
 }
 
 
 
 
-export class ScheduledOrderDataSource extends MatTableDataSource<any> {
+export class OrderDataSource extends MatTableDataSource<any> {
 
   // Override filter predicate to read properties recursively.
   // (otherwise the function matches the original.)
@@ -95,8 +101,9 @@ export class ScheduledOrderDataSource extends MatTableDataSource<any> {
           });
         }
 
-  constructor(private scheduledOrderService: ScheduledOrdersService) {
+  constructor(private ordersPollingService: OrdersPollingService) {
     super();
-    this.scheduledOrderService.ordersEventSource.subscribe(data => this.data = data);
+    this.ordersPollingService.ordersEventSource.subscribe(data => this.data = data);
   }
 }
+

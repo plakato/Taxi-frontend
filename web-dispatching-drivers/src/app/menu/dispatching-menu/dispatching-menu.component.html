@@ -16,7 +16,7 @@
        <mat-icon mat-list-icon>add</mat-icon>
          <p matLine *ngIf="isExpanded">Nová objednávka</p>
       </mat-list-item>
-      <mat-list-item>
+      <mat-list-item [routerLink]="['orders/ongoing']">
         <mat-icon mat-list-icon>cached</mat-icon>
           <p matLine *ngIf="isExpanded">Aktuální objednávky</p>
        </mat-list-item>
