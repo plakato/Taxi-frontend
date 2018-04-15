@@ -27,7 +27,7 @@
     </ng-container>
 
     <!-- Estimated pick up time Column -->
-    <ng-container matColumnDef="estPickUpDate">
+    <ng-container matColumnDef="estPickUpTime">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Předpokladaný čas naložení</mat-header-cell>
       <mat-cell *matCellDef="let order"> {{order.picked_up_time_est | date: 'hh:mm'}} </mat-cell>
     </ng-container>
@@ -45,7 +45,7 @@
     </ng-container>
 
     <!-- Order type Column -->
-    <ng-container matColumnDef="type">
+    <ng-container matColumnDef="source">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Typ objednávky </mat-header-cell>
       <mat-cell *matCellDef="let order">
         <mat-icon *ngIf="order.source === 'app'">phone_android</mat-icon>
@@ -57,7 +57,7 @@
     <ng-container matColumnDef="action">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Akce </mat-header-cell>
       <mat-cell *matCellDef="let order">
-        <mat-icon>close</mat-icon>
+        <mat-icon class="red action">close</mat-icon>
       </mat-cell>
     </ng-container>
 

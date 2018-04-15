@@ -1,6 +1,9 @@
 <h1>Aktuální objednávky</h1>
 
 <h2>Čekající objednávky</h2>
-<app-orders-table></app-orders-table>
+<app-orders-table [displayedColumns]="waitingDisplayedColumns" [params]="waitingParams"></app-orders-table>
 <h2>Probíhající objednávky</h2>
+<app-orders-table [displayedColumns]="ongoingDisplayedColumns" [params]="ongoingParams"></app-orders-table>
 <h2>Poslední dokončené</h2>
+<app-orders-table [displayedColumns]="waitingDisplayedColumns" [params]="waitingParams"></app-orders-table>
+

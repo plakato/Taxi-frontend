@@ -1,0 +1,9 @@
+@import '../../../_variables.scss';
+
+.red {
+  color: mat-color(map-get($yellow-app-theme, warn));
+}
+
+.action {
+  cursor: pointer;
+}

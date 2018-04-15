@@ -14,7 +14,7 @@
     <mat-datepicker-toggle matSuffix [for]="untilPicker"></mat-datepicker-toggle>
     <mat-datepicker #untilPicker (selectedChange)="filter = false"></mat-datepicker>
   </mat-form-field>
-  <button class="leftMargin" mat-raised-button (click)="filterByTime()">Filtrovat</button>
+  <button class="leftMargin" mat-raised-button (click)="filterByTime(true)">Filtrovat</button>
 </form>
 
 

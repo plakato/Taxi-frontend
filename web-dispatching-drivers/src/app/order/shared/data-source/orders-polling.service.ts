@@ -39,6 +39,11 @@ export class OrdersPollingService {
           thisService.ordersEventSource.next(this.orderData);
       });
   }
+
+  clearData() {
+    this.orderData = [];
+    this.ordersEventSource.next(this.orderData);
+  }
 }
 
 interface OrderRequest {
@@ -51,6 +56,7 @@ export class OrderRequestParams {
   numbers: Map<string, number> = new Map<string, number>();
   booleans: Map<string, boolean> = new Map<string, boolean>();
   dates: Map<string, Date> = new Map<string, Date>();
+  status: Set<string> = new Set<string>();
 
   constructor(page: number, per_page: number) {
     // Server pages are numbered starting from 1 (not 0!).
@@ -61,14 +67,39 @@ export class OrderRequestParams {
   set scheduled(bool: boolean) { this.booleans.set('scheduled', bool); }
   set since(when: Date) { this.dates.set('since', when); }
   set until(when: Date) { this.dates.set('until', when); }
+  set waiting(bool: boolean) {
+    if (bool) {
+      this.status.add('created');
+      this.status.add('driver_confirmed');
+      this.status.add('driver_arriving');
+      this.status.add('driver_arrived');
+    } else {
+      this.status.delete('created');
+      this.status.delete('driver_confirmed');
+      this.status.delete('driver_arriving');
+      this.status.delete('driver_arrived');
+    }
+  }
+  set ongoing(bool: boolean) {
+    if (bool) {
+      this.status.add('customer_picked_up');
+
+    } else {
+      this.status.delete('customer_picked_up');
+    }
+  }
+  set page(number) { this.numbers.set('page', ++number); }
   get page(): number { return this.numbers.get('page'); }
+  set per_page(number) { this.numbers.set('per_page', number); }
   get per_page(): number { return this.numbers.get('per_page'); }
 
-  toString(): string {debugger;
-    const result: Map<string, string> = new Map<string, string>();
-    this.numbers.forEach((value, key) => { result.set(key, String(value)); });
-    this.booleans.forEach((value, key) => { result.set(key, String(value)); });
-    this.dates.forEach((value, key) => { result.set(key, value.toISOString()); });
-    return '?' + Array.from(result.keys()).map(key => key + '=' + result.get(key)).join('&');
+  toString(): string {
+    const values: Map<string, string> = new Map<string, string>();
+    this.numbers.forEach((value, key) => { values.set(key, String(value)); });
+    this.booleans.forEach((value, key) => { values.set(key, String(value)); });
+    this.dates.forEach((value, key) => { values.set(key, value.toISOString()); });
+    const result = Array.from(values.keys()).map(key => key + '=' + values.get(key));
+    this.status.forEach(status => result.push('status[]=' + status));
+    return '?' + result.join('&');
   }
 }

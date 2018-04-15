@@ -49,12 +49,6 @@ export class ScheduledOrdersComponent implements AfterViewInit {
     this.dataSource.filter = filterValue;
   }
 
-  getPickUpDate(order: Order): Date {
-    // const unixDate: number = Date.parse(order.scheduled_pick_up_at);
-    // const date: Date = new Date(unixDate);
-    return order.scheduled_pick_up_at;
-  }
-
   onPageChange(event: PageEvent) {
     const params: OrderRequestParams = new OrderRequestParams(event.pageIndex, event.pageSize);
     params.scheduled = true;

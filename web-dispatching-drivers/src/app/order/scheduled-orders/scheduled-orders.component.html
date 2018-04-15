@@ -38,13 +38,13 @@
     <!-- Pick up date Column -->
     <ng-container matColumnDef="pickUpDate">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Datum naložení </mat-header-cell>
-      <mat-cell *matCellDef="let order"> {{getPickUpDate(order) | date: 'dd.MM.yyyy'}} </mat-cell>
+      <mat-cell *matCellDef="let order"> {{order.scheduled_pick_up_at | date: 'dd.MM.yyyy'}} </mat-cell>
     </ng-container>
 
     <!-- Pick up time Column -->
     <ng-container matColumnDef="pickUpTime">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Čas naložení </mat-header-cell>
-      <mat-cell *matCellDef="let order"> {{getPickUpDate(order) | date: 'hh:mm'}} </mat-cell>
+      <mat-cell *matCellDef="let order"> {{order.scheduled_pick_up_at | date: 'hh:mm'}} </mat-cell>
     </ng-container>
 
     <!-- Note Column -->

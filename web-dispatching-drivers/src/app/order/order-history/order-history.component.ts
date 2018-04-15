@@ -62,14 +62,17 @@ export class OrderHistoryComponent implements OnInit, AfterViewInit {
 
   onPageChange(event: PageEvent) {
     if (this.filter) {
-      this.filterByTime();
+      this.filterByTime(false);
     } else {
       const params: OrderRequestParams = new OrderRequestParams(event.pageIndex, event.pageSize);
       this.ordersPollingService.loadPage(params);
     }
   }
 
-  filterByTime() {debugger;
+  filterByTime(clear: boolean) {
+    if (clear) {
+      this.ordersPollingService.clearData();
+    }
     const params: OrderRequestParams = new OrderRequestParams(this.paginator.pageIndex, this.paginator.pageSize);
     params.since = this.intervalForm.get('sinceDate').value;
     params.until = this.intervalForm.get('untilDate').value;
