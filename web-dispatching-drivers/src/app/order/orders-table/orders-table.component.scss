@@ -10,5 +10,16 @@
 
 mat-icon {
   padding-top: 5px;
-  margin-right: 10px;
+  margin-right: 5px;
+}
+
+.empty-label {
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.status-icon {
+  display: flex;
+  align-items: center;
 }

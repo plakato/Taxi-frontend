@@ -13,7 +13,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class CarsComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource();
   displayedColumns = ['image', 'number', 'name', 'plate', 'max_persons', 'available', 'delete'];
-  listEmpty = false;
+
   @ViewChild(MatSort) sort: MatSort;
 
   ngAfterViewInit() {
@@ -47,9 +47,6 @@ export class CarsComponent implements OnInit, AfterViewInit {
     deleteDialog.afterClosed().subscribe(
       res => {
         console.log('The dialog was closed:' + res);
-        if (this.dataSource.data.length === 0 ) {
-          this.listEmpty = true;
-        }
       });
   }
 

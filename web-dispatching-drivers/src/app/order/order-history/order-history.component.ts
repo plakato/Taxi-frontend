@@ -2,11 +2,11 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatPaginator, MatSort, MatTableDataSource, MatPaginatorIntl, PageEvent } from '@angular/material';
 import { Order } from '../order.module';
-import { OrderDataSource } from '../scheduled-orders/scheduled-orders.component';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { OrdersPollingService, OrderRequestParams } from '../shared/data-source/orders-polling.service';
 import { LatLngLiteral } from '@agm/core';
 import { CzechPaginatorIntl } from '../shared/data-source/czech-paginator-intl.service';
+import { OrderDataSource } from '../orders-table/orders-table.component';
 
 @Component({
   selector: 'app-order-history',

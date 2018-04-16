@@ -57,7 +57,7 @@
     <ng-container matColumnDef="action">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Akce </mat-header-cell>
       <mat-cell *matCellDef="let order">
-        <mat-icon class="red action">close</mat-icon>
+        <mat-icon class="red action" matTooltip="Zrušit" (click)="cancelOrder(order)">close</mat-icon>
       </mat-cell>
     </ng-container>
 
@@ -65,14 +65,14 @@
     <ng-container matColumnDef="status">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Stav </mat-header-cell>
         <mat-cell *matCellDef="let order">
-          <div *ngIf="order.status === 'created'">           <mat-icon>add</mat-icon>vytvořená</div>
-          <div *ngIf="order.status === 'driver_confirmed'">  <mat-icon>add_box</mat-icon>potvrzená</div>
-          <div *ngIf="order.status === 'driver_arriving'">   <mat-icon>directions_car</mat-icon>řidič na cestě</div>
-          <div *ngIf="order.status === 'driver_arrived'">    <mat-icon>place</mat-icon>řidič dorazil</div>
-          <div *ngIf="order.status === 'customer_picked_up'"><mat-icon>person_pin</mat-icon>probíhá</div>
-          <div *ngIf="order.status === 'finished'">          <mat-icon>done</mat-icon>ukončena</div>
-          <div *ngIf="order.status === 'canceled'">          <mat-icon>close</mat-icon>zrušena</div>
-          <div *ngIf="order.status === 'fraud'">             <mat-icon>warning</mat-icon>propal</div>
+          <div class="status-icon" *ngIf="order.status === 'created'">           <mat-icon>add</mat-icon>vytvořená</div>
+          <div class="status-icon" *ngIf="order.status === 'driver_confirmed'">  <mat-icon>add_box</mat-icon>potvrzená</div>
+          <div class="status-icon" *ngIf="order.status === 'driver_arriving'">   <mat-icon>directions_car</mat-icon>řidič na cestě</div>
+          <div class="status-icon" *ngIf="order.status === 'driver_arrived'">    <mat-icon>place</mat-icon>řidič dorazil</div>
+          <div class="status-icon" *ngIf="order.status === 'customer_picked_up'"><mat-icon>person_pin</mat-icon>probíhá</div>
+          <div class="status-icon" *ngIf="order.status === 'finished'">          <mat-icon>done</mat-icon>ukončena</div>
+          <div class="status-icon" *ngIf="order.status === 'canceled'">          <mat-icon>close</mat-icon>zrušena</div>
+          <div class="status-icon" *ngIf="order.status === 'fraud'">             <mat-icon>warning</mat-icon>propal</div>
         </mat-cell>
       </ng-container>
 
@@ -80,6 +80,7 @@
     <mat-row *matRowDef="let row; columns: displayedColumns;">
     </mat-row>
   </mat-table>
+  <div *ngIf="this.dataSource.data.length === 0" class="empty-label">Nenašly se žádné objednávky.</div>
 
   <mat-paginator [pageSizeOptions]="[10, 25, 100, 200]"
                  (page)="onPageChange($event)" [length]="totalOrdersCount.value"></mat-paginator>

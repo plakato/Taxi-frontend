@@ -14,7 +14,9 @@
     <!-- Driver Column -->
     <ng-container matColumnDef="driver">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Řidič </mat-header-cell>
-      <mat-cell *matCellDef="let order"> {{order.driver.name}} </mat-cell>
+      <mat-cell *matCellDef="let order" (click)="editingDriver=!editingDriver" class="action">
+        <app-list-all-drivers [firstSelected]="order.driver" (selectedDriver)="changeDriver(order, $event, this)" class="edit-driver"></app-list-all-drivers>
+      </mat-cell>
     </ng-container>
 
     <!-- Car Column -->
@@ -53,12 +55,20 @@
       <mat-cell *matCellDef="let order"> {{order.note}} </mat-cell>
     </ng-container>
 
+    <!-- Action Column -->
+    <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Akce </mat-header-cell>
+      <mat-cell *matCellDef="let order">
+        <mat-icon class="red action" matTooltip="Zrušit" (click)="cancelOrder(order)">close</mat-icon>
+      </mat-cell>
+    </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;">
     </mat-row>
   </mat-table>
 
+  <div *ngIf="this.dataSource.data.length === 0" class="empty-label">Nenašly se žádné objednávky.</div>
   <mat-paginator [pageSizeOptions]="[10, 25, 100, 200]"
                  (page)="onPageChange($event)" [length]="totalOrdersCount.value"></mat-paginator>
 </div>

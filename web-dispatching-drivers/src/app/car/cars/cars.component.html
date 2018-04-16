@@ -57,7 +57,7 @@
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
-    <div *ngIf='listEmpty' class="empty-label">Nenanšla se žádná auta.</div>
+    <div *ngIf="this.dataSource.data.length === 0" class="empty-label">Nenašla se žádná auta.</div>
   </div>
 
   <app-add-new-car></app-add-new-car>

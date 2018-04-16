@@ -64,5 +64,12 @@ export class OrderService {
     ));
   }
 
+  cancel(id: number) {
+    return this.http.patch('orders/' + id + '/cancel', '');
+  }
+
+  updateDriver(orderID: number, driverID: number) {
+
+  }
 }
 

@@ -9,7 +9,7 @@ export class CarRetrievalService {
   private carsEventSource: BehaviorSubject<Map<number, Car>> = new BehaviorSubject( new Map());
   // Extract values from the map to have it as an array of cars.
   public readonly cars: Observable<Array<Car>> = this.carsEventSource.asObservable().map( map => Array.from(map.values()));
-  private carsData: Map<number, Car>;
+  private carsData: Map<number, Car> = new Map();
 
   constructor( private http: HttpClient) {
     this.loadInitialData();
@@ -18,9 +18,7 @@ export class CarRetrievalService {
   loadInitialData() {
     this.http.get<Car[]>('vehicles').subscribe(
       res => {
-        this.carsData = res.reduce((cars: Map<number, Car>, car: Car)  => {
-                                                    cars[car.id] = car;
-                                                    return cars; }, new Map());
+        res.forEach(car => { this.carsData.set(car.id, car); });
         this.carsEventSource.next(this.carsData);
       }
     );

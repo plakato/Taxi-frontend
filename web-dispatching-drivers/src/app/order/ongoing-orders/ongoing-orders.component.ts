@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { OrdersTableComponent } from '../orders-table/orders-table.component';
 import { MatPaginatorIntl, PageEvent } from '@angular/material';
-import { OrderDataSource } from '../scheduled-orders/scheduled-orders.component';
 import { OrdersPollingService, OrderRequestParams } from '../shared/data-source/orders-polling.service';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 

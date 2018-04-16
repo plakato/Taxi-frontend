@@ -15,7 +15,9 @@ import { MatFormFieldModule,
         MatCheckboxModule,
         MatTableModule,
         MatPaginatorModule,
-        MatSortModule
+        MatSortModule,
+        MatTooltipModule,
+        MatTableDataSource
          } from '@angular/material';
 import { CustomerService } from './shared/customer.service';
 import { OrderService } from './shared/order.service';
@@ -30,6 +32,8 @@ import { MyOrdersService } from './shared/my-orders.service';
 import { Car } from '../car/car.module';
 import { OngoingOrdersComponent } from './ongoing-orders/ongoing-orders.component';
 import { OrdersTableComponent } from './orders-table/orders-table.component';
+import { CancelOrderDialogComponent } from '../reusable/modals/cancel-order-dialog/cancel-order-dialog.component';
+
 
 @NgModule({
   imports: [
@@ -50,11 +54,13 @@ import { OrdersTableComponent } from './orders-table/orders-table.component';
     MatCheckboxModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatTooltipModule
   ],
-  declarations: [NewOrderComponent, OrderHistoryComponent, ScheduledOrdersComponent, OngoingOrdersComponent, OrdersTableComponent],
+  declarations: [NewOrderComponent, OrderHistoryComponent, ScheduledOrdersComponent, OngoingOrdersComponent,
+    OrdersTableComponent],
   providers: [CustomerService, OrderService, OrdersPollingService, MyOrdersService, CzechPaginatorIntl],
-  entryComponents: [ ListAllDriversComponent ]
+  entryComponents: [ ListAllDriversComponent, CancelOrderDialogComponent ]
 })
 export class OrderModule { }
 
@@ -87,3 +93,5 @@ export interface Notification {
   subject: string;
   data: object;
 }
+
+
