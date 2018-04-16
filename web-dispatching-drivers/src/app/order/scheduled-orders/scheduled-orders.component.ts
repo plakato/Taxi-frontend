@@ -7,6 +7,7 @@ import { OrdersPollingService, OrderRequestParams } from '../shared/data-source/
 import { DataSource } from '@angular/cdk/table';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { HttpParams } from '@angular/common/http';
+import { CzechPaginatorIntl } from '../shared/data-source/czech-paginator-intl.service';
 
 @Component({
   selector: 'app-scheduled-orders',
@@ -16,15 +17,15 @@ import { HttpParams } from '@angular/common/http';
 export class ScheduledOrdersComponent implements AfterViewInit {
 
   displayedColumns = ['driver', 'car', 'start', 'finish', 'pickUpDate', 'pickUpTime', 'note'];
-  dataSource = new OrderDataSource(this.ordersPollingService);
-  paginatorIntl = new MatPaginatorIntl();
-  totalOrdersCount: BehaviorSubject<number>;
+  ordersEventSource: BehaviorSubject<Array<Order>> = new BehaviorSubject(Array());
+  orderData: Order[] = new Array();
+  dataSource = new OrderDataSource(this.ordersEventSource);
+  totalOrdersCount: BehaviorSubject<number> = new BehaviorSubject(0);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor( private ordersPollingService: OrdersPollingService) {
-    this.totalOrdersCount = this.ordersPollingService.totalCount;
   }
 
   ngAfterViewInit() {
@@ -32,10 +33,7 @@ export class ScheduledOrdersComponent implements AfterViewInit {
      * Set the paginator and sort after the view init since this component will
      * be able to query its view for the initialized paginator and sort.
      */
-    this.paginatorIntl.itemsPerPageLabel = 'Položek na stránku:';
-    this.paginatorIntl.nextPageLabel = 'Další stránka';
-    this.paginatorIntl.previousPageLabel = 'Předchozí stránka';
-    this.paginator._intl = this.paginatorIntl;
+    this.paginator._intl = new CzechPaginatorIntl();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 
@@ -52,7 +50,18 @@ export class ScheduledOrdersComponent implements AfterViewInit {
   onPageChange(event: PageEvent) {
     const params: OrderRequestParams = new OrderRequestParams(event.pageIndex, event.pageSize);
     params.scheduled = true;
-    this.ordersPollingService.loadPage(params);
+    const This = this;
+    this.ordersPollingService.loadPage(params).subscribe(
+      res => {
+        let iterator = 0;
+        this.totalOrdersCount.next(res.totalCount);
+        res.item.subscribe(
+          order => {
+            This.orderData.splice((params.page - 1) * params.per_page + iterator++, 1, order);
+            this.ordersEventSource.next(This.orderData);
+        });
+      }
+    );
   }
 }
 
@@ -95,9 +104,9 @@ export class OrderDataSource extends MatTableDataSource<any> {
           });
         }
 
-  constructor(private ordersPollingService: OrdersPollingService) {
+  constructor(private eventSource: BehaviorSubject<Array<Order>>) {
     super();
-    this.ordersPollingService.ordersEventSource.subscribe(data => this.data = data);
+    eventSource.subscribe(data => this.data = data);
   }
 }
 

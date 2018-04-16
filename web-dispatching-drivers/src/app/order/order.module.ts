@@ -19,6 +19,7 @@ import { MatFormFieldModule,
          } from '@angular/material';
 import { CustomerService } from './shared/customer.service';
 import { OrderService } from './shared/order.service';
+import { CzechPaginatorIntl } from './shared/data-source/czech-paginator-intl.service';
 import { LatLngLiteral } from '@agm/core';
 import { OrderHistoryComponent } from './order-history/order-history.component';
 import { ScheduledOrdersComponent } from './scheduled-orders/scheduled-orders.component';
@@ -52,7 +53,7 @@ import { OrdersTableComponent } from './orders-table/orders-table.component';
     MatSortModule
   ],
   declarations: [NewOrderComponent, OrderHistoryComponent, ScheduledOrdersComponent, OngoingOrdersComponent, OrdersTableComponent],
-  providers: [CustomerService, OrderService, OrdersPollingService, MyOrdersService],
+  providers: [CustomerService, OrderService, OrdersPollingService, MyOrdersService, CzechPaginatorIntl],
   entryComponents: [ ListAllDriversComponent ]
 })
 export class OrderModule { }

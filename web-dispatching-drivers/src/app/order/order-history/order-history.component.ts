@@ -6,6 +6,7 @@ import { OrderDataSource } from '../scheduled-orders/scheduled-orders.component'
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { OrdersPollingService, OrderRequestParams } from '../shared/data-source/orders-polling.service';
 import { LatLngLiteral } from '@agm/core';
+import { CzechPaginatorIntl } from '../shared/data-source/czech-paginator-intl.service';
 
 @Component({
   selector: 'app-order-history',
@@ -14,12 +15,13 @@ import { LatLngLiteral } from '@agm/core';
 })
 export class OrderHistoryComponent implements OnInit, AfterViewInit {
   intervalForm: FormGroup;
+  filter = false;
+  orderData: Order[] = [];
   displayedColumns = ['driver', 'car', 'start', 'finish', 'orderCreatedTime',
         'pickUpTime', 'dropOffTime', 'customer', 'orderCreatedType', 'note'];
-  dataSource = new OrderDataSource(this.ordersPollingService);
-  paginatorIntl = new MatPaginatorIntl();
-  totalOrdersCount: BehaviorSubject<number>;
-  filter = false;
+  ordersEventSource: BehaviorSubject<Array<Order>> = new BehaviorSubject(Array());
+  dataSource = new OrderDataSource(this.ordersEventSource);
+  totalOrdersCount: BehaviorSubject<number> = new BehaviorSubject(0);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -30,11 +32,8 @@ export class OrderHistoryComponent implements OnInit, AfterViewInit {
     return d.setHours(0, 0, 0, 0) <= (new Date(Date.now()).setHours(0, 0, 0, 0));
   }
 
-
   constructor(private fb: FormBuilder,
-              private ordersPollingService: OrdersPollingService ) {
-      this.totalOrdersCount = this.ordersPollingService.totalCount;
-    }
+              private ordersPollingService: OrdersPollingService ) { }
 
   ngOnInit()  {
     const today = new Date(Date.now());
@@ -49,10 +48,7 @@ export class OrderHistoryComponent implements OnInit, AfterViewInit {
      * Set the paginator and sort after the view init since this component will
      * be able to query its view for the initialized paginator and sort.
      */
-    this.paginatorIntl.itemsPerPageLabel = 'Položek na stránku:';
-    this.paginatorIntl.nextPageLabel = 'Další stránka';
-    this.paginatorIntl.previousPageLabel = 'Předchozí stránka';
-    this.paginator._intl = this.paginatorIntl;
+    this.paginator._intl = new CzechPaginatorIntl();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 
@@ -65,19 +61,34 @@ export class OrderHistoryComponent implements OnInit, AfterViewInit {
       this.filterByTime(false);
     } else {
       const params: OrderRequestParams = new OrderRequestParams(event.pageIndex, event.pageSize);
-      this.ordersPollingService.loadPage(params);
+      this.getOrders(params);
     }
   }
 
   filterByTime(clear: boolean) {
     if (clear) {
-      this.ordersPollingService.clearData();
+      this.orderData = [];
+      this.ordersEventSource.next(this.orderData);
     }
     const params: OrderRequestParams = new OrderRequestParams(this.paginator.pageIndex, this.paginator.pageSize);
     params.since = this.intervalForm.get('sinceDate').value;
     params.until = this.intervalForm.get('untilDate').value;
-    this.ordersPollingService.loadPage(params);
+    this.getOrders(params);
     this.filter = true;
+  }
+
+  getOrders(params: OrderRequestParams) {
+    const This = this;
+    this.ordersPollingService.loadPage(params).subscribe(
+    res => {
+      let iterator = 0;
+      this.totalOrdersCount.next(res.totalCount);
+      res.item.subscribe(
+        order => {
+          This.orderData.splice((params.page - 1) * params.per_page + iterator++, 1, order);
+          this.ordersEventSource.next(This.orderData);
+      });
+    });
   }
 
 }

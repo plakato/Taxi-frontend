@@ -31,14 +31,10 @@ export class OrderService {
     });
   }
 
-  fillInDriverAndVehicle(orders: Observable<Order[]>): Observable<Order> {
-    return orders
-      .pipe(mergeMap( rawOrders => {
-        return from(rawOrders).pipe(
-          mergeMap( order => this.fillOrderDriver(order)),
-          mergeMap( order => this.fillOrderVehicle(order))
-        );
-      })
+  fillInDriverAndVehicle(orders: Order[]): Observable<Order> {
+    return from(orders).pipe(
+      mergeMap( order => this.fillOrderDriver(order)),
+      mergeMap( order => this.fillOrderVehicle(order))
     );
   }
 

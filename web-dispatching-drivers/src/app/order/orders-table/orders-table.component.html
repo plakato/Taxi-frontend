@@ -65,14 +65,14 @@
     <ng-container matColumnDef="status">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Stav </mat-header-cell>
         <mat-cell *matCellDef="let order">
-          <mat-icon *ngIf="order.status === 'created'">phone_android</mat-icon>vytvořená
-          <mat-icon *ngIf="order.status === 'driver_confirmed'">phone</mat-icon>potvrzená
-          <mat-icon *ngIf="order.status === 'driver_arriving'">phone</mat-icon>řidič na cestě
-          <mat-icon *ngIf="order.status === 'driver_arrived'">phone</mat-icon>řidič dorazil
-          <mat-icon *ngIf="order.status === 'customer_picked_up'">phone</mat-icon>probíhá
-          <mat-icon *ngIf="order.status === 'finished'">phone</mat-icon>ukončena
-          <mat-icon *ngIf="order.status === 'canceled'">phone</mat-icon>zrušena
-          <mat-icon *ngIf="order.status === 'fraud'">phone</mat-icon>propal
+          <div *ngIf="order.status === 'created'">           <mat-icon>add</mat-icon>vytvořená</div>
+          <div *ngIf="order.status === 'driver_confirmed'">  <mat-icon>add_box</mat-icon>potvrzená</div>
+          <div *ngIf="order.status === 'driver_arriving'">   <mat-icon>directions_car</mat-icon>řidič na cestě</div>
+          <div *ngIf="order.status === 'driver_arrived'">    <mat-icon>place</mat-icon>řidič dorazil</div>
+          <div *ngIf="order.status === 'customer_picked_up'"><mat-icon>person_pin</mat-icon>probíhá</div>
+          <div *ngIf="order.status === 'finished'">          <mat-icon>done</mat-icon>ukončena</div>
+          <div *ngIf="order.status === 'canceled'">          <mat-icon>close</mat-icon>zrušena</div>
+          <div *ngIf="order.status === 'fraud'">             <mat-icon>warning</mat-icon>propal</div>
         </mat-cell>
       </ng-container>
 
@@ -84,3 +84,4 @@
   <mat-paginator [pageSizeOptions]="[10, 25, 100, 200]"
                  (page)="onPageChange($event)" [length]="totalOrdersCount.value"></mat-paginator>
 </div>
+

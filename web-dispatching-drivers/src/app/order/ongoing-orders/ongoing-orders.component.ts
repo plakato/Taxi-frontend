@@ -17,15 +17,19 @@ export class OngoingOrdersComponent implements OnInit {
   waitingParams: OrderRequestParams = new OrderRequestParams(0, 10);
 
   // Ongoing orders.
-  ongoingDisplayedColumns = ['driver', 'car', 'start', 'finish', 'estDropOffTime', 'source'];
+  ongoingDisplayedColumns = ['driver', 'car', 'start', 'finish', 'estDropOffTime', 'source', 'status'];
   ongoingParams: OrderRequestParams = new OrderRequestParams(0, 10);
 
+  // Last finished.
+  finishedDisplayedColumns = ['driver', 'car', 'start', 'finish', 'dropOffTime', 'source', 'status'];
+  finishedParams: OrderRequestParams = new OrderRequestParams(0, 10);
 
   constructor() { }
 
   ngOnInit() {
     this.waitingParams.waiting = true;
     this.ongoingParams.ongoing = true;
+    this.finishedParams.finished = true;
   }
 
 }

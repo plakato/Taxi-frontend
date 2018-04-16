@@ -13,40 +13,23 @@ import { OrderService } from '../../shared/order.service';
 
 @Injectable()
 export class OrdersPollingService {
-  public totalCount: BehaviorSubject<number> = new BehaviorSubject(0);
-  public ordersEventSource: BehaviorSubject<Array<Order>> = new BehaviorSubject(Array());
-  private readonly orders: Observable<Array<Order>> = this.ordersEventSource.asObservable();
-  private orderData: Order[] = new Array();
 
   constructor( private http: HttpClient,
               private orderService: OrderService) {
    }
 
-  loadPage(params: OrderRequestParams) {
+  loadPage(params: OrderRequestParams): Observable<{item: Observable<Order>, totalCount: number}> {
     const thisService = this;
-    let iterator = 0;
-    const orders$ = this.http.get<OrderRequest>('orders/' + params.toString())
-                    .map(
-                      res => {
-                        thisService.totalCount.next(res.total_count);
-                        return res.items;
-                      });
-    return thisService.orderService
-      .fillInDriverAndVehicle(orders$)
-      .subscribe(
-        res => {
-          thisService.orderData.splice((params.page - 1) * params.per_page + iterator++, 1, res);
-          thisService.ordersEventSource.next(this.orderData);
-      });
-  }
-
-  clearData() {
-    this.orderData = [];
-    this.ordersEventSource.next(this.orderData);
+    return this.http.get<OrderResponse>('orders/' + params.toString())
+              .map(
+                res => {
+                  return {item: thisService.orderService.fillInDriverAndVehicle(res.items),
+                          totalCount: res.total_count };
+                });
   }
 }
 
-interface OrderRequest {
+interface OrderResponse {
   items: Order[];
   total_count: number;
 }
@@ -64,34 +47,49 @@ export class OrderRequestParams {
     this.numbers.set('per_page', per_page);
   }
 
+  set page(number) { this.numbers.set('page', ++number); }
+  get page(): number { return this.numbers.get('page'); }
+  set per_page(number) { this.numbers.set('per_page', number); }
+  get per_page(): number { return this.numbers.get('per_page'); }
   set scheduled(bool: boolean) { this.booleans.set('scheduled', bool); }
   set since(when: Date) { this.dates.set('since', when); }
   set until(when: Date) { this.dates.set('until', when); }
+
   set waiting(bool: boolean) {
     if (bool) {
       this.status.add('created');
       this.status.add('driver_confirmed');
-      this.status.add('driver_arriving');
-      this.status.add('driver_arrived');
+
     } else {
       this.status.delete('created');
       this.status.delete('driver_confirmed');
-      this.status.delete('driver_arriving');
-      this.status.delete('driver_arrived');
     }
   }
   set ongoing(bool: boolean) {
     if (bool) {
       this.status.add('customer_picked_up');
+      this.status.add('driver_arriving');
+      this.status.add('driver_arrived');
 
     } else {
       this.status.delete('customer_picked_up');
+      this.status.delete('driver_arriving');
+      this.status.delete('driver_arrived');
     }
   }
-  set page(number) { this.numbers.set('page', ++number); }
-  get page(): number { return this.numbers.get('page'); }
-  set per_page(number) { this.numbers.set('per_page', number); }
-  get per_page(): number { return this.numbers.get('per_page'); }
+  set finished(bool: boolean) {
+    if (bool) {
+      this.status.add('finished');
+      this.status.add('fraud');
+      this.status.add('canceled');
+
+    } else {
+      this.status.delete('finished');
+      this.status.delete('fraud');
+      this.status.delete('canceled');
+    }
+  }
+
 
   toString(): string {
     const values: Map<string, string> = new Map<string, string>();
