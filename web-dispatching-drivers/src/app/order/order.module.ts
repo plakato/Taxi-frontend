@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NewOrderComponent } from './new-order/new-order.component';
+import { NewOrderComponent } from './dispatching/new-order/new-order.component';
 import { MapModule } from '../map/map.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule,
@@ -23,16 +23,20 @@ import { CustomerService } from './shared/customer.service';
 import { OrderService } from './shared/order.service';
 import { CzechPaginatorIntl } from './shared/data-source/czech-paginator-intl.service';
 import { LatLngLiteral } from '@agm/core';
-import { OrderHistoryComponent } from './order-history/order-history.component';
-import { ScheduledOrdersComponent } from './scheduled-orders/scheduled-orders.component';
+import { OrderHistoryComponent } from './dispatching/order-history/order-history.component';
+import { ScheduledOrdersComponent } from './dispatching/scheduled-orders/scheduled-orders.component';
 import { OrdersPollingService } from './shared/data-source/orders-polling.service';
 import { ListAllDriversComponent } from '../driver/list-all-drivers/list-all-drivers.component';
 import { DriverModule, Driver } from '../driver/driver.module';
 import { MyOrdersService } from './shared/my-orders.service';
 import { Car } from '../car/car.module';
-import { OngoingOrdersComponent } from './ongoing-orders/ongoing-orders.component';
-import { OrdersTableComponent } from './orders-table/orders-table.component';
+import { OngoingOrdersComponent } from './dispatching/ongoing-orders/ongoing-orders.component';
+import { OrdersTableComponent } from './dispatching/orders-table/orders-table.component';
 import { CancelOrderDialogComponent } from '../reusable/modals/cancel-order-dialog/cancel-order-dialog.component';
+import { NotificationService } from './shared/notification.service';
+import { DriverNewOrderComponent } from './drivers/driver-new-order/driver-new-order.component';
+import { TimeEditingComponent } from './drivers/time-editing/time-editing.component';
+import { DriverArrivingComponent } from './drivers/driver-arriving/driver-arriving.component';
 
 
 @NgModule({
@@ -57,9 +61,16 @@ import { CancelOrderDialogComponent } from '../reusable/modals/cancel-order-dial
     MatSortModule,
     MatTooltipModule
   ],
-  declarations: [NewOrderComponent, OrderHistoryComponent, ScheduledOrdersComponent, OngoingOrdersComponent,
-    OrdersTableComponent],
-  providers: [CustomerService, OrderService, OrdersPollingService, MyOrdersService, CzechPaginatorIntl],
+  declarations: [
+    NewOrderComponent,
+    OrderHistoryComponent,
+    ScheduledOrdersComponent,
+    OngoingOrdersComponent,
+    OrdersTableComponent,
+    DriverArrivingComponent,
+    DriverNewOrderComponent,
+    TimeEditingComponent],
+  providers: [CustomerService, OrderService, OrdersPollingService, MyOrdersService, CzechPaginatorIntl, NotificationService],
   entryComponents: [ ListAllDriversComponent, CancelOrderDialogComponent ]
 })
 export class OrderModule { }

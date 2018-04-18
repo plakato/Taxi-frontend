@@ -10,6 +10,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { DriverService } from '../../../driver/shared/driver.service';
 import { CarService } from '../../../car/shared/car.service';
 import { OrderService } from '../../shared/order.service';
+import { OrderExtended } from '../../dispatching/order-history/order-history.component';
 
 @Injectable()
 export class OrdersPollingService {
@@ -18,19 +19,19 @@ export class OrdersPollingService {
               private orderService: OrderService) {
    }
 
-  loadPage(params: OrderRequestParams): Observable<{item: Observable<Order>, totalCount: number}> {
+  loadPage(params: OrderRequestParams): Observable<{item: Observable<OrderExtended>, totalCount: number}> {
     const thisService = this;
     return this.http.get<OrderResponse>('orders/' + params.toString())
               .map(
                 res => {
-                  return {item: thisService.orderService.fillInDriverAndVehicle(res.items),
+                  return {item: thisService.orderService.fillInInfo(res.items),
                           totalCount: res.total_count };
                 });
   }
 }
 
 interface OrderResponse {
-  items: Order[];
+  items: OrderExtended[];
   total_count: number;
 }
 

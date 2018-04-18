@@ -1,0 +1,88 @@
+<div class="table mat-elevation-z8">
+
+  <mat-table [dataSource]="dataSource" matSort>
+
+    <!-- Driver Column -->
+    <ng-container matColumnDef="driver">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Řidič </mat-header-cell>
+      <mat-cell *matCellDef="let order"> {{order.driver.name}} </mat-cell>
+    </ng-container>
+
+    <!-- Car Column -->
+    <ng-container matColumnDef="car">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Auto </mat-header-cell>
+      <mat-cell *matCellDef="let order"> {{order.vehicle.name}} </mat-cell>
+    </ng-container>
+
+    <!-- Start Column -->
+    <ng-container matColumnDef="start">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Start </mat-header-cell>
+      <mat-cell *matCellDef="let order"> {{order.loc_start}} </mat-cell>
+    </ng-container>
+
+    <!-- Finish Column -->
+    <ng-container matColumnDef="finish">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Cíl </mat-header-cell>
+      <mat-cell *matCellDef="let order"> {{order.loc_finish}} </mat-cell>
+    </ng-container>
+
+    <!-- Estimated pick up time Column -->
+    <ng-container matColumnDef="estPickUpTime">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Předpokladaný čas naložení</mat-header-cell>
+      <mat-cell *matCellDef="let order"> {{order.picked_up_time_est | date: 'HH:mm'}} </mat-cell>
+    </ng-container>
+
+    <!-- Estimated drop off time Column -->
+    <ng-container matColumnDef="estDropOffTime">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Předpokladaný čas vyložení</mat-header-cell>
+      <mat-cell *matCellDef="let order"> {{order.arrived_time_orig_est | date: 'HH:mm'}} </mat-cell>
+    </ng-container>
+
+    <!-- Drop off time Column -->
+    <ng-container matColumnDef="dropOffTime">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Čas vyložení</mat-header-cell>
+      <mat-cell *matCellDef="let order"> {{order.arrived_time| date: 'HH:mm'}} </mat-cell>
+    </ng-container>
+
+    <!-- Order type Column -->
+    <ng-container matColumnDef="source">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Typ objednávky </mat-header-cell>
+      <mat-cell *matCellDef="let order">
+        <mat-icon *ngIf="order.source === 'app'">phone_android</mat-icon>
+        <mat-icon *ngIf="order.source === 'dispatching'">phone</mat-icon>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Action Column -->
+    <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Akce </mat-header-cell>
+      <mat-cell *matCellDef="let order">
+        <mat-icon class="red action" matTooltip="Zrušit" (click)="cancelOrder(order)">close</mat-icon>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Status Column -->
+    <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Stav </mat-header-cell>
+        <mat-cell *matCellDef="let order">
+          <div class="status-icon" *ngIf="order.status === 'created'">           <mat-icon>add</mat-icon>vytvořená</div>
+          <div class="status-icon" *ngIf="order.status === 'driver_confirmed'">  <mat-icon>add_box</mat-icon>potvrzená</div>
+          <div class="status-icon" *ngIf="order.status === 'driver_arriving'">   <mat-icon>directions_car</mat-icon>řidič na cestě</div>
+          <div class="status-icon" *ngIf="order.status === 'driver_arrived'">    <mat-icon>place</mat-icon>řidič dorazil</div>
+          <div class="status-icon" *ngIf="order.status === 'customer_picked_up'"><mat-icon>person_pin</mat-icon>probíhá</div>
+          <div class="status-icon" *ngIf="order.status === 'finished'">          <mat-icon>done</mat-icon>ukončena</div>
+          <div class="status-icon" *ngIf="order.status === 'canceled'">          <mat-icon>close</mat-icon>zrušena</div>
+          <div class="status-icon" *ngIf="order.status === 'fraud'">             <mat-icon>warning</mat-icon>propal</div>
+        </mat-cell>
+      </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;">
+    </mat-row>
+  </mat-table>
+  <div *ngIf="this.dataSource.data.length === 0" class="empty-label">Nenašly se žádné objednávky.</div>
+
+  <mat-paginator [pageSizeOptions]="[10, 25, 100, 200]"
+                 (page)="onPageChange($event)" [length]="totalOrdersCount.value"></mat-paginator>
+</div>
+

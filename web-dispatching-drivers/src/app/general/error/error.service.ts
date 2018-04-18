@@ -15,18 +15,20 @@ export class ErrorService {
   // change event which causes snackbar not to open properly.
   notifyUser(error) {
     // Handle network errors, they have different structure.
-    if (error instanceof HttpErrorResponse) {
-     // if (error.error instanceof ErrorEvent) {
+    if (error instanceof HttpErrorResponse) {debugger;
+      if (error.error instanceof ErrorEvent) {
          // A client-side or network error occurred.
       this.snackbar.open(error.error.error, 'OK', { duration: 2000});
-   //   } else {
+      } else if (error.error instanceof ProgressEvent) {
+        this.snackbar.open('Error', 'OK', {duration: 2000});
+      } else {
         // Show user what errors is server giving us.
-        /*error.error.errors.forEach(pair => {
+         error.error.errors.forEach(pair => {
           this.snackbar.open(Object.values(pair)[0].toString(), 'OK', {duration: 2000});
-      });*/
-   // }
+      });
+    }
     // Different error occured, let user know.
-  } else {
+  } else {debugger;
       const message = error.message ? error.message : error.toString();
       this.snackbar.open(message, 'OK', { duration: 2000});
     }

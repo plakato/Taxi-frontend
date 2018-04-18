@@ -1,0 +1,11 @@
+.container {
+  height: calc(100vh - 76px);
+  display: flex;
+  flex-direction: column;
+  margin: 10px 20px;
+
+    app-static-marker-map {
+      flex-grow: 1;
+      margin: 20px 0px;
+    }
+  }

@@ -4,7 +4,7 @@ import { LoginComponent } from './user/login/login.component';
 import { NgModule } from '@angular/core';
 import { PasswordConfirmationComponent } from './user/password-confirmation/password-confirmation.component';
 import { DispatchingMenuComponent } from './menu/dispatching-menu/dispatching-menu.component';
-import { NewOrderComponent } from './order/new-order/new-order.component';
+import { NewOrderComponent } from './order/dispatching/new-order/new-order.component';
 import { CarsComponent } from './car/cars/cars.component';
 import { ProfileDispatcherComponent } from './user/profile-dispatcher/profile-dispatcher.component';
 import { EditCarComponent } from './car/edit-car/edit-car.component';
@@ -12,11 +12,12 @@ import { EmployeesComponent } from './user/employees/employees.component';
 import { EditEmployeeComponent } from './user/edit-employee/edit-employee.component';
 import { AuthGuardService, AdminGuardService } from './general/auth-guard.service';
 import { ChooseCarComponent } from './car/choose-car/choose-car.component';
-import { OrderHistoryComponent } from './order/order-history/order-history.component';
-import { ScheduledOrdersComponent } from './order/scheduled-orders/scheduled-orders.component';
+import { OrderHistoryComponent } from './order/dispatching/order-history/order-history.component';
+import { ScheduledOrdersComponent } from './order/dispatching/scheduled-orders/scheduled-orders.component';
 import { DriverMenuComponent } from './menu/driver-menu/driver-menu.component';
-import { DriverNewOrderComponent } from './driver/driver-new-order/driver-new-order.component';
-import { OngoingOrdersComponent } from './order/ongoing-orders/ongoing-orders.component';
+import { DriverNewOrderComponent } from './order/drivers/driver-new-order/driver-new-order.component';
+import { OngoingOrdersComponent } from './order/dispatching/ongoing-orders/ongoing-orders.component';
+import { DriverArrivingComponent } from './order/drivers/driver-arriving/driver-arriving.component';
 
 const appRoutes: Routes = [
     { path: 'password-confirmation/:confirmation_token', component: PasswordConfirmationComponent},
@@ -46,7 +47,8 @@ const appRoutes: Routes = [
             children: [
               { path: '', component: DriverMenuComponent },
               { path: 'choose-car', component: ChooseCarComponent},
-              { path: 'new-order', component: DriverNewOrderComponent }
+              { path: 'new-order', component: DriverNewOrderComponent },
+              { path: 'arriving', component: DriverArrivingComponent}
             ]},
    { path: '', redirectTo: 'login', pathMatch: 'full' },
     // otherwise redirect to home

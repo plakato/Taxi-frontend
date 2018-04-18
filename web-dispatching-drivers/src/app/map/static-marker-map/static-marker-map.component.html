@@ -7,7 +7,7 @@
 <div>
     <div class="map">
       <agm-map
-        [latitude]="map?.center.lat" [longitude]="map?.center.lng"
+        [latitude]="map?.center?.lat" [longitude]="map?.center?.lng"
         [zoom]=15
         [zoomControl]=true [streetViewControl]=false
         (mapReady)="initializeMap($event)">

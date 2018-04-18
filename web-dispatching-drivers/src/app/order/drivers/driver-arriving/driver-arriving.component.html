@@ -1,0 +1,13 @@
+<div class="container">
+  <app-static-marker-map
+    [placeholder]="'Zákazník Vás čeká na adrese:'"
+    [markerCoords]="order?.loc_start">
+  </app-static-marker-map>
+  <div>
+    <p>Předpokladaný čas příjezdu:</p>
+    <app-time-editing [time]="order?.arrived_time_est" (timeChange)="changePickUpTime($event)"></app-time-editing>
+    <p>Zákazník: {{order?.customer?.name == null? 'anonymní': order?.customer?.name}}</p>
+    <p>Poznámka: {{order.note}}</p>
+  </div>
+  <button mat-raised-button color="primary" (click)="arrived()">Jsem na místě</button>
+</div>

@@ -6,40 +6,70 @@ import { interval } from 'rxjs/observable/interval';
 import { Order } from '../order.module';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/takeWhile';
-import { Notification } from '../order.module';
+import { OrderService } from './order.service';
+import { NotificationService } from './notification.service';
+import { Subscription } from 'rxjs/Subscription';
+import { TimerObservable } from 'rxjs/observable/TimerObservable';
+import { OrderExtended } from '../dispatching/order-history/order-history.component';
 
 @Injectable()
 export class MyOrdersService {
-  private ordersEventSource: BehaviorSubject<Array<Order>> = new BehaviorSubject(Array());
-  public readonly orders: Observable<Array<Order>> = this.ordersEventSource.asObservable();
-  private ordersData: Order[];
+  ordersEventSource: BehaviorSubject<Array<OrderExtended>> = new BehaviorSubject(Array());
+  // public readonly orders: Observable<Array<OrderExtended>> = this.ordersEventSource.asObservable();
+  private ordersData: OrderExtended[] = [];
+  polling: Subscription;
 
-  constructor( private http: HttpClient ) { }
+  constructor( private http: HttpClient,
+              private orderService: OrderService,
+              private notifications: NotificationService ) { }
 
-  addOrder(order: Order) {
-    this.ordersData.push(order);
-    this.ordersEventSource.next(this.ordersData);
-  }
-
-  startPollingNotifications() {
+  startPollingOrders() {
+    this.mockDebugOrders();
     const currentUser = JSON.parse(localStorage.getItem('currentUser')).id;
-    interval(10 * 1000)
-      .switchMap(() => this.http.get<Notification[]>('notifications/?page=1&per_page=10'))
-      .takeWhile(data => JSON.parse(localStorage.getItem('currentUser')).id === currentUser)
+    this.stopPollingOrders();
+    const This = this;
+    this.polling = TimerObservable.create(0, 10 * 1000)
+      .switchMap(() => this.http.get<MyOrdersResponse>('order_queues/' + currentUser))
       .subscribe(
-        notifications => {
-          notifications.forEach(n => {
-            switch (n.subject) {
-              case 'driver_new_order':
-                    this.notifyAboutNewOrder(n.data);
+        res => {
+          const orders = res.queue;
+          This.orderService.fillInInfo(orders).subscribe(
+            order => {
+             /* if (This.ordersData[order.id] != null) {
+                if (This.ordersData[order.id] !== order) {
+                This.ordersData[order.id] = order;
+                }
+              } else {
+                this.notifications.notifyAboutNewOrder(order);
+                this.ordersData[order.id] = order;
+              }
+              this.ordersEventSource.next(this.ordersData);debugger;*/
             }
-          });
-        }
-      );
+          );
+        });
   }
 
-  notifyAboutNewOrder(data) {
-
+  stopPollingOrders() {
+    if (this.polling != null) {
+      this.polling.unsubscribe();
+    }
   }
 
+  mockDebugOrders() {
+    const This = this;
+    this.orderService.get(7).subscribe(
+      o => { This.ordersData.push(o);
+             This.ordersEventSource.next(this.ordersData); }
+    );
+    this.orderService.get(4).subscribe(
+      o => { This.ordersData.push(o);
+             This.ordersEventSource.next(this.ordersData); }
+    );
+  }
+
+}
+
+interface MyOrdersResponse {
+  id: number;
+  queue: OrderExtended[];
 }

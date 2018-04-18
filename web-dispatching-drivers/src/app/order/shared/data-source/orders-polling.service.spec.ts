@@ -1,15 +1,14 @@
 import { TestBed, inject } from '@angular/core/testing';
+import { OrdersPollingService } from './orders-polling.service';
 
-import { ScheduledOrdersService } from './scheduled-orders.service';
-
-describe('ScheduledOrdersService', () => {
+describe('OrdersPollingService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ScheduledOrdersService]
+      providers: [OrdersPollingService]
     });
   });
 
-  it('should be created', inject([ScheduledOrdersService], (service: ScheduledOrdersService) => {
+  it('should be created', inject([OrdersPollingService], (service: OrdersPollingService) => {
     expect(service).toBeTruthy();
   }));
 });

@@ -10,6 +10,7 @@ import { DispatchingMenuComponent } from './dispatching-menu/dispatching-menu.co
 import { AppRoutingModule } from '../app-routing.module';
 import { RouterModule } from '@angular/router';
 import { DriverMenuComponent } from './driver-menu/driver-menu.component';
+import { OrderModule } from '../order/order.module';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { DriverMenuComponent } from './driver-menu/driver-menu.component';
     MatButtonModule,
     MatToolbarModule,
     AppRoutingModule,
-    RouterModule
+    RouterModule,
+    OrderModule
   ],
   exports: [
   ],

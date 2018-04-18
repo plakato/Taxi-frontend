@@ -59,3 +59,9 @@ export class LoginComponent implements OnInit {
           */});
     }
 }
+
+export interface StoredUserData {
+  token: string;
+  id: number;
+  roles: string[];
+}

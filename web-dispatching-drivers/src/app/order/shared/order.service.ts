@@ -7,15 +7,18 @@ import { from } from 'rxjs/observable/from';
 import { DriverService } from '../../driver/shared/driver.service';
 import { CarService } from '../../car/shared/car.service';
 import { CarRetrievalService } from '../../car/shared/car-retrieval.service';
+import { OrderExtended } from '../dispatching/order-history/order-history.component';
+import { CustomerService } from './customer.service';
 
 @Injectable()
 export class OrderService {
 
   constructor( private http: HttpClient,
               private driverService: DriverService,
-              private carService: CarRetrievalService ) { }
+              private carService: CarRetrievalService,
+              private customerService: CustomerService ) { }
 
-  private fillOrderDriver(order: Order): Observable<Order> {
+  private fillOrderDriver(order: OrderExtended): Observable<OrderExtended> {
     return this.driverService.getDriver(order.driver_id).map(driver => {
       const o = order;
       o.driver = driver;
@@ -23,7 +26,7 @@ export class OrderService {
     });
   }
 
-  private fillOrderVehicle(order: Order): Observable<Order>  {
+  private fillOrderVehicle(order: OrderExtended): Observable<OrderExtended>  {
     return this.carService.show(order.vehicle_id).map(car => {
       const o = order;
       o.vehicle = car;
@@ -31,10 +34,19 @@ export class OrderService {
     });
   }
 
-  fillInDriverAndVehicle(orders: Order[]): Observable<Order> {
+  private fillOrderCustomer(order: OrderExtended): Observable<OrderExtended>  {
+    return this.customerService.getCustomer(order.customer_id.toString()).map(cust => {
+      const o = order;
+      o.customer = cust;
+      return o;
+    });
+  }
+
+  fillInInfo(orders: OrderExtended[]): Observable<OrderExtended> {
     return from(orders).pipe(
       mergeMap( order => this.fillOrderDriver(order)),
-      mergeMap( order => this.fillOrderVehicle(order))
+      mergeMap( order => this.fillOrderVehicle(order)),
+      mergeMap( order => this.fillOrderCustomer(order))
     );
   }
 
@@ -70,6 +82,24 @@ export class OrderService {
 
   updateDriver(orderID: number, driverID: number) {
 
+  }
+
+  get(orderID: number) {
+    return this.http.get<OrderExtended>('orders/' + orderID);
+  }
+
+  changeArrivalTime(orderID: number, newTime: Date) {
+    return this.http.patch<OrderExtended>('orders/' + orderID + '/change_arrive_time', JSON.stringify(
+      {
+        order: {
+          arrive_time: newTime.toISOString()
+        }
+      }
+    ));
+  }
+
+  arrived(orderID: number) {
+    return this.http.patch<OrderExtended>('orders/' + orderID + 'arrived', '');
   }
 }
 
