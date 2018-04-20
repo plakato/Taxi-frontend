@@ -6,7 +6,8 @@ import { ShiftService } from '../../driver/shared/shift.service';
 import { MyOrdersService } from '../../order/shared/my-orders.service';
 import { StoredUserData } from '../../user/login/login.component';
 import { NotificationService } from '../../order/shared/notification.service';
-// import { CurrentOrderComponent } from '../../order/drivers/current-order/current-order.component';
+import { OrderExtended } from '../../order/dispatching/order-history/order-history.component';
+import { Status } from '../../order/dispatching/order-history/order-history.component';
 
 /** This component is considered a parent holder for all screens in (logged in) driver's view. */
 @Component({
@@ -15,6 +16,8 @@ import { NotificationService } from '../../order/shared/notification.service';
   styleUrls: ['./driver-menu.component.scss']
 })
 export class DriverMenuComponent implements OnInit, OnDestroy {
+
+  status = Status;
 
   constructor( private authService: AuthenticationService,
               private shiftService: ShiftService,
@@ -38,6 +41,10 @@ export class DriverMenuComponent implements OnInit, OnDestroy {
       res =>  this.authService.logout(),
       err =>  this.errorService.showMessageToUser('Odhlásení se nezdařilo.')
     );
+  }
+
+  getEnqueuedOrders(): OrderExtended[] {
+    return this.myOrders.ordersEventSource.value.slice(1);
   }
 
   ngOnDestroy() {

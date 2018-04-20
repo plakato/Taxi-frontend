@@ -11,6 +11,7 @@ import { AppRoutingModule } from '../app-routing.module';
 import { RouterModule } from '@angular/router';
 import { DriverMenuComponent } from './driver-menu/driver-menu.component';
 import { OrderModule } from '../order/order.module';
+import { DriverArrivingComponent } from '../order/drivers/driver-arriving/driver-arriving.component';
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import { OrderModule } from '../order/order.module';
   ],
   exports: [
   ],
+  entryComponents: [DriverArrivingComponent],
   declarations: [DispatchingMenuComponent, DriverMenuComponent]
 })
 export class MenuModule {}

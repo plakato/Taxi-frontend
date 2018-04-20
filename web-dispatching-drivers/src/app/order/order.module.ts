@@ -17,13 +17,14 @@ import { MatFormFieldModule,
         MatPaginatorModule,
         MatSortModule,
         MatTooltipModule,
-        MatTableDataSource
+        MatTableDataSource,
+        MatCardModule
          } from '@angular/material';
 import { CustomerService } from './shared/customer.service';
 import { OrderService } from './shared/order.service';
 import { CzechPaginatorIntl } from './shared/data-source/czech-paginator-intl.service';
 import { LatLngLiteral } from '@agm/core';
-import { OrderHistoryComponent } from './dispatching/order-history/order-history.component';
+import { OrderHistoryComponent, Status } from './dispatching/order-history/order-history.component';
 import { ScheduledOrdersComponent } from './dispatching/scheduled-orders/scheduled-orders.component';
 import { OrdersPollingService } from './shared/data-source/orders-polling.service';
 import { ListAllDriversComponent } from '../driver/list-all-drivers/list-all-drivers.component';
@@ -37,6 +38,7 @@ import { NotificationService } from './shared/notification.service';
 import { DriverNewOrderComponent } from './drivers/driver-new-order/driver-new-order.component';
 import { TimeEditingComponent } from './drivers/time-editing/time-editing.component';
 import { DriverArrivingComponent } from './drivers/driver-arriving/driver-arriving.component';
+import { EnqueuedOrderComponent } from './drivers/enqueued-order/enqueued-order.component';
 
 
 @NgModule({
@@ -59,7 +61,8 @@ import { DriverArrivingComponent } from './drivers/driver-arriving/driver-arrivi
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatCardModule
   ],
   declarations: [
     NewOrderComponent,
@@ -69,8 +72,10 @@ import { DriverArrivingComponent } from './drivers/driver-arriving/driver-arrivi
     OrdersTableComponent,
     DriverArrivingComponent,
     DriverNewOrderComponent,
-    TimeEditingComponent],
+    TimeEditingComponent,
+    EnqueuedOrderComponent],
   providers: [CustomerService, OrderService, OrdersPollingService, MyOrdersService, CzechPaginatorIntl, NotificationService],
+  exports: [DriverArrivingComponent, EnqueuedOrderComponent],
   entryComponents: [ ListAllDriversComponent, CancelOrderDialogComponent ]
 })
 export class OrderModule { }
@@ -84,7 +89,7 @@ export interface Customer {
 
 export interface Order {
   id: number;
-  status: string;
+  status: Status;
   driver_id: number;
   driver: Driver;
   vehicle_id: number;

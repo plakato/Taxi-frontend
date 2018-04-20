@@ -17,7 +17,6 @@ import { ScheduledOrdersComponent } from './order/dispatching/scheduled-orders/s
 import { DriverMenuComponent } from './menu/driver-menu/driver-menu.component';
 import { DriverNewOrderComponent } from './order/drivers/driver-new-order/driver-new-order.component';
 import { OngoingOrdersComponent } from './order/dispatching/ongoing-orders/ongoing-orders.component';
-import { DriverArrivingComponent } from './order/drivers/driver-arriving/driver-arriving.component';
 
 const appRoutes: Routes = [
     { path: 'password-confirmation/:confirmation_token', component: PasswordConfirmationComponent},
@@ -47,8 +46,7 @@ const appRoutes: Routes = [
             children: [
               { path: '', component: DriverMenuComponent },
               { path: 'choose-car', component: ChooseCarComponent},
-              { path: 'new-order', component: DriverNewOrderComponent },
-              { path: 'arriving', component: DriverArrivingComponent}
+              { path: 'new-order', component: DriverNewOrderComponent }
             ]},
    { path: '', redirectTo: 'login', pathMatch: 'full' },
     // otherwise redirect to home

@@ -5,6 +5,7 @@ import { DriverService } from '../../../driver/shared/driver.service';
 import { ErrorService } from '../../../general/error/error.service';
 import { Router } from '@angular/router';
 import { MyOrdersService } from '../../shared/my-orders.service';
+import { Status } from '../../dispatching/order-history/order-history.component';
 
 @Component({
   selector: 'app-driver-new-order',
@@ -25,7 +26,7 @@ export class DriverNewOrderComponent implements OnInit {
     const locFinish: LatLngLiteral = {lat: 21.365282, lng: 54.285364};
     this.order = {
       id: 35,
-      status: '',
+      status: Status.created,
       contact_telephone: '+420111222333',
       loc_start: locStart,
       driver_id: 2,

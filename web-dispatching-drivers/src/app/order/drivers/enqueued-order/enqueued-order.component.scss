@@ -1,0 +1,27 @@
+.col-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.row-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.left {
+  flex-grow: 4;
+}
+
+.right {
+  flex-grow: 1;
+  justify-content: center;
+  padding-left: 10px;
+
+  .center-text {
+    text-align: center;
+  }
+}
+
+.large-font {
+  font-size: 30px;
+}

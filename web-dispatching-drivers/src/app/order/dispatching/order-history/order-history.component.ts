@@ -98,7 +98,7 @@ export class OrderHistoryComponent implements OnInit, AfterViewInit {
 export interface OrderExtended extends Order {
   id: number;
   arrived_time_est: Date;
-  status: string;
+  status: Status;
   created_at: Date;
   updated_at: Date;
 
@@ -132,4 +132,15 @@ export interface OrderExtended extends Order {
   picked_up_time: Date;
   picked_up_time_est: Date;
   picked_up_time_orig_est: Date;
+}
+
+export enum Status {
+  created = 'created',
+  driverConfirmed = 'driver_confirmed',
+  driverArriving = 'driver_arriving',
+  driverArrived = 'driver_arrived',
+  customerPickedUp = 'customer_picked_up',
+  finished = 'finished',
+  canceled = 'canceled',
+  fraud = 'fraud'
 }

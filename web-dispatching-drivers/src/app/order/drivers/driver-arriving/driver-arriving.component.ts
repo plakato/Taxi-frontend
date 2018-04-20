@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { OrderExtended } from '../../dispatching/order-history/order-history.component';
 import { OrderService } from '../../shared/order.service';
 import { Router } from '@angular/router';
+import { Status } from '../../dispatching/order-history/order-history.component';
 
 @Component({
   selector: 'app-driver-arriving',
@@ -11,6 +12,7 @@ import { Router } from '@angular/router';
 export class DriverArrivingComponent implements OnInit {
 
   @Input() order: OrderExtended;
+  status = Status;
 
   constructor(private orderService: OrderService,
               private router: Router) { }
@@ -24,8 +26,20 @@ export class DriverArrivingComponent implements OnInit {
   }
 
   arrived() {
+    const This = this;
     this.orderService.arrived(this.order.id).subscribe(
-      success => { this.router.navigate(['arrived']); }
+      order => { order.subscribe(o => This.order = o); }
     );
+  }
+
+  pickedUpCustomer() {
+    const This = this;
+    this.orderService.pickedUpCustomer(this.order.id).subscribe(
+      order => { order.subscribe(o => This.order = o); }
+    );
+  }
+
+  customerNotHere() {
+    this.orderService.customerNotHere(this.order.id).subscribe();
   }
 }

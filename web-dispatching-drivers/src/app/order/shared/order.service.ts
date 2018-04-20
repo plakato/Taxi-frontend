@@ -99,7 +99,21 @@ export class OrderService {
   }
 
   arrived(orderID: number) {
-    return this.http.patch<OrderExtended>('orders/' + orderID + 'arrived', '');
+    const This = this;
+    return this.http.patch<OrderExtended>('orders/' + orderID + 'arrived', '').map(
+      o => This.fillInInfo([o])
+    );
+  }
+
+  pickedUpCustomer(orderID: number) {
+    const This = this;
+    return this.http.patch<OrderExtended>('/orders/' + orderID + '/picked_up', '').map(
+      o => This.fillInInfo([o])
+    );
+  }
+
+  customerNotHere(orderID: number) {
+    return this.http.patch('/orders/' + orderID + 'customer_not_on_its_place', '');
   }
 }
 

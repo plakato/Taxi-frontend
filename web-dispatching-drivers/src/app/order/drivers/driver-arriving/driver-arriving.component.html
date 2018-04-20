@@ -4,10 +4,12 @@
     [markerCoords]="order?.loc_start">
   </app-static-marker-map>
   <div>
-    <p>Předpokladaný čas příjezdu:</p>
-    <app-time-editing [time]="order?.arrived_time_est" (timeChange)="changePickUpTime($event)"></app-time-editing>
+    <p *ngIf="order.status === status.driverArriving">Předpokladaný čas příjezdu:</p>
+    <app-time-editing *ngIf="order.status === status.driverArriving" [time]="order?.arrived_time_est" (timeChange)="changePickUpTime($event)"></app-time-editing>
+    <button mat-raised-button color="primary" (click)="customerNotHere()" *ngIf="order.status === status.driverArrived">Zákazník se neukazuje</button>
     <p>Zákazník: {{order?.customer?.name == null? 'anonymní': order?.customer?.name}}</p>
     <p>Poznámka: {{order.note}}</p>
   </div>
-  <button mat-raised-button color="primary" (click)="arrived()">Jsem na místě</button>
+  <button mat-raised-button color="primary" (click)="arrived()" *ngIf="order.status === status.driverArriving">Jsem na místě</button>
+  <button mat-raised-button color="primary" (click)="pickedUpCustomer()" *ngIf="order.status === status.driverArrived">Jsem na místě</button>
 </div>

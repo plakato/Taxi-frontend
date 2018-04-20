@@ -1,11 +1,13 @@
 .container {
-  height: calc(100vh - 76px);
+  @media (max-width: 600px) {
+    height: calc(100vh - 76px);
+  }
+  height: calc(100vh - 84px);
   display: flex;
   flex-direction: column;
-  margin: 10px 20px;
 
     app-static-marker-map {
       flex-grow: 1;
       margin: 20px 0px;
     }
-  }
+}

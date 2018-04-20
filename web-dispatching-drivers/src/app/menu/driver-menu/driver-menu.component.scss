@@ -20,3 +20,14 @@
 a {
   color: inherit;
 }
+
+.queue-container {
+  padding: 10px 20px;
+
+  .queue {
+    @media (max-width: 600px) {
+      min-height: calc(100vh - 76px);
+    }
+    min-height: calc(100vh - 84px);
+  }
+}
