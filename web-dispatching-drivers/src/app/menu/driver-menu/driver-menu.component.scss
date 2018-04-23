@@ -7,10 +7,11 @@
 
 .center {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   flex-grow: 1;
-  max-height: calc(100vh - 56px);
+  height: calc(100vh - 56px);
 }
 
 .margin-bottom {
