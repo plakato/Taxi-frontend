@@ -20,12 +20,15 @@ export class ErrorService {
          // A client-side or network error occurred.
       this.snackbar.open(error.error.error, 'OK', { duration: 2000});
       } else if (error.error instanceof ProgressEvent) {
-        this.snackbar.open('Error', 'OK', {duration: 2000});
+        this.snackbar.open(error.statusText, 'OK', {duration: 2000});
       } else {
         // Show user what errors is server giving us.
-         error.error.errors.forEach(pair => {
-          this.snackbar.open(Object.values(pair)[0].toString(), 'OK', {duration: 2000});
-      });
+        if (error.error.errors != null) {
+          error.error.errors.forEach(pair => {
+          this.snackbar.open(Object.values(pair)[0].toString(), 'OK', {duration: 2000}); });
+        } else {
+          this.snackbar.open(error.error.error, 'OK', {duration: 2000});
+        }
     }
     // Different error occured, let user know.
   } else {debugger;

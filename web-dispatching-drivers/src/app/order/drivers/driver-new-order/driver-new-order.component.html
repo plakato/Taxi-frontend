@@ -11,7 +11,7 @@
     <app-static-marker-map placeholder="Místo vyzvednutí" [markerCoords]="order.loc_start"></app-static-marker-map>
 
   <div class="row">
-    <mat-icon class="red">clear</mat-icon>
+    <mat-icon class="red" (click)="refuseOrder()">clear</mat-icon>
     <mat-icon class="green" (click)="acceptOrder()">check</mat-icon>
   </div>
 

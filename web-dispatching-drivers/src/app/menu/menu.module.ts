@@ -4,7 +4,8 @@ import {
   MatIconModule,
   MatListModule,
   MatButtonModule,
-  MatToolbarModule } from '@angular/material';
+  MatToolbarModule,
+  MatCardModule} from '@angular/material';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { DispatchingMenuComponent } from './dispatching-menu/dispatching-menu.component';
 import { AppRoutingModule } from '../app-routing.module';
@@ -23,7 +24,8 @@ import { DriverArrivingComponent } from '../order/drivers/driver-arriving/driver
     MatToolbarModule,
     AppRoutingModule,
     RouterModule,
-    OrderModule
+    OrderModule,
+    MatCardModule
   ],
   exports: [
   ],

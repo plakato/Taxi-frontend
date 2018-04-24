@@ -1,3 +1,4 @@
+@import '../../../_variables.scss';
 
 .space-children {
   display: flex;
@@ -31,4 +32,12 @@ a {
     }
     min-height: calc(100vh - 84px);
   }
+
+  .pause {
+    margin-top: 20px;
+    text-align: center;
+    background-color: $accent-yellow;
+    color: $yellow-app-dark-background;
+  }
+
 }

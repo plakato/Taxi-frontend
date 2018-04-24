@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Order } from '../../order.module';
 import { LatLngLiteral } from '@agm/core';
 import { DriverService } from '../../../driver/shared/driver.service';
@@ -6,6 +6,7 @@ import { ErrorService } from '../../../general/error/error.service';
 import { Router } from '@angular/router';
 import { MyOrdersService } from '../../shared/my-orders.service';
 import { Status } from '../../dispatching/order-history/order-history.component';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-driver-new-order',
@@ -15,7 +16,9 @@ import { Status } from '../../dispatching/order-history/order-history.component'
 export class DriverNewOrderComponent implements OnInit {
   order: Order;
 
-  constructor( private driverService: DriverService,
+  constructor(public dialogRef: MatDialogRef<DriverNewOrderComponent>,
+             @Inject(MAT_DIALOG_DATA) public data: any,
+              private driverService: DriverService,
               private errorService: ErrorService,
               private router: Router,
               private myOrders: MyOrdersService ) { }
@@ -48,10 +51,16 @@ export class DriverNewOrderComponent implements OnInit {
 
   acceptOrder() {
     this.driverService.acceptOrder(this.order.id).subscribe(
-      order => { this.router.navigate(['drivers']); }
+      order => {
+        this.router.navigate(['drivers']);
+        this.dialogRef.close(); }
     );
     this.router.navigate(['drivers']);
     // this.myOrders.addOrder(this.order);
+  }
+
+  refuseOrder() {
+
   }
 
 }

@@ -111,6 +111,8 @@ export interface OrderExtended extends Order {
   vehicle: Car;
   customer: Customer;
 
+  address_start: string;
+  address_finish: string;
   loc_start: LatLngLiteral;
   loc_finish: LatLngLiteral;
   passenger_count: number;

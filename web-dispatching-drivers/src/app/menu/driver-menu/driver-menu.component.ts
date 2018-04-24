@@ -8,6 +8,7 @@ import { StoredUserData } from '../../user/login/login.component';
 import { NotificationService } from '../../order/shared/notification.service';
 import { OrderExtended } from '../../order/dispatching/order-history/order-history.component';
 import { Status } from '../../order/dispatching/order-history/order-history.component';
+import { MatSnackBar } from '@angular/material';
 
 /** This component is considered a parent holder for all screens in (logged in) driver's view. */
 @Component({
@@ -18,13 +19,15 @@ import { Status } from '../../order/dispatching/order-history/order-history.comp
 export class DriverMenuComponent implements OnInit, OnDestroy {
 
   status = Status;
+  pause = false;
 
   constructor( private authService: AuthenticationService,
               private shiftService: ShiftService,
               private errorService: ErrorService,
               private notifications: NotificationService,
               private trackingLocation: LocationTrackingService,
-              public myOrders: MyOrdersService ) { }
+              public myOrders: MyOrdersService,
+              private snackbar: MatSnackBar ) { }
 
   ngOnInit() {
     // If this component looses its parent properties, this can be put in appComponent.
@@ -45,6 +48,23 @@ export class DriverMenuComponent implements OnInit, OnDestroy {
 
   getEnqueuedOrders(): OrderExtended[] {
     return this.myOrders.ordersEventSource.value.slice(1);
+  }
+
+  pauseShift() {
+    const This = this;
+    this.shiftService.pause().subscribe(
+      success => {
+        This.pause = true;
+        this.snackbar.open('Máte naplánovanú pauzu! Neprve ale vyřiďte zbývající objednávky.', '', {duration: 3000});
+      }
+    );
+  }
+
+  resumeShift() {
+    const This = this;
+    this.shiftService.resume().subscribe(
+      success => This.pause = false
+    );
   }
 
   ngOnDestroy() {

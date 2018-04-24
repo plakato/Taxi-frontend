@@ -9,6 +9,7 @@ import { CarService } from '../../car/shared/car.service';
 import { CarRetrievalService } from '../../car/shared/car-retrieval.service';
 import { OrderExtended } from '../dispatching/order-history/order-history.component';
 import { CustomerService } from './customer.service';
+import { LatLngLiteral } from '@agm/core';
 
 @Injectable()
 export class OrderService {
@@ -115,5 +116,37 @@ export class OrderService {
   customerNotHere(orderID: number) {
     return this.http.patch('/orders/' + orderID + 'customer_not_on_its_place', '');
   }
-}
 
+  changeDropOffTime(orderID: number, newTime: Date) {
+    const This = this;
+    return this.http.patch<OrderExtended>('orders/' + orderID + '/change_drop_off_time', JSON.stringify({
+      order: {
+        drop_off_time: newTime.toISOString()
+      }
+    })).map(
+      o => This.fillInInfo([o])
+    );
+  }
+
+  changeDropOffLocation(orderID: number, newLoc: LatLngLiteral) {
+    const This = this;
+    return this.http.patch<OrderExtended>('orders/' + orderID + '/change_drop_off_location', JSON.stringify({
+      order: {
+        location: {
+          lat: newLoc.lat,
+          lng: newLoc.lng
+        }
+      }
+    })).map(
+      o => This.fillInInfo([o])
+    );
+  }
+
+  finish(orderID: number) {
+    return this.http.patch<OrderExtended>('orders/' + orderID + '/finished', '');
+  }
+
+  fraud(orderID: number) {
+    return this.http.patch<OrderExtended>('orders/' + orderID + '/fraud', '');
+  }
+}

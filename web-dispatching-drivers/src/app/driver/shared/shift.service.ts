@@ -33,4 +33,12 @@ export class ShiftService {
       }
     );
   }
+
+  pause() {
+    return this.http.post('shifts/pause', '');
+  }
+
+  resume() {
+    return this.http.post('shifts/resume', '');
+  }
 }

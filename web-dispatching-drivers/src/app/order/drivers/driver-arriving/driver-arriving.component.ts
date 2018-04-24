@@ -13,6 +13,7 @@ export class DriverArrivingComponent implements OnInit {
 
   @Input() order: OrderExtended;
   status = Status;
+  customerAbsent = false;
 
   constructor(private orderService: OrderService,
               private router: Router) { }
@@ -23,6 +24,13 @@ export class DriverArrivingComponent implements OnInit {
   changePickUpTime(newTime: Date) {
     // We don't listen to response. This request is only informative.
     this.orderService.changeArrivalTime(this.order.id, newTime).subscribe();
+  }
+
+  changeDropOffTime(newTime: Date) {
+    const This = this;
+    this.orderService.changeDropOffTime(this.order.id, newTime).subscribe(
+      order => { order.subscribe(o => This.order = o); }
+    );
   }
 
   arrived() {
@@ -41,5 +49,17 @@ export class DriverArrivingComponent implements OnInit {
 
   customerNotHere() {
     this.orderService.customerNotHere(this.order.id).subscribe();
+    this.customerAbsent = true;
+  }
+
+  finished() {
+    this.orderService.finish(this.order.id).subscribe();
+    // TODO: listen to answer.
+  }
+
+  markAsFraud() {
+    this.orderService.fraud(this.order.id).subscribe();
+    // TODO: listen to answer.
   }
 }
+

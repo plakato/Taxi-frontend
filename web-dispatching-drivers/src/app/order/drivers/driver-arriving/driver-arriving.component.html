@@ -1,15 +1,38 @@
-<div class="container">
-  <app-static-marker-map
+<div class="container" [ngSwitch]="order?.status">
+
+  <!-- Map with start/finish address -->
+  <app-static-marker-map *ngSwitchCase="status.driverArriving || status.driverArrived"
     [placeholder]="'Zákazník Vás čeká na adrese:'"
     [markerCoords]="order?.loc_start">
   </app-static-marker-map>
+  <app-static-marker-map *ngSwitchCase="status.customerPickedUp"
+    [placeholder]="'Cíl:'"
+    [markerCoords]="order?.loc_finish">
+  </app-static-marker-map>
+
+  <!-- Buttons and customer info -->
   <div>
-    <p *ngIf="order.status === status.driverArriving">Předpokladaný čas příjezdu:</p>
-    <app-time-editing *ngIf="order.status === status.driverArriving" [time]="order?.arrived_time_est" (timeChange)="changePickUpTime($event)"></app-time-editing>
-    <button mat-raised-button color="primary" (click)="customerNotHere()" *ngIf="order.status === status.driverArrived">Zákazník se neukazuje</button>
+    <p *ngSwitchCase="status.driverArriving || status.customerPickedUp">Předpokladaný čas příjezdu:</p>
+    <app-time-editing *ngSwitchCase="status.driverArriving"
+                      [time]="order?.arrived_time_est"
+                      (timeChange)="changePickUpTime($event)">
+                      </app-time-editing>
+    <app-time-editing *ngSwitchCase="status.customerPickedUp"
+                      [time]="order?.arrived_time_est"
+                      (timeChange)="changeDropOffTime($event)">
+                      </app-time-editing>
+    <button mat-raised-button color="primary" (click)="customerNotHere()" *ngIf="order?.status === status.driverArrived && !customerAbsent">Zákazník se neukazuje</button>
+    <div *ngIf="customerAbsent">
+      <p>Dispečink byl informován o nepřítomnosti zákazníka. Vyčkejte na jeho zprávu nebo označte jako propal.</p>
+      <button mat-raised-button color="primary" (click)="markAsFraud()">Označit jako propal</button>
+    </div>
+
     <p>Zákazník: {{order?.customer?.name == null? 'anonymní': order?.customer?.name}}</p>
-    <p>Poznámka: {{order.note}}</p>
+    <p>Poznámka: {{order?.note}}</p>
   </div>
-  <button mat-raised-button color="primary" (click)="arrived()" *ngIf="order.status === status.driverArriving">Jsem na místě</button>
-  <button mat-raised-button color="primary" (click)="pickedUpCustomer()" *ngIf="order.status === status.driverArrived">Jsem na místě</button>
+
+  <!-- Main action button -->
+    <button *ngSwitchCase="status.driverArriving"   mat-raised-button color="primary" (click)="arrived()">Jsem na místě</button>
+    <button *ngSwitchCase="status.driverArrived"    mat-raised-button color="primary" (click)="pickedUpCustomer()">Naložil jsem zákazníka</button>
+    <button *ngSwitchCase="status.customerPickedUp" mat-raised-button color="primary" (click)="finished()">Jsem v cíli</button>
 </div>

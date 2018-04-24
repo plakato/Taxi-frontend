@@ -16,6 +16,7 @@ import { OrderExtended } from '../dispatching/order-history/order-history.compon
 export class MyOrdersService {
   ordersEventSource: BehaviorSubject<Array<OrderExtended>> = new BehaviorSubject(Array());
   // public readonly orders: Observable<Array<OrderExtended>> = this.ordersEventSource.asObservable();
+  // This array is indexed with string not to generate void elements.
   private ordersData: OrderExtended[] = [];
   polling: Subscription;
 
@@ -24,26 +25,24 @@ export class MyOrdersService {
               private notifications: NotificationService ) { }
 
   startPollingOrders() {
-    this.mockDebugOrders();
+    // this.mockDebugOrders();
     const currentUser = JSON.parse(localStorage.getItem('currentUser')).id;
     this.stopPollingOrders();
     const This = this;
     this.polling = TimerObservable.create(0, 10 * 1000)
-      .switchMap(() => this.http.get<MyOrdersResponse>('order_queues/' + currentUser))
+      .switchMap(() => This.http.get<MyOrdersResponse>('order_queues/' + currentUser))
       .subscribe(
         res => {
           const orders = res.queue;
+          const newOrders = [];
           This.orderService.fillInInfo(orders).subscribe(
             order => {
-             /* if (This.ordersData[order.id] != null) {
-                if (This.ordersData[order.id] !== order) {
-                This.ordersData[order.id] = order;
-                }
-              } else {
-                this.notifications.notifyAboutNewOrder(order);
-                this.ordersData[order.id] = order;
-              }
-              this.ordersEventSource.next(this.ordersData);debugger;*/
+                newOrders.push(order);
+              },
+            err => {},
+            () => {
+              This.ordersData = newOrders.sort(this.compareByStartTime);
+              This.ordersEventSource.next(This.ordersData);
             }
           );
         });
@@ -55,14 +54,24 @@ export class MyOrdersService {
     }
   }
 
-  mockDebugOrders() {
+  compareByStartTime(a: OrderExtended, b: OrderExtended) {
+    if (a.start_est < b.start_est) {
+      return -1;
+    }
+    if (a.start_est > b.start_est) {
+      return 1;
+    }
+    return 0;
+  }
+
+  private mockDebugOrders() {
     const This = this;
     this.orderService.get(7).subscribe(
-      o => { This.ordersData.push(o);
+      o => { // This.ordersData.push(o);
              This.ordersEventSource.next(this.ordersData); }
     );
     this.orderService.get(4).subscribe(
-      o => { This.ordersData.push(o);
+      o => { // This.ordersData.push(o);
              This.ordersEventSource.next(this.ordersData); }
     );
   }
