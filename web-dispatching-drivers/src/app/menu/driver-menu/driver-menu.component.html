@@ -22,10 +22,8 @@
 <!--When there is at least one order. -->
 <div *ngIf="myOrders.ordersEventSource.value.length!==0" class="queue-container">
   <!-- First (ongoing) order. -->
-  <div  [ngSwitch]="myOrders.ordersEventSource.value[0]?.status">
-    <app-driver-arriving *ngSwitchCase="status.driverArriving || status.driverArrived" [order]="myOrders.ordersEventSource.value[0]"></app-driver-arriving>
-  </div>
-  <app-driver-arriving [order]="myOrders.ordersEventSource.value[0]"></app-driver-arriving>
+  <app-driver-arriving *ngIf="active()" [order]="myOrders.ordersEventSource.value[0]"></app-driver-arriving>
+
 
   <!-- Next orders in queue. -->
   <div class="queue">

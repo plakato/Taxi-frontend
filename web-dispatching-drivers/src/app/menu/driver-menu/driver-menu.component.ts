@@ -67,6 +67,16 @@ export class DriverMenuComponent implements OnInit, OnDestroy {
     );
   }
 
+  active(): boolean {
+    if (this.myOrders.ordersEventSource.value[0].status === Status.driverArrived ||
+        this.myOrders.ordersEventSource.value[0].status === Status.driverArriving ||
+        this.myOrders.ordersEventSource.value[0].status === Status.customerPickedUp) {
+          return true;
+    } else {
+      return false;
+    }
+  }
+
   ngOnDestroy() {
     // If this component looses its parent properties, this can be put in appComponent.
     const currUser: StoredUserData = JSON.parse(localStorage.getItem('currentUser'));

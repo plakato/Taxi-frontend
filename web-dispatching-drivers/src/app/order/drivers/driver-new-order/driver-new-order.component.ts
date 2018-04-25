@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { MyOrdersService } from '../../shared/my-orders.service';
 import { Status } from '../../dispatching/order-history/order-history.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { OrderService } from '../../shared/order.service';
 
 @Component({
   selector: 'app-driver-new-order',
@@ -20,11 +21,10 @@ export class DriverNewOrderComponent implements OnInit {
              @Inject(MAT_DIALOG_DATA) public data: any,
               private driverService: DriverService,
               private errorService: ErrorService,
-              private router: Router,
-              private myOrders: MyOrdersService ) { }
+              private orderService: OrderService ) { }
 
   ngOnInit() {
-    // Mock an order.
+    /*// Mock an order.
     const locStart: LatLngLiteral = {lat: 48.610292, lng: 21.333021};
     const locFinish: LatLngLiteral = {lat: 21.365282, lng: 54.285364};
     this.order = {
@@ -42,7 +42,12 @@ export class DriverNewOrderComponent implements OnInit {
       VIP: false,
       flightNumber: null,
       scheduled_pick_up_at: new Date('2018-04-05T11:12:52.051Z')
-    };
+    };*/
+    const This = this;
+    this.orderService.get(this.data.id).subscribe(
+      order => This.order = order
+    );
+
     // Play notification sound.
     const audio = new Audio('../../../assets/audio/chimes-glassy.mp3');
     audio.load();
@@ -50,12 +55,12 @@ export class DriverNewOrderComponent implements OnInit {
   }
 
   acceptOrder() {
-    this.driverService.acceptOrder(this.order.id).subscribe(
+    this.driverService.acceptOrder(this.data.id).subscribe(
       order => {
-        this.router.navigate(['drivers']);
+        // this.router.navigate(['drivers']);
         this.dialogRef.close(); }
     );
-    this.router.navigate(['drivers']);
+   // this.router.navigate(['drivers']);
     // this.myOrders.addOrder(this.order);
   }
 

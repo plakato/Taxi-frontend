@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MapService } from './map.service';
 import { LocationTrackingService } from './location-tracking.service';
 import { StaticMarkerMapComponent } from './static-marker-map/static-marker-map.component';
+import { MyLocationService } from './my-location.service';
 
 @NgModule({
   imports: [
@@ -24,6 +25,6 @@ import { StaticMarkerMapComponent } from './static-marker-map/static-marker-map.
   declarations: [ MapComponent, StaticMarkerMapComponent ],
   exports: [ MapComponent, StaticMarkerMapComponent ],
   bootstrap: [ ],
-  providers: [MapService, LocationTrackingService]
+  providers: [MapService, LocationTrackingService, MyLocationService]
 })
 export class MapModule { }

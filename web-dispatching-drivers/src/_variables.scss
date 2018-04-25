@@ -18,12 +18,12 @@ $yellow-app-accent:  mat-palette($mat-green, A400, A100, A700);
 
 // The warn palette is optional (defaults to red).
 $yellow-app-warn:    mat-palette($mat-red);
-
 // Create the theme object (a Sass map containing all of the palettes).
 $yellow-app-theme: mat-dark-theme($yellow-app-primary, $yellow-app-accent, $yellow-app-warn);
 
 
 $yellow-app-background: #424242;
 $yellow-app-dark-background: #303030;
+$yellow-app-caution: #FFAB40;
 
 $accent-yellow: mat-color(map-get($yellow-app-theme, primary));

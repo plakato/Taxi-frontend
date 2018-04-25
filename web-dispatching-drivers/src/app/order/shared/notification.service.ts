@@ -6,15 +6,18 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/takeWhile';
 import { TimerObservable } from 'rxjs/observable/TimerObservable';
 import { Subscription } from 'rxjs/Subscription';
+import { MatDialog } from '@angular/material';
+import { DriverNewOrderComponent } from '../drivers/driver-new-order/driver-new-order.component';
 
 @Injectable()
 export class NotificationService {
   timer: Subscription;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private dialog: MatDialog) { }
 
   startPollingNotifications() {
-    this.stopPollingNotifications();
+   /* this.stopPollingNotifications();
     const currentUser = JSON.parse(localStorage.getItem('currentUser')).id;
     this.timer = TimerObservable.create(0, 10 * 1000)
       .switchMap(() => this.http.get<Notification[]>('notifications/?page=1&per_page=10'))
@@ -28,7 +31,7 @@ export class NotificationService {
             }
           });
         }
-      );
+      );*/
   }
 
   stopPollingNotifications() {
@@ -37,7 +40,10 @@ export class NotificationService {
     }
   }
 
-  notifyAboutNewOrder(data) {
-
+  notifyAboutNewOrder(data: any) {
+    const dialogRef = this.dialog.open(DriverNewOrderComponent, {
+      width: '100%',
+      data: { id: data.order_id }
+    });
   }
 }

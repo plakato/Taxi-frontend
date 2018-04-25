@@ -77,6 +77,10 @@ export class OrderService {
     ));
   }
 
+  arriving(id: number) {
+    return this.http.patch<OrderExtended>('orders/' + id + '/arriving', '');
+  }
+
   cancel(id: number) {
     return this.http.patch('orders/' + id + '/cancel', '');
   }
@@ -101,7 +105,7 @@ export class OrderService {
 
   arrived(orderID: number) {
     const This = this;
-    return this.http.patch<OrderExtended>('orders/' + orderID + 'arrived', '').map(
+    return this.http.patch<OrderExtended>('orders/' + orderID + '/arrived', '').map(
       o => This.fillInInfo([o])
     );
   }

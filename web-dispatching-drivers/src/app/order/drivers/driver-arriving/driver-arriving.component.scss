@@ -1,3 +1,5 @@
+@import '../../../../_variables.scss';
+
 .container {
   @media (max-width: 600px) {
     height: calc(100vh - 76px);
@@ -9,5 +11,19 @@
     app-static-marker-map {
       flex-grow: 1;
       margin: 20px 0px;
+    }
+
+    .flex {
+      display: flex;
+      flex-direction: column;
+    }
+
+    p {
+      margin: 5px 0px;
+    }
+
+    .caution {
+      background-color: $yellow-app-caution;
+      color: $yellow-app-dark-background;
     }
 }

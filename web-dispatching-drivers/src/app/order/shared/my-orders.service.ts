@@ -10,7 +10,7 @@ import { OrderService } from './order.service';
 import { NotificationService } from './notification.service';
 import { Subscription } from 'rxjs/Subscription';
 import { TimerObservable } from 'rxjs/observable/TimerObservable';
-import { OrderExtended } from '../dispatching/order-history/order-history.component';
+import { OrderExtended, Status } from '../dispatching/order-history/order-history.component';
 
 @Injectable()
 export class MyOrdersService {
@@ -42,6 +42,14 @@ export class MyOrdersService {
             err => {},
             () => {
               This.ordersData = newOrders.sort(this.compareByStartTime);
+              if (This.ordersData[0].status === Status.driverConfirmed) {
+                This.orderService.arriving(This.ordersData[0].id).subscribe(
+                  order => {
+                    This.ordersData[0] = order;
+                    This.ordersEventSource.next(This.ordersData);
+                  }
+                );
+              }
               This.ordersEventSource.next(This.ordersData);
             }
           );
