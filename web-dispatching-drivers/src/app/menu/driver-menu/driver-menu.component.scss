@@ -12,7 +12,10 @@
   align-items: center;
   justify-content: center;
   flex-grow: 1;
-  height: calc(100vh - 56px);
+  @media (max-width: 600px) {
+    min-height: calc(100vh - 56px);
+  }
+  height: calc(100vh - 64px);
 }
 
 .margin-bottom {
@@ -27,10 +30,7 @@ a {
   padding: 10px 20px;
 
   .queue {
-    @media (max-width: 600px) {
-      min-height: calc(100vh - 76px);
-    }
-    min-height: calc(100vh - 84px);
+    min-height: calc(100vh - 20px);
   }
 
   .pause {

@@ -27,7 +27,38 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
   }
 }
 
-/** Restricts access for those who are not admins. */
+/** Restricts access to areas of anonymous users for users who are logged in (like login screen). */
+@Injectable()
+export class LoggedOutGuardService implements CanActivate {
+  constructor(private router: Router) {}
+
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    const url: string = state.url;
+
+    return this.checkLoggedOut(url);
+  }
+
+  checkLoggedOut(url: string): boolean {
+    const current = JSON.parse(localStorage.getItem('currentUser'));
+   if (current === null) {
+     return true;
+   }
+  // Navigate to the home page.
+  if (current.roles.indexOf('driver') > -1) {
+    if (localStorage.getItem('car') != null) {
+      this.router.navigate(['/drivers']);
+    } else {
+      this.router.navigate(['/drivers/choose-car']);
+    }
+  } else {
+    this.router.navigate(['/dispatching/new-order']);
+  }
+
+  return false;
+  }
+
+}
+
 @Injectable()
 export class AdminGuardService implements CanActivate {
   constructor(private router: Router) {}

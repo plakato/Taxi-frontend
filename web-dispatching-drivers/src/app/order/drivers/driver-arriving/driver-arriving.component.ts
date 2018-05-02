@@ -15,12 +15,14 @@ export class DriverArrivingComponent implements OnInit {
   @Input() order: OrderExtended;
   status = Status;
   customerAbsent = false;
+  editingAddress = true;
 
   constructor(private orderService: OrderService,
               private router: Router,
               private errorService: ErrorService) { }
 
   ngOnInit() {
+    this.editingAddress = (this.order.address_finish == null) ? true : false;
   }
 
   changePickUpTime(newTime: Date) {
@@ -35,13 +37,22 @@ export class DriverArrivingComponent implements OnInit {
     );
   }
   changeAddress(newAddress) {
-    this.orderService.changeDropOffLocation(this.order.id, newAddress).subscribe(
-      success => {},
-      err => this.errorService.showMessageToUser('Změna adresy se nepovedla.')
-    );
+    if (newAddress === null) {
+      this.editingAddress = true;
+    } else {
+      this.editingAddress = false;
+      this.orderService.changeDropOffLocation(this.order.id, newAddress).subscribe(
+        success => {},
+        err => this.errorService.showMessageToUser('Změna adresy se nepovedla.')
+      );
+    }
   }
 
   arrived() {
+    if (this.editingAddress) {
+      this.addressEditingWarning();
+      return;
+    }
     const This = this;
     this.orderService.arrived(this.order.id).subscribe(
       order => { order.subscribe(o => This.order = o); }
@@ -49,6 +60,10 @@ export class DriverArrivingComponent implements OnInit {
   }
 
   pickedUpCustomer() {
+    if (this.editingAddress) {
+      this.addressEditingWarning();
+      return;
+    }
     const This = this;
     this.orderService.pickedUpCustomer(this.order.id).subscribe(
       order => { order.subscribe(o => This.order = o); }
@@ -61,6 +76,10 @@ export class DriverArrivingComponent implements OnInit {
   }
 
   finished() {
+    if (this.editingAddress) {
+      this.addressEditingWarning();
+      return;
+    }
     this.orderService.finish(this.order.id).subscribe();
     // TODO: listen to answer.
   }
@@ -68,6 +87,10 @@ export class DriverArrivingComponent implements OnInit {
   markAsFraud() {
     this.orderService.fraud(this.order.id).subscribe();
     // TODO: listen to answer.
+  }
+
+  addressEditingWarning() {
+    this.errorService.showMessageToUser('Po pokračování ukončete editaci adresy.');
   }
 
 }

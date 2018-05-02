@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
+import { LatLngLiteral } from '@agm/core';
 
 const GEOLOCATION_ERRORS = {
   'errors.location.unsupportedBrowser': 'Browser does not support location services',
@@ -11,8 +12,8 @@ const GEOLOCATION_ERRORS = {
 
 @Injectable()
 export class MyLocationService {
-  private positionSource = new Subject<Position>();
-  public positionObservable = this.positionSource.asObservable().retry(1000);
+   private positionSource = new Subject<Position>();
+   public positionObservable = this.positionSource.asObservable(); // .retry(1000);
 
   constructor() {
     this.startWatching();

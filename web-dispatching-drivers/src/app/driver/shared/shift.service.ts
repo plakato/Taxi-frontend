@@ -17,6 +17,7 @@ export class ShiftService {
       vehicle_id: carID
     })).map(
       success => {
+        localStorage.setItem('car', carID.toString());
         this.locationTracking.startSharingLocation();
         this.notifications.startPollingNotifications();
         this.myOrders.startPollingOrders();
@@ -27,6 +28,7 @@ export class ShiftService {
   endShift() {
     return this.http.post('shifts/end', JSON.stringify({})).map(
       success => {
+        localStorage.setItem('car', null);
         this.locationTracking.stopSharingLocation();
         // Polling notifications will stop automatically.
         this.myOrders.stopPollingOrders();

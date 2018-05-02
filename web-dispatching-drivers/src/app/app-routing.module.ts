@@ -10,7 +10,7 @@ import { ProfileDispatcherComponent } from './user/profile-dispatcher/profile-di
 import { EditCarComponent } from './car/edit-car/edit-car.component';
 import { EmployeesComponent } from './user/employees/employees.component';
 import { EditEmployeeComponent } from './user/edit-employee/edit-employee.component';
-import { AuthGuardService, AdminGuardService } from './general/auth-guard.service';
+import { AuthGuardService, AdminGuardService, LoggedOutGuardService } from './general/auth-guard.service';
 import { ChooseCarComponent } from './car/choose-car/choose-car.component';
 import { OrderHistoryComponent } from './order/dispatching/order-history/order-history.component';
 import { ScheduledOrdersComponent } from './order/dispatching/scheduled-orders/scheduled-orders.component';
@@ -20,7 +20,7 @@ import { OngoingOrdersComponent } from './order/dispatching/ongoing-orders/ongoi
 
 const appRoutes: Routes = [
     { path: 'password-confirmation/:confirmation_token', component: PasswordConfirmationComponent},
-    { path: 'login', component: LoginComponent },
+    { path: 'login', component: LoginComponent, canActivate: [LoggedOutGuardService] },
     { path: 'dispatching', component: DispatchingMenuComponent, canActivate: [AuthGuardService],
             children: [
               { path: 'orders',

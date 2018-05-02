@@ -33,8 +33,8 @@ export class DriverService {
   }
 
   getDriver(id: number): Observable<Driver> {
-    if (this.driversData[id] != null) {
-      return Observable.create(observer => { observer.next(this.driversData[id]); });
+    if (this.driversData.get(id) != null) {
+      return Observable.create(observer => { observer.next(this.driversData.get(id)); });
     } else {
       const result = this.http.get<Driver>('employees/' + id).map(
         driver => { this.driversData.set(driver.id, driver);

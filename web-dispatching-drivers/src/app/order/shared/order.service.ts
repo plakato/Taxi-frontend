@@ -28,7 +28,8 @@ export class OrderService {
   }
 
   private fillOrderVehicle(order: OrderExtended): Observable<OrderExtended>  {
-    return this.carService.show(order.vehicle_id).map(car => {
+    return this.carService.show(order.vehicle_id)
+    .map(car => {
       const o = order;
       o.vehicle = car;
       return o;
@@ -44,10 +45,11 @@ export class OrderService {
   }
 
   fillInInfo(orders: OrderExtended[]): Observable<OrderExtended> {
+    const This = this;
     return from(orders).pipe(
-      mergeMap( order => this.fillOrderDriver(order)),
-      mergeMap( order => this.fillOrderVehicle(order)),
-      mergeMap( order => this.fillOrderCustomer(order))
+      mergeMap( order => This.fillOrderDriver(order)),
+      mergeMap( order => This.fillOrderVehicle(order)),
+      mergeMap( order => This.fillOrderCustomer(order))
     );
   }
 
@@ -86,7 +88,7 @@ export class OrderService {
   }
 
   updateDriver(orderID: number, driverID: number) {
-
+    // TODO
   }
 
   get(orderID: number) {

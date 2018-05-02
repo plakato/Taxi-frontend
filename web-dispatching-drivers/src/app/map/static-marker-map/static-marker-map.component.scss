@@ -29,6 +29,18 @@
         }
     }
 
+    .myLocationButton {
+      z-index: 10;
+      position: absolute;
+      right: 10px;
+      top: 10px;
+
+      .white {
+        background-color: white;
+        line-height: 40px;
+      }
+    }
+
 
     .marker {
       display:flex;

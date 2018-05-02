@@ -13,16 +13,16 @@
         [zoom]=15
         [zoomControl]=true [streetViewControl]=false
         (mapReady)="initializeMap($event)">
-     <agm-circle *ngIf="false"
-        [latitude]="myLocation.positionObservable" [longitude]="center.lng" [radius]="15"
+     <agm-circle
+        [latitude]="myPosition?.coords.latitude" [longitude]="myPosition?.coords.longitude" [radius]="myPosition?.coords.accuracy"
         [clickable]=false [fillColor]="'rgb(255, 229, 0)'"  ></agm-circle>
-      <div #myLocationButton>
-        <button>
+      </agm-map>
+      <div (click)="zoomToMyLocation()" class="myLocationButton">
+        <button mat-mini-fab class="white">
           <mat-icon>my_location</mat-icon>
         </button>
       </div>
-      </agm-map>
     </div>
 
-  <div class="marker"><mat-icon>location_on</mat-icon> </div>
+  <div class="marker" *ngIf="editing"><mat-icon>location_on</mat-icon> </div>
 </div>

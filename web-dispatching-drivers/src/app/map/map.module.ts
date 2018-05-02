@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { AgmCoreModule } from '@agm/core';
 import { MapComponent } from './map/map.component';
-import { MatIconModule, MatInputModule } from '@angular/material';
+import { MatIconModule, MatInputModule, MatButtonModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MapService } from './map.service';
 import { LocationTrackingService } from './location-tracking.service';
@@ -17,6 +17,7 @@ import { MyLocationService } from './my-location.service';
     MatIconModule,
     MatInputModule,
     ReactiveFormsModule,
+    MatButtonModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyA-ESM4gOyIJqBJoxJqWain_kI_U-tsJJE',
       libraries: ['places']

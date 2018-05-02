@@ -35,11 +35,12 @@ export class CarDetailFormComponent implements OnInit {
     this.car = this.carForm.value;
 
     // Fill in car information.
+    const This = this;
     const carID = this.route.snapshot.paramMap.get('carID');
     if (carID != null) {
       this.carService.get(Number(carID)).subscribe(
-        car => { this.car = car;
-                 this.originalImage = this.car.image; }
+        car => { This.car = car;
+                 This.originalImage = this.car.image; }
       );
     }
   }

@@ -17,6 +17,7 @@ export class StaticMarkerMapComponent implements OnInit {
     addressControl: FormControl;
     editing = false;
     marker: google.maps.Marker;
+    myPosition: Position;
     @Input() placeholder: string;
     @Input() markerCoords: LatLngLiteral;
     @Input() editable: boolean;
@@ -28,10 +29,12 @@ export class StaticMarkerMapComponent implements OnInit {
       private mapsAPILoader: MapsAPILoader,
       private ngZone: NgZone,
       private mapService: MapService,
-      public myLocation: MyLocationService ) {}
+      public myLocationService: MyLocationService ) {}
 
     ngOnInit() {
+      const This = this;
       this.addressControl = new FormControl({value: '', disabled: !this.editing});
+      this.myLocationService.positionObservable.subscribe(pos => This.myPosition = pos);
 
       // Load Places Autocomplete.
     this.mapsAPILoader.load().then(() => {
@@ -67,8 +70,11 @@ export class StaticMarkerMapComponent implements OnInit {
 
     initializeMap(map) {
       this.map = map;
-      this.map.controls[google.maps.ControlPosition.TOP_RIGHT].push(document.getElementById('myLocationButton'));
-      this.setMapOnLocation(this.markerCoords);
+      if (this.markerCoords != null && Object.keys(this.markerCoords).length === 2) {
+        this.setMapOnLocation(this.markerCoords);
+      } else {
+        this.editAddress();
+      }
     }
 
     setMapOnLocation(markerCoords: LatLngLiteral) {
@@ -87,8 +93,11 @@ export class StaticMarkerMapComponent implements OnInit {
 
     editAddress() {
       this.editing = true;
+      this.newAddress.emit(null);
       this.addressControl.enable();
-      this.marker.setMap(null);
+      if (this.marker != null) {
+        this.marker.setMap(null);
+      }
     }
 
     submitNewAddress() {
@@ -96,5 +105,10 @@ export class StaticMarkerMapComponent implements OnInit {
       this.addressControl.disable();
       this.newAddress.emit(this.map.center);
       this.setMapOnLocation(this.map.center);
+    }
+
+    zoomToMyLocation() {
+      const newLoc: LatLngLiteral = { lat: this.myPosition.coords.latitude, lng: this.myPosition.coords.longitude };
+     this.map.panTo(newLoc);
     }
   }

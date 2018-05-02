@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
 import { Car } from '../car.module';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
@@ -46,13 +47,19 @@ export class CarRetrievalService {
 
   /** Gets updated car info. */
   get(carID: number) {
-    return this.http.get<Car>('vehicles/' + carID);
+    return this.http.get<Car>('vehicles/' + carID).map(
+      car => {
+        this.carsData.set(carID, car);
+        this.carsEventSource.next(this.carsData);
+        return car;
+      }
+    );
   }
 
   /** Shows saved instance of car. */
   show(carID: number) {
-    if (this.cars[carID] != null) {
-      return this.cars[carID];
+    if (this.carsData.get(carID) != null) {
+      return of(this.carsData.get(carID));
     } else {
       return this.get(carID);
     }

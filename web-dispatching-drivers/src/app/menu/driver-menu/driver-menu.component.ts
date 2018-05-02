@@ -55,7 +55,7 @@ export class DriverMenuComponent implements OnInit, OnDestroy {
     this.shiftService.pause().subscribe(
       success => {
         This.pause = true;
-        this.snackbar.open('Máte naplánovanú pauzu! Neprve ale vyřiďte zbývající objednávky.', '', {duration: 3000});
+        this.snackbar.open('Máte naplánovanú pauzu! Nejprve ale vyřiďte zbývající objednávky.', '', {duration: 3000});
       }
     );
   }
