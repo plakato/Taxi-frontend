@@ -1,3 +1,21 @@
-<p>
-  login works!
-</p>
+<div class="container">
+  <img src="../../../assets/images/logo100.png" alt="logo"/>
+  <form [formGroup]="loginForm">
+    <mat-form-field>
+      <input matInput placeholder="Telefónní číslo" formControlName="phoneNumber">
+      <mat-error *ngIf="loginForm.get('phoneNumber').hasError('required')">Tato položka je povinná.</mat-error>
+      <mat-error *ngIf="loginForm.get('phoneNumber').hasError('pattern')">Tohle není validní telefónní číslo.</mat-error>
+      <mat-error *ngIf="loginForm.get('phoneNumber').hasError('maxLength')">Číslo je příliš dlouhé.</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Heslo" formControlName="password" type="password">
+      <mat-error *ngIf="loginForm.get('password').hasError('required')">Tato položka je povinná.</mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="logIn()" type="sumbit">Přihlásit se</button>
+  </form>
+  <button mat-raised-button class="margin-top" (click)="register()">Registrovat</button>
+  <a (click)="forgotPassword()">Zapomněl jsem heslo</a>
+  <div class="bottom">
+    <button mat-button (click)="continueWithoutLogin()">Pokračovat bez přihlášení</button>
+  </div>
+</div>
