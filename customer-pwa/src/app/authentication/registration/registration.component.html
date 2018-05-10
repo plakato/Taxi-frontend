@@ -1,0 +1,24 @@
+<div class="basic-padding">
+  <h2 i18n>Registrace</h2>
+  <form [formGroup]="registrationForm">
+    <mat-form-field>
+      <input matInput i18n-placeholder placeholder="Jméno a příjmení" formControlName="name">
+      <mat-error *ngIf="registrationForm.get('name').hasError('required')" i18n>Tato položka je povinná.</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput i18n-placeholder placeholder="Telefónní číslo" formControlName="phone">
+      <mat-error *ngIf="registrationForm.get('phone').hasError('required')" i18n>Tato položka je povinná.</mat-error>
+      <mat-error *ngIf="registrationForm.get('phone').hasError('pattern')" i18n>Tohle není validní telefónní číslo.</mat-error>
+      <mat-error *ngIf="registrationForm.get('phone').hasError('maxLength')" i18n>Číslo je příliš dlouhé.</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput i18n-placeholder placeholder="Heslo" formControlName="password" type="password">
+      <mat-error *ngIf="registrationForm.get('password').hasError('required')" i18n>Tato položka je povinná.</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput i18n-placeholder placeholder="Ověření hesla" formControlName="passwordCofirmation" type="password">
+      <mat-error *ngIf="registrationForm.get('passwordCofirmation').hasError('required')" i18n>Tato položka je povinná.</mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="register()" i18n>Registrovat</button>
+  </form>
+</div>

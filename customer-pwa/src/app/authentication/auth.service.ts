@@ -10,6 +10,18 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
+  register(phone: string, name: string, password: string) {
+    return this.http.post('customers', JSON.stringify(
+      {
+        customer: {
+          name: name,
+          telephone: phone,
+          password: password
+        }
+      }
+    ));
+  }
+
   login(phone: string, password: string) {
     return this.http.post<Customer>('customers/login', JSON.stringify(
       {

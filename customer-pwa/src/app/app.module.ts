@@ -10,6 +10,9 @@ import { AuthGuardService } from './general/auth-guard.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { AuthenticationModule } from './authentication/authentication.module';
+import { OrderModule } from './order/order.module';
+import { HttpClientModule } from '@angular/common/http';
+import { MatSnackBarModule, MatButtonModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,11 @@ import { AuthenticationModule } from './authentication/authentication.module';
     BrowserAnimationsModule,
     AppRoutingModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
-    AuthenticationModule
+    AuthenticationModule,
+    OrderModule,
+    HttpClientModule,
+    MatSnackBarModule,
+    MatButtonModule
   ],
   providers: [
     ErrorService,

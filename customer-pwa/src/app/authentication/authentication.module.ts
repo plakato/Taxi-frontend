@@ -4,16 +4,18 @@ import { LoginComponent } from './login/login.component';
 import { MatFormFieldModule, MatInputModule, MatButtonModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './auth.service';
+import { RegistrationComponent } from './registration/registration.component';
+import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
 
 @NgModule({
   imports: [
     CommonModule,
     MatInputModule,
     MatFormFieldModule,
-    MatButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatButtonModule
   ],
-  declarations: [LoginComponent],
+  declarations: [LoginComponent, RegistrationComponent, PasswordRecoveryComponent],
   providers: [AuthService]
 })
 export class AuthenticationModule { }

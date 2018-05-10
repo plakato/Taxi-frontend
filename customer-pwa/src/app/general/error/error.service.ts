@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
 
-@Injectable()
+@Injectable({providedIn: 'root', })
 export class ErrorService {
 
   constructor(private snackbar: MatSnackBar) { }
