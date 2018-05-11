@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Customer } from './authentication.module';
 import { tap } from 'rxjs/operators';
+import { AbstractControl } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -68,7 +69,7 @@ export class AuthService {
   }
 
   setNewPasswordFromRecovery(phone: string, password: string, code: string) {
-    this.http.patch('customers/reset_password_by_token', JSON.stringify(
+    return this.http.patch('customers/reset_password_by_token', JSON.stringify(
       {
         telephone: phone,
         reset_password_token: code,
@@ -76,4 +77,12 @@ export class AuthService {
       }
     ));
   }
+
+    /** Custom validation function to determine that password and password confirmation are identical */
+    areEqual(group: AbstractControl)  {
+      if (group.get('password').value !== group.get('passwordConfirmation').value) {
+        return  { 'passwordMismatch': {value: true}} ;
+      }
+      return null;
+    }
 }

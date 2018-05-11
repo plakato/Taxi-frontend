@@ -1,4 +1,13 @@
 form {
   display: flex;
   flex-direction: column;
+
+  .faulty-error {
+    padding-top: 1.54em;
+  }
+
+  .red {
+    color:#f44336;
+  }
+
 }

@@ -1,0 +1,11 @@
+<div mat-dialog-content>
+  <p i18n>Zadejte potvrzovací SMS kód:</p>
+  <mat-form-field>
+    <input matInput [(value)]="code">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="accent" (click)="confirm()" cdkFocusInitial i18n>Potvrdit</button>
+  <button mat-button (click)="resend()" i18n>Znovu zaslat kód</button>
+</div>
+

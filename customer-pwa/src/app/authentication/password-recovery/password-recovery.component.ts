@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
+import { MatDialog, MatSnackBar } from '@angular/material';
+import { SmsCodeDialogComponent } from '../sms-code-dialog/sms-code-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-password-recovery',
@@ -11,7 +14,10 @@ export class PasswordRecoveryComponent implements OnInit {
   phoneForm: FormGroup;
 
   constructor(private fb: FormBuilder,
-              private authService: AuthService) { }
+              private authService: AuthService,
+              private dialog: MatDialog,
+              private router: Router,
+              private snackbar: MatSnackBar) { }
 
   ngOnInit() {
     this.phoneForm = this.fb.group({
@@ -19,14 +25,14 @@ export class PasswordRecoveryComponent implements OnInit {
     });
   }
 
-  sendCode() {
+  setPassword() {
     if (this.phoneForm.valid) {
       let phone = this.phoneForm.get('phone').value;
       if (phone[0] !== '+') {
         phone = '+420' + phone;
       }
-      // Open dialog.
       this.authService.forgotPassword(phone).subscribe();
+      this.router.navigate(['new-password', phone]);
     }
   }
 }

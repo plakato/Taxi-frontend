@@ -50,7 +50,7 @@ const appRoutes: Routes = [
             ]},
    { path: '', redirectTo: 'login', pathMatch: 'full' },
     // otherwise redirect to home
-  // { path: '**', redirectTo: 'login' }
+   { path: '**', redirectTo: 'login' }
 ];
 
 @NgModule({

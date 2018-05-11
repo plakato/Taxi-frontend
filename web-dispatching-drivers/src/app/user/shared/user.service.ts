@@ -22,9 +22,12 @@ export class UserService {
   loadInitialData() {
     this.http.get<User[]>('employees').subscribe(
       res => {
-        res.forEach(user => {
-          user.employee_roles = user.employee_roles.map( x => this.translated_roles[x.role]);
-        });
+        const current = JSON.parse(localStorage.getItem('currentUser'));
+        if (current.roles.indexOf('admin') > -1) {
+          res.forEach(user => {
+            user.employee_roles = user.employee_roles.map( x => this.translated_roles[x.role]);
+          });
+        }
         this.employeesData = res;
         this.employeesEventSource.next(this.employeesData);
       });

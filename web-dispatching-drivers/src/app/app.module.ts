@@ -18,7 +18,7 @@ import { DirtyErrorStateMatcher } from './reusable/error-state-matcher/error-sta
 import { GlobalErrorHandler } from './general/error/global-error-handler';
 import { ErrorService } from './general/error/error.service';
 import { httpInterceptorProviders } from './general/interceptor/index';
-import { AuthGuardService, AdminGuardService } from './general/auth-guard.service';
+import { AuthGuardService, AdminGuardService, LoggedOutGuardService } from './general/auth-guard.service';
 import { MapModule } from './map/map.module';
 import { DriverModule } from './driver/driver.module';
 
@@ -48,7 +48,8 @@ import { DriverModule } from './driver/driver.module';
     {provide: MAT_DATE_LOCALE, useValue: 'cs'},
     httpInterceptorProviders,
     AuthGuardService,
-    AdminGuardService
+    AdminGuardService,
+    LoggedOutGuardService
   ],
   bootstrap: [AppComponent]
 })
