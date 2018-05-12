@@ -8,7 +8,7 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./sms-code-dialog.component.scss']
 })
 export class SmsCodeDialogComponent implements OnInit {
-  code: string;
+  code = '';
 
   constructor(public dialogRef: MatDialogRef<SmsCodeDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,

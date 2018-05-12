@@ -6,21 +6,22 @@
       <mat-error *ngIf="registrationForm.get('name').hasError('required')" i18n>Tato položka je povinná.</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput i18n-placeholder placeholder="Telefónní číslo" formControlName="phone"/>
+      <input matInput i18n-placeholder placeholder="Telefónní číslo" formControlName="phone" type="tel"/>
       <mat-error *ngIf="registrationForm.get('phone').hasError('required')" i18n>Tato položka je povinná.</mat-error>
       <mat-error *ngIf="registrationForm.get('phone').hasError('pattern')" i18n>Tohle není validní telefónní číslo.</mat-error>
       <mat-error *ngIf="registrationForm.get('phone').hasError('maxlength')" i18n>Číslo je příliš dlouhé.</mat-error>
     </mat-form-field>
+
     <mat-form-field>
       <input matInput i18n-placeholder placeholder="Heslo" formControlName="password" type="password"/>
       <mat-error *ngIf="registrationForm.get('password').hasError('required')" i18n>Tato položka je povinná.</mat-error>
       <mat-error *ngIf="registrationForm.get('password').hasError('minlength') && !registrationForm.get('password').hasError('required')" i18n>Heslo musí míte alespoň 6 znaků.</mat-error>
     </mat-form-field>
 
-    <!-- This is also bug workaround - class needs to be one level higher than mat-form-field - also careful if the name of the class changes with new update -->
-    <div [class.mat-form-field-invalid]="registrationForm.hasError('passwordMismatch') && !registrationForm.get('passwordConfirmation').hasError('required')">
-      <mat-form-field>
-        <input matInput i18n-placeholder placeholder="Ověření hesla" formControlName="passwordConfirmation" class="red" type="password"/>
+    <!-- This is also bug workaround - careful if the name of the class changes with new update -->
+      <mat-form-field [class.mat-form-field-invalid]="registrationForm.hasError('passwordMismatch') && !registrationForm.get('passwordConfirmation').hasError('required')"
+                                  [class.ng-invalid]="registrationForm.hasError('passwordMismatch') && !registrationForm.get('passwordConfirmation').hasError('required')">
+        <input matInput i18n-placeholder placeholder="Ověření hesla" formControlName="passwordConfirmation" type="password"/>
         <mat-error *ngIf="registrationForm.get('passwordConfirmation').hasError('required')" i18n>Tato položka je povinná.</mat-error>
         <!-- This was added because there is probably a bug in material library - error doesn't get diplayed on *ngIf=true -->
         <div *ngIf="registrationForm.hasError('passwordMismatch') && !registrationForm.get('passwordConfirmation').hasError('required')" class="mat-input-subscript-wrapper mat-form-field-subscript-wrapper">
@@ -31,7 +32,7 @@
           </div>
         </div>
       </mat-form-field>
-    </div>
+
     <button mat-raised-button color="primary" (click)="register()" i18n>Registrovat</button>
   </form>
 </div>

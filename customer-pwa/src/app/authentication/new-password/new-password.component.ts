@@ -21,7 +21,7 @@ export class NewPasswordComponent implements OnInit {
   ngOnInit() {
     this.form = this.fb.group({
       password: ['', [Validators.required, Validators.minLength(6)]],
-      passwordCofirmation: ['', [Validators.required]],
+      passwordConConfirmation: ['', [Validators.required]],
       code: ['', [Validators.required]]
     });
     this.form.setValidators([this.authService.areEqual]);

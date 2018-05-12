@@ -1,11 +1,11 @@
-<div mat-dialog-content>
+<div mat-dialog-content class="column">
   <p i18n>Zadejte potvrzovací SMS kód:</p>
   <mat-form-field>
-    <input matInput [(value)]="code">
+    <input matInput [(ngModel)]="code"/>
   </mat-form-field>
 </div>
-<div mat-dialog-actions>
-  <button mat-raised-button color="accent" (click)="confirm()" cdkFocusInitial i18n>Potvrdit</button>
-  <button mat-button (click)="resend()" i18n>Znovu zaslat kód</button>
+<div mat-dialog-actions class="center">
+  <button mat-raised-button color="accent" (click)="confirm()" i18n>Potvrdit</button>
+  <button mat-button (click)="resend()" class="no-padding" i18n>Znovu zaslat kód</button>
 </div>
 

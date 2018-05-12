@@ -44,7 +44,7 @@ export class AuthService {
   }
 
   confirm(code: string, phone: string) {
-    return this.http.patch('customers/confirmation', JSON.stringify(
+    return this.http.patch('customers/confirm', JSON.stringify(
       {
         telephone: phone,
         confirmation_code: code
