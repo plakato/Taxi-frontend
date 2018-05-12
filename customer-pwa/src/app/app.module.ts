@@ -12,7 +12,8 @@ import { environment } from '../environments/environment';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { OrderModule } from './order/order.module';
 import { HttpClientModule } from '@angular/common/http';
-import { MatSnackBarModule } from '@angular/material';
+import { MatSnackBarModule, MatNativeDateModule } from '@angular/material';
+import { MapModule } from './map/map.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,9 @@ import { MatSnackBarModule } from '@angular/material';
     AuthenticationModule,
     OrderModule,
     HttpClientModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MapModule,
+    MatNativeDateModule
   ],
   providers: [
     ErrorService,
