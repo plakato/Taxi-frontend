@@ -38,6 +38,7 @@
       .white {
         background-color: white;
         line-height: 40px;
+        color: $yellow-app-background;
       }
     }
 
@@ -59,7 +60,7 @@
         height: 50px;
         color: $yellow-app-background;
         position: relative;
-        top: -24px;
+        top: -25px;
         visibility: visible;
       }
     }

@@ -7,6 +7,7 @@ import { EventEmitter } from '@angular/core';
 import { Marker } from '@agm/core/services/google-maps-types';
 import {} from '@types/googlemaps';
 import { MyLocationService } from '../my-location.service';
+import { Constants } from '../../../assets/const';
 
 @Component({
   selector: 'app-static-marker-map',
@@ -18,7 +19,7 @@ export class StaticMarkerMapComponent implements OnInit {
     addressControl: FormControl;
     editing = false;
     marker: google.maps.Marker;
-    myPosition: Position;
+    myPosition: Position = null;
     @Input() placeholder: string;
     @Input() markerCoords: LatLngLiteral;
     @Input() editable: boolean;
@@ -74,12 +75,13 @@ export class StaticMarkerMapComponent implements OnInit {
       if (this.markerCoords != null && Object.keys(this.markerCoords).length === 2) {
         this.setMapOnLocation(this.markerCoords);
       } else {
+        this.zoomToMyLocation();
         this.editAddress();
       }
     }
 
     setMapOnLocation(markerCoords: LatLngLiteral) {
-      this.map.center = markerCoords;
+      this.map.panTo(markerCoords);
       this.marker = new google.maps.Marker({
         position: markerCoords,
         icon: '../../../assets/images/ic_location_on_black_48px.svg'
@@ -104,12 +106,36 @@ export class StaticMarkerMapComponent implements OnInit {
     submitNewAddress() {
       this.editing = false;
       this.addressControl.disable();
-      this.newAddress.emit(this.map.center);
+       const newPlace = { lat: this.map.center.lat(), lng: this.map.center.lng()};debugger;
+      this.newAddress.emit(newPlace);
       this.setMapOnLocation(this.map.center);
     }
 
     zoomToMyLocation() {
-      const newLoc: LatLngLiteral = { lat: this.myPosition.coords.latitude, lng: this.myPosition.coords.longitude };
-     this.map.panTo(newLoc);
+      let newLoc: LatLngLiteral;
+      if (this.myPosition != null) {
+         newLoc = { lat: this.myPosition.coords.latitude, lng: this.myPosition.coords.longitude };
+      } else {
+        newLoc = Constants.DEFAULT_ADDRESS;
+      }
+      this.map.panTo(newLoc);
     }
+
+    mapCenterChanged(event) {
+      if (this.editing){
+        this.mapService.getAddress(event).subscribe(
+          result => { if (result.formatted_address) {
+                          this.addressControl.setValue(result.formatted_address); }},
+          err => console.log(err)
+        );
+      }
+      
+   /*   // Deselect airport if address was changed.
+      if (this.airportSelected &&
+          (event.lat.toFixed(5) !== Constants.DEFAULT_AIRPORT_ADDRESS.lat.toFixed(5) ||
+           event.lng.toFixed(5) !== Constants.DEFAULT_AIRPORT_ADDRESS.lng.toFixed(5))) {
+        this.airportSelected = false;
+      }
+    */ }
+  
   }

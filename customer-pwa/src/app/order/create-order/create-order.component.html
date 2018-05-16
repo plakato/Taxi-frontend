@@ -1,0 +1,21 @@
+<div class="basic-padding container">
+    
+    <!-- Choose start -->
+    <div class="grow" *ngIf="url === '/standard-order/choose-start'">
+        <app-static-marker-map i18n-placeholder placeholder="Zvolte start" (newAddress)="newStart(newAddress)" editable="true"></app-static-marker-map>
+        <button mat-raised-button color="primary" (click)="startChosen()" i18n>Dále
+            <mat-icon class="right">keyboard_arrow_right</mat-icon>
+        </button>
+    </div>
+
+    <!-- Choose finish -->
+    <div class="grow" *ngIf="url === '/standard-order/choose-finish'">
+        <app-static-marker-map i18n-placeholder placeholder="Zvolte cíl" (newAddress)="newFinish(newAddress)" editable="true"></app-static-marker-map>
+        <button mat-raised-button color="primary" (click)="finishChosen()" i18n>Dále
+            <mat-icon class="right">keyboard_arrow_right</mat-icon>
+        </button>
+    </div>
+
+    <!-- Fill in other info -->
+    <app-fill-in-params *ngIf="url === '/standard-order/fill-in-info'"></app-fill-in-params>
+</div>

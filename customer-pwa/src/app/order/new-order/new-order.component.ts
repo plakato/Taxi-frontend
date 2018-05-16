@@ -19,7 +19,7 @@ export class NewOrderComponent implements OnInit {
   }
 
   chooseStandard() {
-
+    this.router.navigate(['standard-order/create-order']);
   }
 
   chooseAirport() {

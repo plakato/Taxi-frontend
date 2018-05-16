@@ -22,7 +22,7 @@ import { MyLocationService } from './my-location.service';
     })
   ],
   declarations: [  StaticMarkerMapComponent ],
-  exports: [  StaticMarkerMapComponent ],
+  exports: [ StaticMarkerMapComponent ],
   bootstrap: [ ],
   providers: [MapService, MyLocationService]
 })

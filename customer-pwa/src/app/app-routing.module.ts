@@ -6,7 +6,7 @@ import { AuthGuardService } from './general/auth-guard.service';
 import { RegistrationComponent } from './authentication/registration/registration.component';
 import { PasswordRecoveryComponent } from './authentication/password-recovery/password-recovery.component';
 import { NewPasswordComponent } from './authentication/new-password/new-password.component';
-import { FillInParamsComponent } from './order/fill-in-params/fill-in-params.component';
+import { CreateOrderComponent } from './order/create-order/create-order.component';
 
 const appRoutes: Routes = [
   { path: 'new-order', component: NewOrderComponent, canActivate: [AuthGuardService] },
@@ -15,7 +15,10 @@ const appRoutes: Routes = [
   { path: 'password-recovery', component: PasswordRecoveryComponent },
   { path: 'standard-order', canActivate: [AuthGuardService],
       children: [
-        { path: 'fill-in-parameters', component: FillInParamsComponent }
+        { path: 'choose-start', component: CreateOrderComponent },
+        { path: 'choose-finish', component: CreateOrderComponent },
+        { path: 'fill-in-info', component: CreateOrderComponent }
+        
       ]},
   { path: 'login', component: LoginComponent },
   { path: '', pathMatch: 'full', redirectTo: 'login' }
