@@ -12,8 +12,7 @@
         [latitude]="map?.center?.lat" [longitude]="map?.center?.lng"
         [zoom]=15
         [zoomControl]=true [streetViewControl]=false
-        (mapReady)="initializeMap($event)"
-        (centerChange)="mapCenterChanged($event)">
+        (mapReady)="initializeMap($event)">
       <agm-circle
         [latitude]="+myPosition?.coords.latitude" [longitude]="+myPosition?.coords.longitude" [radius]="myPosition?.coords.accuracy"
         [clickable]=false [fillColor]="'rgb(255, 229, 0)'"></agm-circle>

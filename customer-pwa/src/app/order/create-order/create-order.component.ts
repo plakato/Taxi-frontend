@@ -32,7 +32,7 @@ export class CreateOrderComponent implements OnInit {
     this.router.navigate(['standard-order/fill-in-info']);
   }
 
-  newStart(newAddress) {debugger;
+  newStart(newAddress) {
     this.order.loc_start = newAddress;
   }
 

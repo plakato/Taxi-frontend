@@ -72,6 +72,7 @@ export class StaticMarkerMapComponent implements OnInit {
 
     initializeMap(map) {
       this.map = map;
+      this.map.addListener('idle', () => this.mapIdle() )
       if (this.markerCoords != null && Object.keys(this.markerCoords).length === 2) {
         this.setMapOnLocation(this.markerCoords);
       } else {
@@ -105,10 +106,10 @@ export class StaticMarkerMapComponent implements OnInit {
 
     submitNewAddress() {
       this.editing = false;
-      this.addressControl.disable();
-       const newPlace = { lat: this.map.center.lat(), lng: this.map.center.lng()};debugger;
+       const newPlace = { lat: this.map.center.lat(), lng: this.map.center.lng()};
       this.newAddress.emit(newPlace);
       this.setMapOnLocation(this.map.center);
+      this.addressControl.disable();      
     }
 
     zoomToMyLocation() {
@@ -121,9 +122,9 @@ export class StaticMarkerMapComponent implements OnInit {
       this.map.panTo(newLoc);
     }
 
-    mapCenterChanged(event) {
-      if (this.editing){
-        this.mapService.getAddress(event).subscribe(
+    mapIdle() {
+      if (this.editing) {
+        this.mapService.getAddress(this.map.center).subscribe(
           result => { if (result.formatted_address) {
                           this.addressControl.setValue(result.formatted_address); }},
           err => console.log(err)

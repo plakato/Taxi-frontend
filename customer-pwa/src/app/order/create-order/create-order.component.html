@@ -2,7 +2,7 @@
     
     <!-- Choose start -->
     <div class="grow" *ngIf="url === '/standard-order/choose-start'">
-        <app-static-marker-map i18n-placeholder placeholder="Zvolte start" (newAddress)="newStart(newAddress)" editable="true"></app-static-marker-map>
+        <app-static-marker-map i18n-placeholder placeholder="Zvolte start" (newAddress)="newStart($event)" editable="true"></app-static-marker-map>
         <button mat-raised-button color="primary" (click)="startChosen()" i18n>Dále
             <mat-icon class="right">keyboard_arrow_right</mat-icon>
         </button>
@@ -10,7 +10,7 @@
 
     <!-- Choose finish -->
     <div class="grow" *ngIf="url === '/standard-order/choose-finish'">
-        <app-static-marker-map i18n-placeholder placeholder="Zvolte cíl" (newAddress)="newFinish(newAddress)" editable="true"></app-static-marker-map>
+        <app-static-marker-map i18n-placeholder placeholder="Zvolte cíl" (newAddress)="newFinish($event)" editable="true"></app-static-marker-map>
         <button mat-raised-button color="primary" (click)="finishChosen()" i18n>Dále
             <mat-icon class="right">keyboard_arrow_right</mat-icon>
         </button>
