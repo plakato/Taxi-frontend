@@ -23,7 +23,7 @@ export class StaticMarkerMapComponent implements OnInit {
     @Input() placeholder: string;
     @Input() markerCoords: LatLngLiteral;
     @Input() editable: boolean;
-    @Output() newAddress = new EventEmitter<LatLngLiteral>();
+    @Output() newAddress = new EventEmitter<{coords: LatLngLiteral, address:string}>();
     @ViewChild('address')
     public addressElementRef: ElementRef;
 
@@ -97,7 +97,7 @@ export class StaticMarkerMapComponent implements OnInit {
 
     editAddress() {
       this.editing = true;
-      this.newAddress.emit(null);
+      this.newAddress.emit({ coords: null, address:''});
       this.addressControl.enable();
       if (this.marker != null) {
         this.marker.setMap(null);
@@ -106,8 +106,8 @@ export class StaticMarkerMapComponent implements OnInit {
 
     submitNewAddress() {
       this.editing = false;
-       const newPlace = { lat: this.map.center.lat(), lng: this.map.center.lng()};
-      this.newAddress.emit(newPlace);
+      const newPlace = { lat: this.map.center.lat(), lng: this.map.center.lng()};
+      this.newAddress.emit({coords: newPlace, address:  this.addressControl.value});
       this.setMapOnLocation(this.map.center);
       this.addressControl.disable();      
     }

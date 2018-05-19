@@ -17,5 +17,6 @@
     </div>
 
     <!-- Fill in other info -->
-    <app-fill-in-params *ngIf="url === '/standard-order/fill-in-info'"></app-fill-in-params>
+    <app-fill-in-params *ngIf="url === '/standard-order/fill-in-info'" 
+        [(startAddress)]="start" [(finishAddress)]="finish" (newOrder)="sendNewOrder($event)"></app-fill-in-params>
 </div>
