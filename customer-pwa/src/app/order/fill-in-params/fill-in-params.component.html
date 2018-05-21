@@ -1,13 +1,12 @@
-<div>
   <form class="container" [formGroup]="orderForm">
     <!-- Start -->
-    <mat-form-field>
-      <input matInput i18n-placeholder placeholder="Start" value="{{startAddress.address}}" disabled/>
+    <mat-form-field *ngIf="!airport">
+      <input matInput i18n-placeholder placeholder="Start" value="{{orderService.order.startAddress}}" disabled/>
     </mat-form-field>
 
     <!-- Finish -->
-    <mat-form-field>
-      <input matInput i18n-placeholder placeholder="Cíl" value="{{finishAddress.address}}" disabled/>
+    <mat-form-field *ngIf="!airport">
+      <input matInput i18n-placeholder placeholder="Cíl" value="{{orderService.order.finishAddress}}" disabled/>
     </mat-form-field>
 
     <div>
@@ -31,25 +30,32 @@
       <mat-error *ngIf="orderForm.get('phone').hasError('maxLength')" i18n>Číslo je příliš dlouhé.</mat-error>
     </mat-form-field>
 
+    <!-- Flight number --> 
+    <mat-form-field *ngIf="airport">
+        <input matInput i18n-placeholder placeholder="Číslo letu" formControlName="flightNumber"/>
+        <mat-error *ngIf="orderForm.get('persons').hasError('required')" i18n>Tato položka je povinná.</mat-error>
+    </mat-form-field>
+
+
     <!-- Note for driver -->
     <mat-form-field>
         <textarea matInput i18n-placeholder placeholder="Poznámka pro řidiče" formControlName="note"></textarea>
     </mat-form-field>
 
     <!-- Scheduled order -->
-    <section class="scheduled" [class.yellow]="scheduled.checked" *ngIf="signedIn">
-      <mat-slide-toggle color="primary" formControlName="scheduled" i18n #scheduled>
+    <section class="scheduled" *ngIf="signedIn">
+      <mat-slide-toggle color="primary" formControlName="scheduled" [class.hidden]="airport" i18n #scheduled>
         Termínovaná
       </mat-slide-toggle>
       <div class="dateTime">
         <!-- Date -->
-        <mat-form-field class="date">
+        <mat-form-field class="date" *ngIf="scheduled.checked || airport">
             <input matInput [matDatepickerFilter]="filterLaterThanToday" [matDatepicker]="picker" i18n-placeholder placeholder="Datum" formControlName="date">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
         <!-- Time -->
-        <mat-form-field class="time">
+        <mat-form-field class="time" *ngIf="scheduled.checked || airport">
             <input matInput formControlName="time" i18n-placeholder placeholder="Čas"
                   (click)="$event.target.select()"/>
             <mat-error *ngIf="orderForm.get('time').hasError('pattern')">Zadejte čas ve formátu HH:MM</mat-error>
@@ -57,7 +63,15 @@
       </div>
     </section>
 
+    <!-- To or From Airport -->
+    <div *ngIf="airport" class="centeredRow">
+        <span i18n>Jdu z letiska</span>
+        <mat-slide-toggle color="primary" (change)="directionChange($event.checked)" i18n>
+            Jdu na letisko
+        </mat-slide-toggle>
+    </div>
 
-    <button mat-raised-button color="primary" class="submitButton" (click)="send()" i18n>Odeslat</button>
+
+    <button mat-raised-button color="primary" class="submitButton" (click)="send()" *ngIf="!airport" i18n>Odeslat</button>
+    <button mat-raised-button color="primary" class="submitButton" (click)="chooseOtherEndpoint()" *ngIf="airport" i18n>Zvolit {{goingToAirport ? 'start' : 'cíl'}}</button>    
   </form>
-</div>

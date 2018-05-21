@@ -20,6 +20,7 @@ export class StaticMarkerMapComponent implements OnInit {
     editing = false;
     marker: google.maps.Marker;
     myPosition: Position = null;
+
     @Input() placeholder: string;
     @Input() markerCoords: LatLngLiteral;
     @Input() editable: boolean;

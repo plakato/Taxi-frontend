@@ -14,6 +14,7 @@ import { OrderModule } from './order/order.module';
 import { HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule, MatNativeDateModule } from '@angular/material';
 import { MapModule } from './map/map.module';
+import { ReusableModule } from './reusable/reusable.module';
 
 @NgModule({
   declarations: [
@@ -29,11 +30,12 @@ import { MapModule } from './map/map.module';
     HttpClientModule,
     MatSnackBarModule,
     MapModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    ReusableModule
   ],
   providers: [
     ErrorService,
-    { provide: LOCALE_ID, useValue: 'cs' },
+   // { provide: LOCALE_ID, useValue: 'cs' },
     httpInterceptorProviders,
     AuthGuardService
 ],

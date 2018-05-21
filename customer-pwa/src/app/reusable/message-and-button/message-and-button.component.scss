@@ -1,0 +1,11 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 20px);
+
+    p {
+        text-align: center;
+        margin: auto 10px;
+    }
+
+}
