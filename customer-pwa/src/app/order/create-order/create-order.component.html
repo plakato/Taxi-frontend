@@ -1,7 +1,7 @@
 <div class="basic-padding container">
     
     <!-- Choose start -->
-    <div class="grow" *ngIf="url === '/standard-order/choose-start'">
+    <div class="grow" *ngIf="url === '/order/standard/choose-start'">
         <app-static-marker-map i18n-placeholder placeholder="Zvolte start" (newAddress)="newStart($event)" editable="true"></app-static-marker-map>
         <button mat-raised-button color="primary" (click)="startChosen()" i18n>Dále
             <mat-icon class="right">keyboard_arrow_right</mat-icon>
@@ -9,7 +9,7 @@
     </div>
 
     <!-- Choose finish -->
-    <div class="grow" *ngIf="url === '/standard-order/choose-finish'">
+    <div class="grow" *ngIf="url === '/order/standard/choose-finish'">
         <app-static-marker-map i18n-placeholder placeholder="Zvolte cíl" (newAddress)="newFinish($event)" editable="true"></app-static-marker-map>
         <button mat-raised-button color="primary" (click)="finishChosen()" i18n>Dále
             <mat-icon class="right">keyboard_arrow_right</mat-icon>
@@ -17,7 +17,7 @@
     </div>
 
     <!-- Fill in other info -->
-    <div *ngIf="url === '/standard-order/fill-in-info'" class="grow">
+    <div *ngIf="url === '/order/standard/fill-in-info'" class="grow">
         <div>
             <mat-card>
                 <div class="cardContent" *ngIf="driversArrivalService.arrivals.length !== 0">   

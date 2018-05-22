@@ -1,0 +1,17 @@
+<div class="container">
+  <p i18n>Váš řidič je na cestě.</p>
+  <div class="map">
+    <app-static-marker-map [trackDriverID]="2"></app-static-marker-map>
+  </div>  
+  <div class="details">
+    <div>
+        <p i18n>Předpokladaný čas příchodu</p>
+        <p i18n>18:20</p>
+    </div>
+    <div>
+        <p i18n>SPZ</p>
+        <p i18n>AAA11</p>
+    </div>
+  </div>
+  <button mat-raised-button color="warn" (click)="cancelOrder()" i18n>Zrušit objednávku</button>
+</div>

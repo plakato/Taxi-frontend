@@ -15,7 +15,7 @@ export class ErrorService {
   // change event which causes snackbar not to open properly.
   notifyUser(error) {
     // Handle network errors, they have different structure.
-    if (error instanceof HttpErrorResponse) {debugger;
+    if (error instanceof HttpErrorResponse) {
       if (error.error instanceof ErrorEvent) {
          // A client-side or network error occurred.
       this.snackbar.open(error.error.error, 'OK', { duration: 2000});

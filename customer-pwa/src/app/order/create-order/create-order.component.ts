@@ -30,7 +30,7 @@ export class CreateOrderComponent implements OnInit {
       this.signedIn = true;
     }
     // On refresh request new arrival times and drivers.
-    if (this.url === '/standard-order/fill-in-info') {
+    if (this.url === 'order/standard/fill-in-info') {
       this.driversArrivalService.get(this.start.coords, this.finish.coords); //TODO      
     }
   }
@@ -39,7 +39,7 @@ export class CreateOrderComponent implements OnInit {
     if (this.start.coords != null) {
       this.orderService.order.loc_start = this.start.coords;
       this.orderService.order.startAddress = this.start.address;
-      this.router.navigate(['standard-order/choose-finish']);
+      this.router.navigate(['order/standard/choose-finish']);
     } else {
       this.errorService.showMessageToUser('Musíte zvolit nějaký start.');
     }
@@ -49,7 +49,7 @@ export class CreateOrderComponent implements OnInit {
     this.orderService.order.loc_finish = this.finish.coords;
     this.orderService.order.finishAddress = this.finish.address;
     this.driversArrivalService.get(this.start.coords, this.finish.coords); //TODO
-    this.router.navigate(['standard-order/fill-in-info']);
+    this.router.navigate(['order/standard/fill-in-info']);
   }
 
   newStart(newAddress) {
@@ -65,7 +65,7 @@ export class CreateOrderComponent implements OnInit {
   }
 
   changeDriver() {
-    this.router.navigate(['standard-order/change-driver']);
+    this.router.navigate(['order/standard/change-driver']);
   }
 
   getSelectedDriver() {

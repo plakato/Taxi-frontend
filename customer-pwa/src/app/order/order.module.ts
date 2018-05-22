@@ -17,6 +17,8 @@ import { ReusableModule } from '../reusable/reusable.module';
 import { WaitForConfirmationComponent } from './ongoing-order/wait-for-confirmation/wait-for-confirmation.component';
 import { CanceledOrderComponent } from './ongoing-order/canceled-order/canceled-order.component';
 import { OrderFinishedComponent } from './ongoing-order/order-finished/order-finished.component';
+import { WatchDriverArriveComponent } from './ongoing-order/watch-driver-arrive/watch-driver-arrive.component';
+import { YesCancelDialogComponent } from '../reusable/yes-cancel-dialog/yes-cancel-dialog.component';
 
 @NgModule({
   imports: [
@@ -35,7 +37,8 @@ import { OrderFinishedComponent } from './ongoing-order/order-finished/order-fin
     MatCardModule,
     ReusableModule
   ],
-  declarations: [NewOrderComponent, FillInParamsComponent, CreateOrderComponent, CreateAirportOrderComponent, ChangeDriverComponent, OrderCreatedComponent, WaitForConfirmationComponent, CanceledOrderComponent, OrderFinishedComponent],
+  declarations: [NewOrderComponent, FillInParamsComponent, CreateOrderComponent, CreateAirportOrderComponent, ChangeDriverComponent, OrderCreatedComponent, WaitForConfirmationComponent, CanceledOrderComponent, OrderFinishedComponent, WatchDriverArriveComponent],
+  entryComponents: [YesCancelDialogComponent]
 })
 export class OrderModule { }
 

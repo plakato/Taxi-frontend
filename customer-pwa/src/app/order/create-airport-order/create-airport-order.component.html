@@ -1,17 +1,17 @@
 <div class="basic-padding container">
 
   <!-- Fill in basic info -->
-  <app-fill-in-params *ngIf="url === '/airport-order/fill-in-info'" [airport]="true" (goingToAirport)="goingToAirport = $event"></app-fill-in-params>
+  <app-fill-in-params *ngIf="url === '/order/airport/fill-in-info'" [airport]="true" (goingToAirport)="goingToAirport = $event"></app-fill-in-params>
     
   <!-- Choose start -->
-  <div class="grow" *ngIf="url === '/airport-order/choose-start'">
+  <div class="grow" *ngIf="url === '/order/airport/choose-start'">
       <app-static-marker-map i18n-placeholder placeholder="Zvolte start" (newAddress)="newEndpoint($event)" editable="true"></app-static-marker-map>
       <button mat-raised-button color="primary" (click)="endpointChosen()" i18n>Odeslat objednávku
       </button>
   </div>
 
   <!-- Choose finish -->
-  <div class="grow" *ngIf="url === '/airport-order/choose-finish'">
+  <div class="grow" *ngIf="url === '/order/airport/choose-finish'">
       <app-static-marker-map i18n-placeholder placeholder="Zvolte cíl" (newAddress)="newEndpoint($event)" editable="true"></app-static-marker-map>
       <button mat-raised-button color="primary" (click)="endpointChosen()" i18n>Odeslat objednávku
       </button>

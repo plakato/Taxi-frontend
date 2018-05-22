@@ -1,5 +1,5 @@
 
-<mat-form-field class="address" >
+<mat-form-field class="address" *ngIf="trackDriverID == null">
   <input matInput type="text" placeholder="{{placeholder}}"  [formControl]="addressControl"
     autocorrect="off" autocapitalize="off" spellcheck="off" i18n-value value="nezvolená" #address/>
   <mat-icon matSuffix *ngIf="editable && !editing" (click)="editAddress()">edit</mat-icon>

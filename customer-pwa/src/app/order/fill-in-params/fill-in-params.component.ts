@@ -50,7 +50,7 @@ export class FillInParamsComponent implements OnInit {
     this.orderService.sendNewOrder().subscribe(
       newOrder => {
         if (This.orderForm.get('scheduled').value) {
-          This.router.navigate(['standard-order/scheduled-order-created']);
+          This.router.navigate(['order/standard/scheduled-order-created']);
         } else {
           This.router.navigate(['wait-for-confirmation']);
         }
@@ -69,10 +69,10 @@ export class FillInParamsComponent implements OnInit {
       }
       if (this.goingToAirport) {
         this.orderService.order.loc_finish = Constants.DEFAULT_AIRPORT_ADDRESS;
-        this.router.navigate(['airport-order/choose-start']);
+        this.router.navigate(['order/airport/choose-start']);
       } else {
         this.orderService.order.loc_start = Constants.DEFAULT_AIRPORT_ADDRESS;
-        this.router.navigate(['airport-order/choose-finish']);        
+        this.router.navigate(['order/airport/choose-finish']);        
       }
     }
   }

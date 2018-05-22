@@ -1,14 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MessageAndButtonComponent } from './message-and-button/message-and-button.component';
-import { MatButtonModule } from '@angular/material';
+import { MatButtonModule, MatDialogModule } from '@angular/material';
+import { YesCancelDialogComponent } from './yes-cancel-dialog/yes-cancel-dialog.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDialogModule
   ],
-  declarations: [MessageAndButtonComponent],
-  exports: [MessageAndButtonComponent]
+  declarations: [MessageAndButtonComponent, YesCancelDialogComponent],
+  exports: [MessageAndButtonComponent, YesCancelDialogComponent]
 })
 export class ReusableModule { }

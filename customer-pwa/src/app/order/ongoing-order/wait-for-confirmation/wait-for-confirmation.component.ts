@@ -20,7 +20,7 @@ export class WaitForConfirmationComponent implements OnInit {
   cancelOrder() {
     const This = this;
     this.orderService.cancelCurrentOrder().subscribe(
-      success => this.router.navigate(['order-canceled']),
+      success => this.router.navigate(['order/canceled']),
       fail => This.errorService.showMessageToUser('Objednávku se nezdařilo zrušit.')
     )
   }

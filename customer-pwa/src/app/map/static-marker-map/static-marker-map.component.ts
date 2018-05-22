@@ -8,6 +8,7 @@ import { Marker } from '@agm/core/services/google-maps-types';
 import {} from '@types/googlemaps';
 import { MyLocationService } from '../my-location.service';
 import { Constants } from '../../../assets/const';
+import { TrackDriverService } from '../track-driver.service';
 
 @Component({
   selector: 'app-static-marker-map',
@@ -21,9 +22,9 @@ export class StaticMarkerMapComponent implements OnInit {
     marker: google.maps.Marker;
     myPosition: Position = null;
 
+    @Input() trackDriverID: number = null;
     @Input() placeholder: string;
-    @Input() markerCoords: LatLngLiteral;
-    @Input() editable: boolean;
+    @Input() editable: boolean = false;
     @Output() newAddress = new EventEmitter<{coords: LatLngLiteral, address:string}>();
     @ViewChild('address')
     public addressElementRef: ElementRef;
@@ -32,53 +33,69 @@ export class StaticMarkerMapComponent implements OnInit {
       private mapsAPILoader: MapsAPILoader,
       private ngZone: NgZone,
       private mapService: MapService,
-      public myLocationService: MyLocationService ) {}
+      public myLocationService: MyLocationService,
+      private driverTracking: TrackDriverService ) {}
 
     ngOnInit() {
       const This = this;
-      this.addressControl = new FormControl({value: '', disabled: !this.editing});
       this.myLocationService.positionObservable.subscribe(pos => This.myPosition = pos);
 
-      // Load Places Autocomplete.
-    this.mapsAPILoader.load().then(() => {
-      // Create bounds to restrics search to selected area.
-      const bounds = new google.maps.LatLngBounds(
-        new google.maps.LatLng(49.959910, 14.266797),
-        new google.maps.LatLng(50.757167, 15.340711));
-      // Get autocomplete object.
-      const autocomplete = new google.maps.places.Autocomplete(this.addressElementRef.nativeElement, {
-        componentRestrictions: { country: 'cz' },
-        bounds: bounds,
-        // Restrict to bounds even when viewport changes.
-        strictBounds: true,
-        types: ['address']
-      });
-      autocomplete.addListener('place_changed', () => {
-        this.ngZone.run(() => {
-          // Get the place result.
-          const place: google.maps.places.PlaceResult = autocomplete.getPlace();
+      if (this.trackDriverID == null) {
+        this.addressControl = new FormControl({value: '', disabled: !this.editing});        
+        // Load Places Autocomplete.
+        this.mapsAPILoader.load().then(() => {
+          // Create bounds to restrics search to selected area.
+          const bounds = new google.maps.LatLngBounds(
+            new google.maps.LatLng(49.959910, 14.266797),
+            new google.maps.LatLng(50.757167, 15.340711));
+          // Get autocomplete object.
+          const autocomplete = new google.maps.places.Autocomplete(this.addressElementRef.nativeElement, {
+            componentRestrictions: { country: 'cz' },
+            bounds: bounds,
+            // Restrict to bounds even when viewport changes.
+            strictBounds: true,
+            types: ['address']
+          });
+          autocomplete.addListener('place_changed', () => {
+            this.ngZone.run(() => {
+              // Get the place result.
+              const place: google.maps.places.PlaceResult = autocomplete.getPlace();
 
-          // Verify result.
-          if (place.geometry === undefined || place.geometry === null) {
-            return;
-          }
+              // Verify result.
+              if (place.geometry === undefined || place.geometry === null) {
+                return;
+              }
 
-          // Set latitude, longitude.
-          const newLatLng = {lat: place.geometry.location.lat(), lng: place.geometry.location.lng()};
-          this.map.center = newLatLng;
+              // Set latitude, longitude.
+              const newLatLng = {lat: place.geometry.location.lat(), lng: place.geometry.location.lng()};
+              this.map.center = newLatLng;
+            });
+          });
         });
-      });
-    });
+      }
+     
     }
 
     initializeMap(map) {
+      const This = this;
       this.map = map;
-      this.map.addListener('idle', () => this.mapIdle() )
-      if (this.markerCoords != null && Object.keys(this.markerCoords).length === 2) {
-        this.setMapOnLocation(this.markerCoords);
+      this.zoomToMyLocation();
+      if (this.trackDriverID == null) {
+        this.map.addListener('idle', () => this.mapIdle() )
+        this.editAddress();        
       } else {
-        this.zoomToMyLocation();
-        this.editAddress();
+        this.driverTracking.startTracking(this.trackDriverID);
+        this.driverTracking.location.subscribe(
+          newLoc => {
+            if (newLoc == null) {return;}
+            if (This.marker != null) {This.marker.setMap(null);}
+            This.marker = new google.maps.Marker({
+              position: newLoc,
+              icon: '../../../assets/images/round-directions_car-24px.svg'
+            });
+            This.marker.setMap(This.map);
+            This.map.panTo(newLoc);
+          });
       }
     }
 
@@ -131,13 +148,6 @@ export class StaticMarkerMapComponent implements OnInit {
           err => console.log(err)
         );
       }
-      
-   /*   // Deselect airport if address was changed.
-      if (this.airportSelected &&
-          (event.lat.toFixed(5) !== Constants.DEFAULT_AIRPORT_ADDRESS.lat.toFixed(5) ||
-           event.lng.toFixed(5) !== Constants.DEFAULT_AIRPORT_ADDRESS.lng.toFixed(5))) {
-        this.airportSelected = false;
-      }
-    */ }
+    }
   
   }
