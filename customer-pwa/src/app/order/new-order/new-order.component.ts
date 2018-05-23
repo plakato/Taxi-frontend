@@ -9,7 +9,7 @@ import { ErrorService } from '../../general/error/error.service';
   styleUrls: ['./new-order.component.scss']
 })
 export class NewOrderComponent implements OnInit {
-  loggedIn = localStorage.getItem('currentuser') !== null;
+  loggedIn = JSON.parse(localStorage.getItem('currentUser')) !== null;
 
   constructor(private authService: AuthService,
               private router: Router,

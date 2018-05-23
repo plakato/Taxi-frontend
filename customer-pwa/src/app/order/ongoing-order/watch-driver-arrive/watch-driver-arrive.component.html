@@ -4,14 +4,20 @@
     <app-static-marker-map [trackDriverID]="2"></app-static-marker-map>
   </div>  
   <div class="details">
-    <div>
+    <div *ngIf="driverOnHisWay() || driverArrived()">
         <p i18n>Předpokladaný čas příchodu</p>
-        <p i18n>18:20</p>
+        <p i18n>{{getDriverArrivalTime() | date: 'HH:mm'}}</p>
     </div>
-    <div>
+    <div *ngIf="customerPickedUp()">
+      <p i18n>Předpokladaný příjezd do cíle</p>
+      <p i18n>{{getEstFinishTime() | date: 'HH:mm'}}</p>
+  </div>
+    <div *ngIf="driverOnHisWay() || driverArrived()">
         <p i18n>SPZ</p>
-        <p i18n>AAA11</p>
+        <p i18n>{{getLicencePlate()}}</p>
     </div>
   </div>
-  <button mat-raised-button color="warn" (click)="cancelOrder()" i18n>Zrušit objednávku</button>
+  <button mat-raised-button *ngIf="driverOnHisWay()" color="warn" (click)="cancelOrder()" i18n>Zrušit objednávku</button>
+  <div class="message" *ngIf="driverArrived()" i18n>Váš řidič je na místě.</div>
+  
 </div>

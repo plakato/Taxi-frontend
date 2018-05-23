@@ -37,8 +37,8 @@ export class CreateOrderComponent implements OnInit {
 
   startChosen() {
     if (this.start.coords != null) {
-      this.orderService.order.loc_start = this.start.coords;
-      this.orderService.order.startAddress = this.start.address;
+      this.orderService.newOrder.loc_start = this.start.coords;
+      this.orderService.newOrder.startAddress = this.start.address;
       this.router.navigate(['order/standard/choose-finish']);
     } else {
       this.errorService.showMessageToUser('Musíte zvolit nějaký start.');
@@ -46,8 +46,8 @@ export class CreateOrderComponent implements OnInit {
   }
 
   finishChosen() {
-    this.orderService.order.loc_finish = this.finish.coords;
-    this.orderService.order.finishAddress = this.finish.address;
+    this.orderService.newOrder.loc_finish = this.finish.coords;
+    this.orderService.newOrder.finishAddress = this.finish.address;
     this.driversArrivalService.get(this.start.coords, this.finish.coords); //TODO
     this.router.navigate(['order/standard/fill-in-info']);
   }
@@ -69,15 +69,15 @@ export class CreateOrderComponent implements OnInit {
   }
 
   getSelectedDriver() {
-    if (this.orderService.order.driverID == null) {
+    if (this.orderService.newOrder.driverID == null) {
       return this.driversArrivalService.arrivals[0].driver.name;
     } else {
-      return this.driversArrivalService.getDriver(this.orderService.order.driverID).driver.name;
+      return this.driversArrivalService.getDriver(this.orderService.newOrder.driverID).driver.name;
     }
   }
 
   getSelectedArrivalTime() {
-    const chosen = this.orderService.order.driverID;
+    const chosen = this.orderService.newOrder.driverID;
     if (chosen == null) {
       return this.driversArrivalService.getMinutes(this.driversArrivalService.arrivals[0].driver.id);
     } else {

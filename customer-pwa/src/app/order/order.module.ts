@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NewOrderComponent } from './new-order/new-order.component';
 import { MatButtonModule, MatIconModule, MatFormFieldModule, MatSlideToggleModule,
-         MatDatepickerModule, MatInputModule, MatCheckboxModule, MatCardModule } from '@angular/material';
+         MatDatepickerModule, MatInputModule, MatCheckboxModule, MatCardModule, MatToolbarModule, MatMenuModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { FillInParamsComponent } from './fill-in-params/fill-in-params.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -19,6 +19,10 @@ import { CanceledOrderComponent } from './ongoing-order/canceled-order/canceled-
 import { OrderFinishedComponent } from './ongoing-order/order-finished/order-finished.component';
 import { WatchDriverArriveComponent } from './ongoing-order/watch-driver-arrive/watch-driver-arrive.component';
 import { YesCancelDialogComponent } from '../reusable/yes-cancel-dialog/yes-cancel-dialog.component';
+import { Status } from './order.service';
+import { MarkedFraudComponent } from './ongoing-order/marked-fraud/marked-fraud.component';
+import { OrderConfirmedByDriverComponent } from './ongoing-order/order-confirmed-by-driver/order-confirmed-by-driver.component';
+import { ScheduledOrdersComponent } from './scheduled-orders/scheduled-orders.component';
 
 @NgModule({
   imports: [
@@ -35,9 +39,11 @@ import { YesCancelDialogComponent } from '../reusable/yes-cancel-dialog/yes-canc
     MatCheckboxModule,
     ReactiveFormsModule,
     MatCardModule,
-    ReusableModule
+    ReusableModule,
+    MatToolbarModule,
+    MatMenuModule
   ],
-  declarations: [NewOrderComponent, FillInParamsComponent, CreateOrderComponent, CreateAirportOrderComponent, ChangeDriverComponent, OrderCreatedComponent, WaitForConfirmationComponent, CanceledOrderComponent, OrderFinishedComponent, WatchDriverArriveComponent],
+  declarations: [NewOrderComponent, FillInParamsComponent, CreateOrderComponent, CreateAirportOrderComponent, ChangeDriverComponent, OrderCreatedComponent, WaitForConfirmationComponent, CanceledOrderComponent, OrderFinishedComponent, WatchDriverArriveComponent, MarkedFraudComponent, OrderConfirmedByDriverComponent, ScheduledOrdersComponent],
   entryComponents: [YesCancelDialogComponent]
 })
 export class OrderModule { }
@@ -60,6 +66,42 @@ export interface NewOrder {
 
 export interface Order extends NewOrder {
   id: number;
+  status: Status;
+  created_at: Date;
+  updated_at: Date;
+
+  driver_id: number;
+  vehicle_id: number;
+  dispatcher_id: number;
+
+  driver: Driver;
+  vehicle: Car;
+
+  address_start: string;
+  address_finish: string;
+  loc_start: LatLngLiteral;
+  loc_finish: LatLngLiteral;
+  passenger_count: number;
+  note: string;
+  contact_telephone: string;
+  estimated_price: number;
+  explicitly_chosen_driver: boolean;
+  VIP: boolean;
+  scheduled_pick_up_at: Date;
+  flight_number: string;
+  source: string;
+
+  start_est: Date;
+  start: Date;
+  arrived_time: Date;
+  arrived_time_est: Date;  
+  arrived_time_orig_est: Date;
+  finish_time: Date;
+  finish_time_est: Date;  
+  finish_time_orig_est: Date;
+  picked_up_time: Date;
+  picked_up_time_est: Date;
+  picked_up_time_orig_est: Date;
 }
 
 export interface DriversArrival {
@@ -77,4 +119,6 @@ export interface Driver {
 }
 
 export interface Car extends Driver { 
+  plate: string; 
 }
+

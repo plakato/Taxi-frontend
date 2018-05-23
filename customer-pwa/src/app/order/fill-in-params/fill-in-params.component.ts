@@ -29,17 +29,17 @@ export class FillInParamsComponent implements OnInit {
   // Save params so they can be restored after resfesh.    
     window.addEventListener('unload', this.setParams);
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));    
-    this.orderService.order.passenger_count = 1;
-    this.orderService.order.phone = (currentUser == null)? '': currentUser.phone;
+    this.orderService.newOrder.passenger_count = 1;
+    this.orderService.newOrder.phone = (currentUser == null)? '': currentUser.phone;
     this.orderForm = this.fb.group({
-      persons: [this.orderService.order.passenger_count.toString(), [Validators.required, Validators.min(0)]],
-      phone: [this.orderService.order.phone, [Validators.required, Validators.pattern('\\+?(420)?([0-9]){9,12}'), Validators.maxLength(13)]],
-      scheduled: [this.orderService.order.scheduled_pick_up_at != null],
+      persons: [this.orderService.newOrder.passenger_count.toString(), [Validators.required, Validators.min(0)]],
+      phone: [this.orderService.newOrder.phone, [Validators.required, Validators.pattern('\\+?(420)?([0-9]){9,12}'), Validators.maxLength(13)]],
+      scheduled: [this.orderService.newOrder.scheduled_pick_up_at != null],
       date: [''],
       time: ['', [Validators.pattern('[0-2]?[0-9]:[0-5][0-9]')]], // TODO: validate that time is in the future.
-      note: [this.orderService.order.note == null ? '' : this.orderService.order.note],
-      flightNumber: [this.orderService.order.flight_number],
-      VIP: [this.orderService.order.VIP == null ? false : this.orderService.order.VIP]
+      note: [this.orderService.newOrder.note == null ? '' : this.orderService.newOrder.note],
+      flightNumber: [this.orderService.newOrder.flight_number],
+      VIP: [this.orderService.newOrder.VIP == null ? false : this.orderService.newOrder.VIP]
     });
   }
 
@@ -68,10 +68,10 @@ export class FillInParamsComponent implements OnInit {
         return;
       }
       if (this.goingToAirport) {
-        this.orderService.order.loc_finish = Constants.DEFAULT_AIRPORT_ADDRESS;
+        this.orderService.newOrder.loc_finish = Constants.DEFAULT_AIRPORT_ADDRESS;
         this.router.navigate(['order/airport/choose-start']);
       } else {
-        this.orderService.order.loc_start = Constants.DEFAULT_AIRPORT_ADDRESS;
+        this.orderService.newOrder.loc_start = Constants.DEFAULT_AIRPORT_ADDRESS;
         this.router.navigate(['order/airport/choose-finish']);        
       }
     }
@@ -85,7 +85,7 @@ export class FillInParamsComponent implements OnInit {
       if (formattedNumber[0] !== '+') {
         formattedNumber = '+420' + formattedNumber;
       }
-      this.orderService.order.contact_phone = formattedNumber;
+      this.orderService.newOrder.contact_phone = formattedNumber;
     }
     // Set up if scheduled.
     let scheduled: Date = new Date(Date.now());
@@ -98,20 +98,20 @@ export class FillInParamsComponent implements OnInit {
         this.errorService.showMessageToUser('Termínovaná objednávka na zadaný čas není možná.');
         return false;
       }
-      this.orderService.order.scheduled_pick_up_at = scheduled;
+      this.orderService.newOrder.scheduled_pick_up_at = scheduled;
     }
 
     // Set up other params.
     if (this.orderForm.valid) {
       const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-      this.orderService.order.driverID = 2; //TODO
-      this.orderService.order.passenger_count = this.orderForm.get('persons').value;
-      this.orderService.order.note =   this.orderForm.get('note').value; 
-      this.orderService.order.VIP = this.orderForm.get('VIP').value;
-      this.orderService.order.flight_number = this.orderForm.get('flightNumber') == null ? null : this.orderForm.get('flightNumber').value;
-      this.orderService.order.phone = currentUser != null? currentUser.phone : this.orderService.order.contact_phone;
+      this.orderService.newOrder.driverID = 2; //TODO
+      this.orderService.newOrder.passenger_count = this.orderForm.get('persons').value;
+      this.orderService.newOrder.note =   this.orderForm.get('note').value; 
+      this.orderService.newOrder.VIP = this.orderForm.get('VIP').value;
+      this.orderService.newOrder.flight_number = this.orderForm.get('flightNumber') == null ? null : this.orderForm.get('flightNumber').value;
+      this.orderService.newOrder.phone = currentUser != null? currentUser.phone : this.orderService.newOrder.contact_phone;
       if (this.airport) {
-        this.orderService.order.flight_number = this.orderForm.get('flightNumber').value; }
+        this.orderService.newOrder.flight_number = this.orderForm.get('flightNumber').value; }
         return true;
     }
     return false;

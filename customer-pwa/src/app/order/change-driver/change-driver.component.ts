@@ -17,11 +17,11 @@ export class ChangeDriverComponent implements OnInit {
               private location: Location) { }
 
   ngOnInit() {
-    this.chosenID = this.orderService.order.driverID;
+    this.chosenID = this.orderService.newOrder.driverID;
   }
 
   change(id: number) {
-    this.orderService.order.driverID = id;
+    this.orderService.newOrder.driverID = id;
     // Navigate back.
     this.location.back();
   }

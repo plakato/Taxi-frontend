@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { OrderService } from '../../order.service';
+import { OrderService, Status } from '../../order.service';
 import { MatDialog } from '@angular/material';
 import { YesCancelDialogComponent } from '../../../reusable/yes-cancel-dialog/yes-cancel-dialog.component';
 import { Router } from '@angular/router';
@@ -33,6 +33,30 @@ export class WatchDriverArriveComponent implements OnInit {
           fail => This.errorService.showMessageToUser('Objednávku se nezdařilo zrušit.'));
       }
     });
+  }
+
+  driverOnHisWay() {
+    return this.orderService.currentOrder.value.status === Status.driverArriving;
+  }
+
+  driverArrived() {
+    return this.orderService.currentOrder.value.status === Status.driverArrived;    
+  }
+
+  customerPickedUp() {
+    return this.orderService.currentOrder.value.status === Status.customerPickedUp;    
+  }
+
+  getDriverArrivalTime() {
+    return this.orderService.currentOrder.value.arrived_time_est;
+  }
+
+  getEstFinishTime() {
+    return this.orderService.currentOrder.value.finish_time_est;
+  }
+
+  getLicencePlate() {
+    return this.orderService.currentOrder.value.vehicle.plate;    
   }
 
 }

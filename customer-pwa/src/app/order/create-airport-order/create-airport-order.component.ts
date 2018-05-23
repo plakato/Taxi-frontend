@@ -27,11 +27,11 @@ export class CreateAirportOrderComponent implements OnInit {
     if (this.endpoint.coords != null) {
       const This = this;
       if (this.goingToAirport) {
-        this.orderService.order.loc_start = this.endpoint.coords;
-        this.orderService.order.startAddress = this.endpoint.address;
+        this.orderService.newOrder.loc_start = this.endpoint.coords;
+        this.orderService.newOrder.startAddress = this.endpoint.address;
       } else {
-        this.orderService.order.loc_finish = this.endpoint.coords;
-        this.orderService.order.finishAddress = this.endpoint.address;
+        this.orderService.newOrder.loc_finish = this.endpoint.coords;
+        this.orderService.newOrder.finishAddress = this.endpoint.address;
       }
       
       this.orderService.sendNewOrder().subscribe(

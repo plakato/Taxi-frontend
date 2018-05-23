@@ -31,7 +31,7 @@ export class AuthService {
       }
     )).pipe(tap(
       cust => {
-        localStorage.setItem('currentUser', JSON.stringify({ token: cust.token }));
+        localStorage.setItem('currentUser', JSON.stringify({ token: cust.token, id: cust.id }));
       }
     ));
   }

@@ -14,6 +14,9 @@ import { WaitForConfirmationComponent } from './order/ongoing-order/wait-for-con
 import { CanceledOrderComponent } from './order/ongoing-order/canceled-order/canceled-order.component';
 import { OrderFinishedComponent } from './order/ongoing-order/order-finished/order-finished.component';
 import { WatchDriverArriveComponent } from './order/ongoing-order/watch-driver-arrive/watch-driver-arrive.component';
+import { MarkedFraudComponent } from './order/ongoing-order/marked-fraud/marked-fraud.component';
+import { OrderConfirmedByDriverComponent } from './order/ongoing-order/order-confirmed-by-driver/order-confirmed-by-driver.component';
+import { ScheduledOrdersComponent } from './order/scheduled-orders/scheduled-orders.component';
 
 const appRoutes: Routes = [
   { path: 'new-order', component: NewOrderComponent, canActivate: [AuthGuardService] },
@@ -38,10 +41,13 @@ const appRoutes: Routes = [
               { path: 'fill-in-info', component: CreateAirportOrderComponent },
               { path: 'created', component: OrderCreatedComponent }                     
             ]},
+        { path: 'confirmed-by-driver', component: OrderConfirmedByDriverComponent },            
         { path: 'watch-driver-arrive', component: WatchDriverArriveComponent },
         { path: 'canceled', component: CanceledOrderComponent },
-        { path: 'finished', component: OrderFinishedComponent }
+        { path: 'finished', component: OrderFinishedComponent },
+        { path: 'fraud', component: MarkedFraudComponent }        
         ]},
+  { path: 'orders/scheduled', component: ScheduledOrdersComponent },
   { path: 'login', component: LoginComponent },
   { path: '', pathMatch: 'full', redirectTo: 'login' }
 ];

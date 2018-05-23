@@ -7,4 +7,8 @@ export class Constants {
                     { return { lat: 50.109670, lng: 14.275326 }; }
   public static get DRIVER_LOCATION_SHARING_INTERVAL(): number
                     { return 10 * 1000; }
+  public static get ORDER_GETTING_INTERVAL(): number
+                    { return 10 * 1000; }
+  public static get DISPATCHING_PHONE(): string
+                    { return '724 111 011'; }
 }

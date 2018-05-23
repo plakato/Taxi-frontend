@@ -27,13 +27,13 @@ export class DriversArrivalsService implements OnInit{
     this.arrivals = [
       { driver: {name: 'Carlos', id: 2 },
         arrivalTime: new Date(Date.now()),
-        car: {name: 'Audi', id: 2} },
+        car: {name: 'Audi', id: 2, plate: 'A'} },
       { driver: {name: 'Giovanni', id: 3 },
       arrivalTime: new Date(Date.now()),
-      car: {name: 'BMW', id: 3} },
+      car: {name: 'BMW', id: 3, plate: 'AA'} },
       { driver: {name: 'Giorgio', id: 4 },
       arrivalTime: new Date(Date.now()),
-      car: {name: 'Mazda', id: 4} },
+      car: {name: 'Mazda', id: 4, plate: 'AAA'} },
     ]
   }
 
