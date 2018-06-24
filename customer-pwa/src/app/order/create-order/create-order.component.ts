@@ -22,16 +22,17 @@ export class CreateOrderComponent implements OnInit {
               private orderService: OrderService,
               private driversArrivalService: DriversArrivalsService) { 
     this.url = this.router.url;
+
+    // On refresh request new arrival times and drivers.
+    if (this.url === '/order/standard/fill-in-info') {
+      this.driversArrivalService.get(this.start.coords, this.finish.coords); //TODO      
+    }
   }
 
   ngOnInit() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     if (currentUser != null) {
       this.signedIn = true;
-    }
-    // On refresh request new arrival times and drivers.
-    if (this.url === 'order/standard/fill-in-info') {
-      this.driversArrivalService.get(this.start.coords, this.finish.coords); //TODO      
     }
   }
 
@@ -60,7 +61,7 @@ export class CreateOrderComponent implements OnInit {
 
   newFinish(newAddress) {
     // To keep the reference.    
-    this.finish.coords = newAddress.cooords;
+    this.finish.coords = newAddress.coords;
     this.finish.address = newAddress.address;  
   }
 

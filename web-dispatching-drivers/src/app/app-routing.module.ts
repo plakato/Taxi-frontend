@@ -48,9 +48,9 @@ const appRoutes: Routes = [
               { path: 'choose-car', component: ChooseCarComponent},
               { path: 'new-order', component: DriverNewOrderComponent }
             ]},
-   { path: '', redirectTo: 'login', pathMatch: 'full' },
+  // { path: '', redirectTo: 'login', pathMatch: 'full' },
     // otherwise redirect to home
-   { path: '**', redirectTo: 'login' }
+   // { path: '**', redirectTo: 'login' }
 ];
 
 @NgModule({

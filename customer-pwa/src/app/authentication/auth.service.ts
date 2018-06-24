@@ -31,7 +31,7 @@ export class AuthService {
       }
     )).pipe(tap(
       cust => {
-        localStorage.setItem('currentUser', JSON.stringify({ token: cust.token, id: cust.id }));
+        localStorage.setItem('currentUser', JSON.stringify({ token: cust.token, id: cust.id, phone: cust.telephone }));
       }
     ));
   }
@@ -61,7 +61,7 @@ export class AuthService {
   }
 
   forgotPassword(phone: string) {
-    return this.http.put('customers/password_recovery', JSON.stringify(
+    return this.http.post('customers/password_recovery', JSON.stringify(
       {
         telephone: phone
       }
@@ -80,8 +80,12 @@ export class AuthService {
 
     /** Custom validation function to determine that password and password confirmation are identical */
     areEqual(group: AbstractControl)  {
-      if (group.get('password').value !== group.get('passwordConfirmation').value) {
-        return  { 'passwordMismatch': {value: true}} ;
+      const password = group.get('password');
+      const passwordConfirmation = group.get('passwordConfirmation');
+      if (password != null && 
+          passwordConfirmation != null && 
+          password.value !== passwordConfirmation.value) {
+            return  { 'passwordMismatch': {value: true}} ;
       }
       return null;
     }

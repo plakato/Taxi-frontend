@@ -18,16 +18,38 @@ export class OrderService implements OnInit {
   constructor(private http: HttpClient,
               private router: Router) {
     this.initializeOrder();    
+    window.addEventListener('beforeunload', () => {this.cacheOrder();});    
+    let newO = localStorage.getItem('newOrder');
+    if (newO != 'undefined') {
+      this.newOrder = JSON.parse(newO);
+    }
+    let currentO = localStorage.getItem('currentOrder');
+    if (currentO != 'undefined') {
+      this.currentOrderData = JSON.parse(currentO);
+      this.currentOrder.next(this.currentOrderData);
+    }
+    if (this.interval != null) {
+      this.startWatchingOrder(this.currentOrderData.id);
+    }
+    this.cacheOrder();
+    // this.startWatchingOrder(54);
    }
 
   ngOnInit() {
+   // localStorage.setItem('newOrder', JSON.stringify(this.newOrder));
+
   }
 
   initializeOrder() {
     this.newOrder = {} as any;
   }
 
-  sendNewOrder() {
+  cacheOrder() {
+    localStorage.setItem('newOrder', JSON.stringify(this.newOrder));
+    localStorage.setItem('currentOrder', JSON.stringify(this.currentOrderData));    
+  }
+
+  sendNewOrder() {debugger;
     const This = this;
     const user = JSON.parse(localStorage.getItem('currentUser'));
     return this.http.post<Order>('orders', JSON.stringify(
@@ -68,11 +90,11 @@ export class OrderService implements OnInit {
 
   getOrder(id: number) {
     const This = this;
-    this.http.get<Order>('orders' + id).subscribe(
+    this.http.get<Order>('orders/' + id).subscribe(
       order => {
         // React to change in status.
-        if (order.status !== This.currentOrderData.status) {
-          switch (This.currentOrderData.status) {
+        //if (order.status !== This.currentOrderData.status) {
+          switch (order.status) {
             case Status.driverConfirmed: {
               This.router.navigate(['order/confirmed-by-driver']);
               break;
@@ -96,7 +118,7 @@ export class OrderService implements OnInit {
               break;
             }
             
-          }
+       //   }
         }
         This.currentOrderData = order;
         This.currentOrder.next(this.currentOrderData);      
@@ -118,7 +140,7 @@ export class OrderService implements OnInit {
   }
 
   getScheduledOrders() {
-    return this.http.get('orders', { params: {scheduled: true}});
+    return this.http.get<Order[]>('orders/?page=1&per_page=100&scheduled');
   }
 }
 

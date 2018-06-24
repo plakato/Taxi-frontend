@@ -1,0 +1,10 @@
+.container {
+    min-height: calc(100vh - 20px);
+    display: flex;
+    
+    .center-on-page {
+        flex-grow: 1;
+        margin: auto;
+        text-align: center;
+    }    
+}

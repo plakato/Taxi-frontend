@@ -15,14 +15,14 @@ export class DriverArrivingComponent implements OnInit {
   @Input() order: OrderExtended;
   status = Status;
   customerAbsent = false;
-  editingAddress = true;
+  editingAddress = false;
 
   constructor(private orderService: OrderService,
               private router: Router,
               private errorService: ErrorService) { }
 
   ngOnInit() {
-    this.editingAddress = (this.order.address_finish == null) ? true : false;
+    // this.editingAddress = (this.order.address_finish == null) ? true : false;
   }
 
   changePickUpTime(newTime: Date) {
@@ -36,7 +36,7 @@ export class DriverArrivingComponent implements OnInit {
       order => { order.subscribe(o => This.order = o); }
     );
   }
-  changeAddress(newAddress) {
+  changeAddress(newAddress) {debugger;
     if (newAddress === null) {
       this.editingAddress = true;
     } else {
@@ -49,7 +49,7 @@ export class DriverArrivingComponent implements OnInit {
   }
 
   arrived() {
-    if (this.editingAddress) {
+    if (this.editingAddress) {debugger;
       this.addressEditingWarning();
       return;
     }

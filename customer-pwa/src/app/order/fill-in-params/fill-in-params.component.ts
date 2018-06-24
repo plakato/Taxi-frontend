@@ -52,7 +52,7 @@ export class FillInParamsComponent implements OnInit {
         if (This.orderForm.get('scheduled').value) {
           This.router.navigate(['order/standard/scheduled-order-created']);
         } else {
-          This.router.navigate(['wait-for-confirmation']);
+          This.router.navigate(['order/standard/wait-for-confirmation']);
         }
         console.log('sending order...');
       }
@@ -98,8 +98,9 @@ export class FillInParamsComponent implements OnInit {
         this.errorService.showMessageToUser('Termínovaná objednávka na zadaný čas není možná.');
         return false;
       }
-      this.orderService.newOrder.scheduled_pick_up_at = scheduled;
+      this.orderService.newOrder.scheduled_pick_up_at = new Date(scheduled);      
     }
+
 
     // Set up other params.
     if (this.orderForm.valid) {
@@ -108,11 +109,17 @@ export class FillInParamsComponent implements OnInit {
       this.orderService.newOrder.passenger_count = this.orderForm.get('persons').value;
       this.orderService.newOrder.note =   this.orderForm.get('note').value; 
       this.orderService.newOrder.VIP = this.orderForm.get('VIP').value;
-      this.orderService.newOrder.flight_number = this.orderForm.get('flightNumber') == null ? null : this.orderForm.get('flightNumber').value;
       this.orderService.newOrder.phone = currentUser != null? currentUser.phone : this.orderService.newOrder.contact_phone;
-      if (this.airport) {
-        this.orderService.newOrder.flight_number = this.orderForm.get('flightNumber').value; }
-        return true;
+      this.orderService.newOrder.flight_number = this.orderForm.get('flightNumber') == null ? null : this.orderForm.get('flightNumber').value;         
+      if (this.orderService.newOrder.flight_number == null) {
+        if (this.airport) {
+          this.errorService.showMessageToUser('Číslo letu je povinná položka!');
+          return false;          
+        } else {
+          this.orderService.newOrder.flight_number = '';
+        }
+      } 
+      return true;
     }
     return false;
   }

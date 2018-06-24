@@ -13,12 +13,13 @@ export class DriversArrivalsService implements OnInit{
   start: LatLngLiteral;
   finish: LatLngLiteral;
 
-  constructor(private http: HttpClient) { }
-
-  ngOnInit() {
+  constructor(private http: HttpClient) { 
     if (this.start != null) {
       this.get(this.start, this.finish);
     }
+  }
+
+  ngOnInit() {
   }
 
   get(start: LatLngLiteral, finish: LatLngLiteral) {

@@ -1,12 +1,12 @@
   <form class="container" [formGroup]="orderForm">
     <!-- Start -->
     <mat-form-field *ngIf="!airport">
-      <input matInput i18n-placeholder placeholder="Start" value="{{orderService.order.startAddress}}" disabled/>
+      <input matInput i18n-placeholder placeholder="Start" value="{{orderService.newOrder.startAddress}}" disabled/>
     </mat-form-field>
 
     <!-- Finish -->
     <mat-form-field *ngIf="!airport">
-      <input matInput i18n-placeholder placeholder="Cíl" value="{{orderService.order.finishAddress}}" disabled/>
+      <input matInput i18n-placeholder placeholder="Cíl" value="{{orderService.newOrder.finishAddress}}" disabled/>
     </mat-form-field>
 
     <div>
@@ -64,14 +64,14 @@
     </section>
 
     <!-- To or From Airport -->
-    <div *ngIf="airport" class="centeredRow">
+    <div *ngIf="airport" class="centeredRow margin-bottom">
         <span i18n>Jdu z letiska</span>
         <mat-slide-toggle color="primary" (change)="directionChange($event.checked)" i18n>
             Jdu na letisko
         </mat-slide-toggle>
     </div>
 
-
+    
     <button mat-raised-button color="primary" class="submitButton" (click)="send()" *ngIf="!airport" i18n>Odeslat</button>
     <button mat-raised-button color="primary" class="submitButton" (click)="chooseOtherEndpoint()" *ngIf="airport" i18n>Zvolit {{goingToAirport ? 'start' : 'cíl'}}</button>    
   </form>

@@ -56,7 +56,7 @@ export class WatchDriverArriveComponent implements OnInit {
   }
 
   getLicencePlate() {
-    return this.orderService.currentOrder.value.vehicle.plate;    
+    return '';// this.orderService.currentOrder.value.vehicle.plate;    
   }
 
 }

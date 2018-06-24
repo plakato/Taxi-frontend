@@ -1,8 +1,11 @@
 <div class="basic-padding container">
 
   <!-- Fill in basic info -->
-  <app-fill-in-params *ngIf="url === '/order/airport/fill-in-info'" [airport]="true" (goingToAirport)="goingToAirport = $event"></app-fill-in-params>
-    
+  <span *ngIf="url === '/order/airport/fill-in-info'">
+    <h2 i18n>Detaily objednávky</h2>
+    <app-fill-in-params [airport]="true" (goingToAirport)="goingToAirport = $event"></app-fill-in-params>  
+  </span>
+      
   <!-- Choose start -->
   <div class="grow" *ngIf="url === '/order/airport/choose-start'">
       <app-static-marker-map i18n-placeholder placeholder="Zvolte start" (newAddress)="newEndpoint($event)" editable="true"></app-static-marker-map>

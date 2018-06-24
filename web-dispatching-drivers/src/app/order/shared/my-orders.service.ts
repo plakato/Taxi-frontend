@@ -6,11 +6,14 @@ import { interval } from 'rxjs/observable/interval';
 import { Order } from '../order.module';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/takeWhile';
+import 'rxjs/add/operator/finally';
+
 import { OrderService } from './order.service';
 import { NotificationService } from './notification.service';
 import { Subscription } from 'rxjs/Subscription';
 import { TimerObservable } from 'rxjs/observable/TimerObservable';
 import { OrderExtended, Status } from '../dispatching/order-history/order-history.component';
+import { DriverService } from '../../driver/shared/driver.service';
 
 @Injectable()
 export class MyOrdersService {
@@ -22,35 +25,45 @@ export class MyOrdersService {
 
   constructor( private http: HttpClient,
               private orderService: OrderService,
-              private notifications: NotificationService ) { }
+              private notifications: NotificationService,
+              private driverService: DriverService ) { }
 
   startPollingOrders() {
     // this.mockDebugOrders();
     const currentUser = JSON.parse(localStorage.getItem('currentUser')).id;
     this.stopPollingOrders();
-    const This = this;
+    const This = this;debugger;
     this.polling = TimerObservable.create(0, 10 * 1000)
       .switchMap(() => This.http.get<MyOrdersResponse>('order_queues/' + currentUser))
       .subscribe(
         res => {
           const orders = res.queue;
           const newOrders = [];
-          This.orderService.fillInInfo(orders).subscribe(
-            order => {
-                newOrders.push(order);
-              },
-            err => {},
-            () => {
-              This.ordersData = newOrders.sort(this.compareByStartTime);
-              if (This.ordersData[0].status === Status.driverConfirmed) {
+          This.orderService.fillInInfo(orders)
+            .finally(() => {
+              // This.ordersData = newOrders.filter(order => order.status !== Status.finished).sort(this.compareByStartTime);
+              // for testing purposes only
+              This.ordersData = newOrders;
+              This.ordersData[0].status = Status.driverArrived;debugger;
+              /*if (This.ordersData.length > 0 && This.ordersData[0].status === Status.driverConfirmed) {
                 This.orderService.arriving(This.ordersData[0].id).subscribe(
                   order => {
                     This.ordersData[0] = order;
                     This.ordersEventSource.next(This.ordersData);
                   }
                 );
-              }
+              } else if (This.ordersData.length > 0 && This.ordersData[0].status === Status.created){ //debug purposes
+                This.driverService.acceptOrder(This.ordersData[0].id).subscribe();
+              } */
               This.ordersEventSource.next(This.ordersData);
+            })  
+          .subscribe(
+            order => {
+                newOrders.push(order);
+              },
+            err => {},
+            () => {
+              
             }
           );
         });

@@ -1,5 +1,5 @@
 <div class="container">
-  <p i18n>Váš řidič je na cestě.</p>
+  <p *ngIf="driverOnHisWay()" i18n>Váš řidič je na cestě.</p>
   <div class="map">
     <app-static-marker-map [trackDriverID]="2"></app-static-marker-map>
   </div>  
@@ -18,6 +18,6 @@
     </div>
   </div>
   <button mat-raised-button *ngIf="driverOnHisWay()" color="warn" (click)="cancelOrder()" i18n>Zrušit objednávku</button>
-  <div class="message" *ngIf="driverArrived()" i18n>Váš řidič je na místě.</div>
+  <p class="message" *ngIf="driverArrived()" i18n>Váš řidič je na místě.</p>
   
 </div>
