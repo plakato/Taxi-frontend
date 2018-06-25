@@ -1,7 +1,7 @@
 .container {
     min-height: calc(100vh - 20px);
     display: flex;
-  
+    flex-direction: column;
     .grow {
       flex-grow: 1;  
       display: flex;
@@ -25,6 +25,7 @@
 
     app-fill-in-params {
         flex-grow: 1;
+        display: flex;
     }
   }
   

@@ -4,6 +4,7 @@ import { Order } from '../order.module';
 import { Observable } from 'rxjs/Observable';
 import { mergeMap } from 'rxjs/operators';
 import { from } from 'rxjs/observable/from';
+import { of } from 'rxjs/observable/of';
 import { DriverService } from '../../driver/shared/driver.service';
 import { CarService } from '../../car/shared/car.service';
 import { CarRetrievalService } from '../../car/shared/car-retrieval.service';
@@ -20,28 +21,40 @@ export class OrderService {
               private customerService: CustomerService ) { }
 
   private fillOrderDriver(order: OrderExtended): Observable<OrderExtended> {
-    return this.driverService.getDriver(order.driver_id).map(driver => {
-      const o = order;
-      o.driver = driver;
-      return o;
-    });
+    if (order.driver_id == null) {
+      return of(order);
+    } else {
+      return this.driverService.getDriver(order.driver_id).map(driver => {
+        const o = order;
+        o.driver = driver;
+        return o;
+      });
+    }
   }
 
   private fillOrderVehicle(order: OrderExtended): Observable<OrderExtended>  {
-    return this.carService.show(order.vehicle_id)
-    .map(car => {
-      const o = order;
-      o.vehicle = car;
-      return o;
-    });
+    if (order.vehicle_id == null) {
+      return of(order);
+    } else {
+      return this.carService.show(order.vehicle_id)
+      .map(car => {
+        const o = order;
+        o.vehicle = car;
+        return o;
+      });
+    }
   }
 
   private fillOrderCustomer(order: OrderExtended): Observable<OrderExtended>  {
-    return this.customerService.getCustomer(order.customer_id.toString()).map(cust => {
-      const o = order;
-      o.customer = cust;
-      return o;
-    });
+    if (order.customer_id == null) {
+      return of(order);
+    } else {
+      return this.customerService.getCustomer(order.customer_id.toString()).map(cust => {
+        const o = order;
+        o.customer = cust;
+        return o;
+      });
+    }
   }
 
   fillInInfo(orders: OrderExtended[]): Observable<OrderExtended> {
@@ -88,7 +101,7 @@ export class OrderService {
   }
 
   updateDriver(orderID: number, driverID: number) {
-    // TODO
+    // TODO, can be null - when driver is deselected
   }
 
   get(orderID: number) {

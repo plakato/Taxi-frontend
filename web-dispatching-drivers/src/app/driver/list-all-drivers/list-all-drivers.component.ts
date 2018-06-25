@@ -27,7 +27,7 @@ export class ListAllDriversComponent implements OnInit {
   }
 
   selectDriver(driver: Driver) {
-    this.selectedDriver.emit(driver.id);
+    this.selectedDriver.emit(driver == null ? null : driver.id);
   }
 
 }

@@ -22,4 +22,9 @@ mat-icon {
 .status-icon {
   display: flex;
   align-items: center;
+
+  mat-icon {
+    margin: 0px;
+    padding: 0px;
+  }
 }

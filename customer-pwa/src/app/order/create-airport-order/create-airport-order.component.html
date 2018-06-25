@@ -1,10 +1,10 @@
 <div class="basic-padding container">
 
   <!-- Fill in basic info -->
-  <span *ngIf="url === '/order/airport/fill-in-info'">
+  <div class="grow" *ngIf="url === '/order/airport/fill-in-info'">
     <h2 i18n>Detaily objednávky</h2>
     <app-fill-in-params [airport]="true" (goingToAirport)="goingToAirport = $event"></app-fill-in-params>  
-  </span>
+  </div>
       
   <!-- Choose start -->
   <div class="grow" *ngIf="url === '/order/airport/choose-start'">

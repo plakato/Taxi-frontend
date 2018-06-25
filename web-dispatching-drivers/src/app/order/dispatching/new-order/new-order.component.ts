@@ -5,7 +5,6 @@ import { Customer, Order } from '../../order.module';
 import { OrderService } from '../../shared/order.service';
 import { MatSnackBar } from '@angular/material';
 import { LatLngLiteral } from '@agm/core';
-import { DirtyErrorStateMatcher } from '../../../reusable/error-state-matcher/error-state-matcher.module';
 import { ListAllDriversComponent } from '../../../driver/list-all-drivers/list-all-drivers.component';
 
 @Component({
@@ -14,7 +13,6 @@ import { ListAllDriversComponent } from '../../../driver/list-all-drivers/list-a
   styleUrls: ['./new-order.component.scss']
 })
 export class NewOrderComponent implements OnInit {
-  matcher = new DirtyErrorStateMatcher();
   newOrderForm: FormGroup;
   fromAirportEnabled = true;
   selectingDriver = false;
@@ -81,7 +79,7 @@ export class NewOrderComponent implements OnInit {
     this.newOrderForm = this.fb.group({
       phoneNumber: ['', [Validators.required, Validators.pattern('\\+?(420)?([0-9]){9,12}'), Validators.maxLength(13)]],
       name: [''],
-      passengers: ['1', Validators.required],
+      passengers: ['1', [Validators.required, Validators.min(1)]],
       flightNumber: [''],
       date: [ now, Validators.required],
       time: [ '', Validators.pattern('[0-2]?[0-9]:[0-5][0-9]')], // TODO: validate that time is in the future.

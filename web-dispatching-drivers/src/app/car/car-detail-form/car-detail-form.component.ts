@@ -56,7 +56,7 @@ export class CarDetailFormComponent implements OnInit {
       // Clear image as a part of form.reset().
       this.originalImage = null;
     } else {
-      this.snackbar.open('Vyplňte správne všechny položky!', 'OK', {duration: 2000});
+      this.snackbar.open('Vyplňte správně všechny položky!', 'OK', {duration: 2000});
     }
   }
 }

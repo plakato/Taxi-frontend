@@ -1,11 +1,11 @@
 <h1>Nová objednávka</h1>
 
-<form [formGroup]="newOrderForm">
+<form novalidate [formGroup]="newOrderForm">
 
   <div>
     <!-- Phone number -->
     <mat-form-field class="margin-right">
-      <input matInput type="tel" formControlName="phoneNumber" placeholder="Telefónní číslo" (change)="phoneNumberChanged()" [errorStateMatcher]="matcher"/>
+      <input matInput type="tel" formControlName="phoneNumber" placeholder="Telefónní číslo" (change)="phoneNumberChanged()"/>
       <mat-error *ngIf="newOrderForm.get('phoneNumber').hasError('required')">Tato položka je povinná.</mat-error>
       <mat-error *ngIf="newOrderForm.get('phoneNumber').hasError('pattern')">Tohle není validní telefónní číslo.</mat-error>
       <mat-error *ngIf="newOrderForm.get('phoneNumber').hasError('maxLength')">Číslo je příliš dlouhé.</mat-error>
@@ -52,6 +52,7 @@
           <input matInput type="number" formControlName="passengers" placeholder="Počet osob"
                 class="no-spinners" (click)="$event.target.select()" required/>
           <mat-error *ngIf="newOrderForm.get('passengers').hasError('required')">Tato položka je povinná.</mat-error>
+          <mat-error *ngIf="newOrderForm.get('passengers').hasError('min')">Minimální počet osob je 1.</mat-error>
         </mat-form-field>
 
         <!-- Flight number -->
@@ -101,7 +102,7 @@
 
 
   <div>
-    <button mat-raised-button color="primary" class="confirm"
+    <button mat-raised-button color="primary" class="confirm" type="submit"
       (click)="confirmOrder()">Potvrdit objednávku</button>
   </div>
 

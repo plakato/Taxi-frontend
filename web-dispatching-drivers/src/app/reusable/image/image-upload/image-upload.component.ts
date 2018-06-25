@@ -1,4 +1,5 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { ErrorService } from '../../../general/error/error.service';
 
 @Component({
   selector: 'app-image-upload',
@@ -9,7 +10,7 @@ export class ImageUploadComponent implements OnInit {
   @Input() image: any|string;
   @Output() newImageUploaded = new EventEmitter<string|any>();
 
-  constructor() { }
+  constructor(private errorService: ErrorService) { }
 
   ngOnInit() {
   }
@@ -24,11 +25,16 @@ export class ImageUploadComponent implements OnInit {
     const reader = new FileReader();
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        this.image = reader.result;
-        this.newImageUploaded.emit(reader.result);
-      };
+      const extension = file.name.split('.').pop();
+      if (['jpeg','jpg', 'gif','png'].indexOf(extension) > -1) {
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          this.image = reader.result;
+          this.newImageUploaded.emit(reader.result);
+        };
+      } else {
+        this.errorService.showMessageToUser('Povoleny přípony jsou jen .png, .jpg, .jpeg, .gif.');
+      }
     }
   }
 

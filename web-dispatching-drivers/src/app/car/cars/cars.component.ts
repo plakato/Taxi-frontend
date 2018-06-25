@@ -24,14 +24,15 @@ export class CarsComponent implements OnInit, AfterViewInit {
     private carService: CarRetrievalService,
     public dialog: MatDialog,
     private router: Router,
-    private route: ActivatedRoute ) { }
+    private route: ActivatedRoute) {
+      this.carService.cars.subscribe(      
+        res => {
+          this.dataSource.data = res;
+        }
+      );
+     }
 
   ngOnInit() {
-    this.carService.cars.subscribe(
-      res => {
-        this.dataSource.data = res;
-      }
-    );
   }
 
   changeAvailable(car: Car, event: MatCheckboxChange) {

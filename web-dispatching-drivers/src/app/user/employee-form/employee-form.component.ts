@@ -73,8 +73,6 @@ export class EmployeeFormComponent implements OnInit {
         }
       });
       this.employeeSubmitted.emit(this.employee);
-      this.employeeForm.reset();
-      this.image = null;
     } else  {
       this.snackbar.open('Vyplňte správně všechny položky!', 'OK', {duration: 2000});
     }

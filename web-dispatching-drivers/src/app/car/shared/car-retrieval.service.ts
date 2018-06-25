@@ -76,7 +76,7 @@ export class CarRetrievalService {
           available: car.available
     }})).map(
       (response: Car) => {
-        this.carsData[response.id] = response;
+        this.carsData.set(response.id, response);
         this.carsEventSource.next(this.carsData);
       }
     ); // add mapping to reflect changes

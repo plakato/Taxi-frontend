@@ -52,7 +52,7 @@ export class OrdersTableComponent implements OnInit {
     const This = this;
     this.ordersPollingService.loadPage(this.params).subscribe(
       res => {
-        let iterator = 0;
+        let iterator = 0; 
         this.totalOrdersCount.next(res.totalCount);
         res.item.subscribe(
           order => {
