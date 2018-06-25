@@ -4,7 +4,7 @@ import { HttpClientModule, HttpRequest, HTTP_INTERCEPTORS } from '@angular/commo
 import { NgModule, NO_ERRORS_SCHEMA, ErrorHandler } from '@angular/core';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { MatSnackBarModule, MAT_DATE_LOCALE, ErrorStateMatcher } from '@angular/material';
+import { MatSnackBarModule, MAT_DATE_LOCALE, ErrorStateMatcher, MatIconModule } from '@angular/material';
 
 
 import { UserModule } from './user/user.module';
@@ -21,15 +21,18 @@ import { httpInterceptorProviders } from './general/interceptor/index';
 import { AuthGuardService, AdminGuardService, LoggedOutGuardService } from './general/auth-guard.service';
 import { MapModule } from './map/map.module';
 import { DriverModule } from './driver/driver.module';
+import { PageNotFoundComponent } from './general/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    MatIconModule,
     AppRoutingModule,
     UserModule,
     MenuModule,

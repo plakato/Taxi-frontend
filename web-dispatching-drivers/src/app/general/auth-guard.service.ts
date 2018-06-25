@@ -44,7 +44,7 @@ export class LoggedOutGuardService implements CanActivate {
      return true;
    }
   // Navigate to the home page.
-  if (current.roles.indexOf('driver') > -1) {
+ /* if (current.roles.indexOf('driver') > -1) {
     if (localStorage.getItem('car') != null) {
       this.router.navigate(['/drivers']);
     } else {
@@ -53,7 +53,7 @@ export class LoggedOutGuardService implements CanActivate {
   } else {
     this.router.navigate(['/dispatching/new-order']);
   }
-
+*/
   return false;
   }
 

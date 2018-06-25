@@ -17,6 +17,7 @@ import { ScheduledOrdersComponent } from './order/dispatching/scheduled-orders/s
 import { DriverMenuComponent } from './menu/driver-menu/driver-menu.component';
 import { DriverNewOrderComponent } from './order/drivers/driver-new-order/driver-new-order.component';
 import { OngoingOrdersComponent } from './order/dispatching/ongoing-orders/ongoing-orders.component';
+import { PageNotFoundComponent } from './general/page-not-found/page-not-found.component';
 
 const appRoutes: Routes = [
     { path: 'password-confirmation/:confirmation_token', component: PasswordConfirmationComponent},
@@ -48,9 +49,9 @@ const appRoutes: Routes = [
               { path: 'choose-car', component: ChooseCarComponent},
               { path: 'new-order', component: DriverNewOrderComponent }
             ]},
-  // { path: '', redirectTo: 'login', pathMatch: 'full' },
+   { path: '', redirectTo: 'login', pathMatch: 'full' },
     // otherwise redirect to home
-   // { path: '**', redirectTo: 'login' }
+    { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
