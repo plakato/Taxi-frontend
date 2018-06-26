@@ -44,16 +44,15 @@ export class LoggedOutGuardService implements CanActivate {
      return true;
    }
   // Navigate to the home page.
- /* if (current.roles.indexOf('driver') > -1) {
+  if (current.roles.indexOf('driver') > -1) {
     if (localStorage.getItem('car') != null) {
-      this.router.navigate(['/drivers']);
+      this.router.navigateByUrl('/drivers');
     } else {
-      this.router.navigate(['/drivers/choose-car']);
+      this.router.navigateByUrl('/drivers/choose-car');
     }
   } else {
-    this.router.navigate(['/dispatching/new-order']);
+    this.router.navigateByUrl('/dispatching/orders/new');
   }
-*/
   return false;
   }
 
