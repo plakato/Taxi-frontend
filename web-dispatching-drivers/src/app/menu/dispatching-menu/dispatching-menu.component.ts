@@ -4,7 +4,6 @@ import {
   MatSidenav,
   MatSidenavContainer,
   MatListItem,
-  MatListDivider,
   MatToolbar } from '@angular/material';
 import { AuthenticationService } from '../../user/shared/authentication.service';
 import { User } from '../../user/user.module';

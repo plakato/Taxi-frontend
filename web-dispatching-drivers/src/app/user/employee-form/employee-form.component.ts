@@ -63,7 +63,7 @@ export class EmployeeFormComponent implements OnInit {
     );
   }
 
-  submit() {
+  submit(clear: boolean) {
     if (this.employeeForm.valid) {
       this.employee.employee_roles = [];
       // Set roles from checked checkboxes.
@@ -73,6 +73,10 @@ export class EmployeeFormComponent implements OnInit {
         }
       });
       this.employeeSubmitted.emit(this.employee);
+      if (clear) {
+        this.employeeForm.reset();
+        this.image = null;
+      }
     } else  {
       this.snackbar.open('Vyplňte správně všechny položky!', 'OK', {duration: 2000});
     }

@@ -3,4 +3,4 @@
 <app-employee-form #form (employeeSubmitted)="saveChanges($event)">
 </app-employee-form>
 
-<button mat-raised-button (click)="form.submit()">Uložit změny</button>
+<button mat-raised-button (click)="form.submit(clear = false)">Uložit změny</button>

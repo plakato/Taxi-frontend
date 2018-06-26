@@ -26,9 +26,14 @@ mat-drawer{
   flex-grow: 1;
 }
 
+mat-toolbar {
+  .spacer {
+    flex: 1 1 auto;
+  }
 
-.toolbar_span {
-  margin: 0 auto;
+  .toolbar_span {
+    margin: 0 auto;
+  }  
 }
 
 mat-drawer-container {

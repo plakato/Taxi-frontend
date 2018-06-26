@@ -5,8 +5,11 @@ import {
   MatListModule,
   MatButtonModule,
   MatToolbarModule,
-  MatCardModule} from '@angular/material';
+  MatCardModule, 
+//  MatBadgeModule,
+  MatDividerModule} from '@angular/material';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatBadgeModule } from '@angular/material/badge';
 import { DispatchingMenuComponent } from './dispatching-menu/dispatching-menu.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { RouterModule } from '@angular/router';
@@ -25,7 +28,9 @@ import { DriverArrivingComponent } from '../order/drivers/driver-arriving/driver
     AppRoutingModule,
     RouterModule,
     OrderModule,
-    MatCardModule
+    MatCardModule,
+    MatBadgeModule,
+    MatDividerModule
   ],
   exports: [
   ],
