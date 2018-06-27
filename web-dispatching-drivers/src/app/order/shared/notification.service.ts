@@ -8,10 +8,12 @@ import { TimerObservable } from 'rxjs/observable/TimerObservable';
 import { Subscription } from 'rxjs/Subscription';
 import { MatDialog } from '@angular/material';
 import { DriverNewOrderComponent } from '../drivers/driver-new-order/driver-new-order.component';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class NotificationService {
-  timer: Subscription;
+  private timer: Subscription;
+  driversNotifications: Array<{notification: Notification, seen: boolean}> = [{notification: {subject: "Nova sprava", data: {}, id: 0}, seen: false}];
 
   constructor(private http: HttpClient,
               private dialog: MatDialog) { }

@@ -106,6 +106,7 @@ export interface Order {
 }
 
 export interface Notification {
+  id: number;
   subject: string;
   data: object;
 }

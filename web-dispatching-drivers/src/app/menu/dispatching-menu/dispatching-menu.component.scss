@@ -1,3 +1,4 @@
+@import "../../../_variables.scss";
 
 :host {
   height: 100vh;
@@ -31,10 +32,26 @@ mat-toolbar {
     flex: 1 1 auto;
   }
 
+  .notification-icon {
+    padding-right: 40px;
+  }
   .toolbar_span {
     margin: 0 auto;
-  }  
+  } 
+
 }
+
+.notification {
+  display: flex;
+  flex-direction: row;
+
+  button {
+    padding: 0px 20px;
+    mat-icon {
+      color: mat-color(map-get($yellow-app-theme, accent)); 
+    }
+  }
+}  
 
 mat-drawer-container {
   display: flex;

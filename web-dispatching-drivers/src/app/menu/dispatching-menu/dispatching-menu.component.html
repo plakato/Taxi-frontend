@@ -1,11 +1,30 @@
+<!-- Toolbar -->
 <mat-toolbar>
   <span class="toolbar_span">
       Taxi Ali
   </span>
   <span class="spacer"></span>
-  <mat-icon  matBadge="0" matBadgeColor="warn">notifications</mat-icon>
-</mat-toolbar>
+  <!-- Notifications -->
+  <button mat-icon-button [matMenuTriggerFor]="notifications" (click)="openNotificationTray()">
+  <mat-icon  [matBadgeHidden]="getUnreadNotificationCount() === 0" class="toolbar_span" 
+              matBadge="{{getUnreadNotificationCount()}}" matBadgeColor="warn">notifications</mat-icon> 
+  </button>
+  <mat-menu #notifications="matMenu">
+    <button mat-menu-item *ngIf="getNotifications().length === 0">Nemáte žádné notifikace.</button>
 
+    <!-- One notification -->
+    <div mat-menu-item *ngFor="let notification of getNotifications()"class="notification">
+        <p>{{notification.notification.subject}}</p>
+        <button mat-icon-button (click)="resolveNotification(notification)">
+          <mat-icon>check</mat-icon>
+        </button>
+    </div>
+
+  </mat-menu>
+ </mat-toolbar>
+
+
+<!-- Main menu -->
 <mat-drawer-container [ngClass]="{ 'expanded': isExpanded }">
   <mat-drawer mode="side" opened="true">
 

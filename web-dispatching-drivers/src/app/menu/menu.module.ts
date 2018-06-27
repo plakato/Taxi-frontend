@@ -7,7 +7,8 @@ import {
   MatToolbarModule,
   MatCardModule, 
 //  MatBadgeModule,
-  MatDividerModule} from '@angular/material';
+  MatDividerModule,
+  MatMenuModule} from '@angular/material';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatBadgeModule } from '@angular/material/badge';
 import { DispatchingMenuComponent } from './dispatching-menu/dispatching-menu.component';
@@ -30,7 +31,8 @@ import { DriverArrivingComponent } from '../order/drivers/driver-arriving/driver
     OrderModule,
     MatCardModule,
     MatBadgeModule,
-    MatDividerModule
+    MatDividerModule,
+    MatMenuModule
   ],
   exports: [
   ],
