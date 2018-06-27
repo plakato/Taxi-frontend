@@ -32,7 +32,7 @@ export class MyOrdersService {
     // this.mockDebugOrders();
     const currentUser = JSON.parse(localStorage.getItem('currentUser')).id;
     this.stopPollingOrders();
-    const This = this;debugger;
+    const This = this;
     this.polling = TimerObservable.create(0, 10 * 1000)
       .switchMap(() => This.http.get<MyOrdersResponse>('order_queues/' + currentUser))
       .subscribe(
@@ -44,7 +44,7 @@ export class MyOrdersService {
               // This.ordersData = newOrders.filter(order => order.status !== Status.finished).sort(this.compareByStartTime);
               // for testing purposes only
               This.ordersData = newOrders;
-              This.ordersData[0].status = Status.driverArrived;debugger;
+              This.ordersData[0].status = Status.driverArrived;
               /*if (This.ordersData.length > 0 && This.ordersData[0].status === Status.driverConfirmed) {
                 This.orderService.arriving(This.ordersData[0].id).subscribe(
                   order => {

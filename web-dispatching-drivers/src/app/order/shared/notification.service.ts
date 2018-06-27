@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { MatDialog } from '@angular/material';
 import { DriverNewOrderComponent } from '../drivers/driver-new-order/driver-new-order.component';
 import { BehaviorSubject } from 'rxjs';
+import { not } from '@angular/compiler/src/output/output_ast';
 
 @Injectable()
 export class NotificationService {
@@ -18,7 +19,7 @@ export class NotificationService {
   constructor(private http: HttpClient,
               private dialog: MatDialog) { }
 
-  startPollingNotifications() {
+  startPollingNotifications() {this.notifyAboutNewOrder({order_id:54});
    /* this.stopPollingNotifications();
     const currentUser = JSON.parse(localStorage.getItem('currentUser')).id;
     this.timer = TimerObservable.create(0, 10 * 1000)
@@ -30,6 +31,11 @@ export class NotificationService {
             switch (n.subject) {
               case 'driver_new_order':
                     this.notifyAboutNewOrder(n.data);
+                    break;
+              case 'dispatching': 
+                    if (this.driversNotifications.findIndex(not => not.notification.id === n.id) === -1) {
+                      this.driversNotifications.push({notification: n, seen: false});
+                    }
             }
           });
         }
@@ -42,10 +48,13 @@ export class NotificationService {
     }
   }
 
-  notifyAboutNewOrder(data: any) {
-    const dialogRef = this.dialog.open(DriverNewOrderComponent, {
+  notifyAboutNewOrder(notification: any) {
+    setTimeout(() => this.dialog.open(DriverNewOrderComponent, {
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      height: '100%',
       width: '100%',
-      data: { id: data.order_id }
-    });
+      data: { id: notification.order_id }
+    }));
   }
 }
