@@ -1,26 +1,26 @@
 import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Order } from './order.module';
-import { tap } from 'rxjs/operators';
+import { Order, Car } from './order.module';
+import { tap, map } from 'rxjs/operators';
 import { Constants } from '../../assets/const';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrderService implements OnInit {
-  public newOrder: Order;
+  public newOrder: Order = {} as any;
   private currentOrderData: Order;  
   public currentOrder: BehaviorSubject<Order> = new BehaviorSubject(this.currentOrderData);
-  private interval = null;
+  private interval;
 
   constructor(private http: HttpClient,
               private router: Router) {
     this.initializeOrder();    
     window.addEventListener('beforeunload', () => {this.cacheOrder();});    
     let newO = localStorage.getItem('newOrder');
-    if (newO != 'undefined') {
+    if (newO != 'undefined' && newO !== 'null') {
       this.newOrder = JSON.parse(newO);
     }
     let currentO = localStorage.getItem('currentOrder');
@@ -28,11 +28,11 @@ export class OrderService implements OnInit {
       this.currentOrderData = JSON.parse(currentO);
       this.currentOrder.next(this.currentOrderData);
     }
-    if (this.interval != null) {
+
+    if (this.currentOrderData != null) {
       this.startWatchingOrder(this.currentOrderData.id);
-    }
-    this.cacheOrder();
-    // this.startWatchingOrder(54);
+      }
+      this.cacheOrder();
    }
 
   ngOnInit() {
@@ -49,13 +49,13 @@ export class OrderService implements OnInit {
     localStorage.setItem('currentOrder', JSON.stringify(this.currentOrderData));    
   }
 
-  sendNewOrder() {debugger;
+  sendNewOrder() {
     const This = this;
     const user = JSON.parse(localStorage.getItem('currentUser'));
     return this.http.post<Order>('orders', JSON.stringify(
       {
         order: {
-          customer_telephone: this.newOrder.phone,
+          customer_telephone: this.newOrder.phone == null ? this.newOrder.contact_phone : this.newOrder.phone,
           driver_id: this.newOrder.driverID,
           loc_start: {
             lat: this.newOrder.loc_start.lat,
@@ -93,7 +93,7 @@ export class OrderService implements OnInit {
     this.http.get<Order>('orders/' + id).subscribe(
       order => {
         // React to change in status.
-        //if (order.status !== This.currentOrderData.status) {
+        if (order.status !== This.currentOrderData.status) {
           switch (order.status) {
             case Status.driverConfirmed: {
               This.router.navigate(['order/confirmed-by-driver']);
@@ -114,14 +114,17 @@ export class OrderService implements OnInit {
             }
             case Status.finished: {
               This.stopWatchingOrder();
+              this.clearCache();
               This.router.navigate(['order/finished']);
               break;
             }
             
-       //   }
+          }
         }
-        This.currentOrderData = order;
-        This.currentOrder.next(this.currentOrderData);      
+        This.fillOrderVehicle(order).subscribe(o => {
+          This.currentOrderData = o;
+          This.currentOrder.next(This.currentOrderData);      
+        });
       }
     );
   }
@@ -132,6 +135,7 @@ export class OrderService implements OnInit {
 
   cancelCurrentOrder() {
     const This = this;
+    this.clearCache();
     return this.http.patch('orders/' + this.currentOrderData.id + '/cancel', '').pipe(tap(
       success => {
         This.stopWatchingOrder();
@@ -139,8 +143,37 @@ export class OrderService implements OnInit {
     ));
   }
 
+  clearCache() {
+    localStorage.setItem('currentOrder', null);    
+    this.currentOrderData = null;
+    this.currentOrder.next(this.currentOrderData);
+  }
+
   getScheduledOrders() {
     return this.http.get<Order[]>('orders/?page=1&per_page=100&scheduled');
+  }
+
+  private fillOrderVehicle(order: Order): Observable<Order>  {
+    if (order.vehicle_id == null) {
+      return of(order);
+    } else {
+      return this.getCar(order.vehicle_id).pipe(
+        map(car => { 
+           const o = order;
+           o.vehicle = car;
+           return o;
+        })
+      );
+
+    }
+  }
+
+  getCar(id: number): Observable<Car> {
+    if (this.currentOrderData.vehicle != null) {
+      return of(this.currentOrderData.vehicle);
+    } else {
+      return this.http.get<Car>('vehicles/' + id);
+    }
   }
 }
 

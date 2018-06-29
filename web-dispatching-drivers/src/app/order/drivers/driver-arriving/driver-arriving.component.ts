@@ -36,7 +36,7 @@ export class DriverArrivingComponent implements OnInit {
       order => { order.subscribe(o => This.order = o); }
     );
   }
-  changeAddress(newAddress) {debugger;
+  changeAddress(newAddress) {
     if (newAddress === null) {
       this.editingAddress = true;
     } else {
@@ -49,7 +49,7 @@ export class DriverArrivingComponent implements OnInit {
   }
 
   arrived() {
-    if (this.editingAddress) {debugger;
+    if (this.editingAddress) {
       this.addressEditingWarning();
       return;
     }

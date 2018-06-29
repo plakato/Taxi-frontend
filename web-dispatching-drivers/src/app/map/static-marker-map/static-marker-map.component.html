@@ -14,7 +14,7 @@
         [zoomControl]=true [streetViewControl]=false
         (mapReady)="initializeMap($event)">
      <agm-circle
-        [latitude]="myPosition?.coords.latitude" [longitude]="myPosition?.coords.longitude" [radius]="myPosition?.coords.accuracy"
+        [latitude]="+myPosition?.coords.latitude" [longitude]="+myPosition?.coords.longitude" [radius]="myPosition?.coords.accuracy"
         [clickable]=false [fillColor]="'rgb(255, 229, 0)'"  ></agm-circle>
       </agm-map>
       <div (click)="zoomToMyLocation()" class="myLocationButton">

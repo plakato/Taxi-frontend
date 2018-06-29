@@ -14,13 +14,21 @@ import { not } from '@angular/compiler/src/output/output_ast';
 @Injectable()
 export class NotificationService {
   private timer: Subscription;
-  driversNotifications: Array<{notification: Notification, seen: boolean}> = [{notification: {subject: "Nova sprava", data: {}, id: 0}, seen: false}];
+  notifications: Array<{notification: Notification, seen: boolean}>;
 
   constructor(private http: HttpClient,
-              private dialog: MatDialog) { }
+              private dialog: MatDialog) { 
+    window.addEventListener('beforeunload', () => {this.cacheNotifications();});    
+    const storedNotifications = localStorage.getItem('notifications');
+    if (storedNotifications !== 'undefined' && storedNotifications !== 'null') {
+      this.notifications = JSON.parse(storedNotifications);
+    } else {
+      this.notifications = [];
+    }
+  }
 
-  startPollingNotifications() {this.notifyAboutNewOrder({order_id:54});
-   /* this.stopPollingNotifications();
+  startPollingNotifications() {
+    this.stopPollingNotifications();
     const currentUser = JSON.parse(localStorage.getItem('currentUser')).id;
     this.timer = TimerObservable.create(0, 10 * 1000)
       .switchMap(() => this.http.get<Notification[]>('notifications/?page=1&per_page=10'))
@@ -28,18 +36,19 @@ export class NotificationService {
       .subscribe(
         notifications => {
           notifications.forEach(n => {
-            switch (n.subject) {
-              case 'driver_new_order':
-                    this.notifyAboutNewOrder(n.data);
-                    break;
-              case 'dispatching': 
-                    if (this.driversNotifications.findIndex(not => not.notification.id === n.id) === -1) {
-                      this.driversNotifications.push({notification: n, seen: false});
-                    }
-            }
+            if (this.notifications.findIndex(not => not.notification.id === n.id) === -1) {
+              this.notifications.push({notification: n, seen: false});
+              switch (n.subject) {
+                case 'driver_new_order':
+                      this.notifyAboutNewOrder(n);
+                      break;
+                case 'dispatching': 
+                      break;
+              }
+            }           
           });
         }
-      );*/
+      );
   }
 
   stopPollingNotifications() {
@@ -54,7 +63,13 @@ export class NotificationService {
       maxHeight: '100vh',
       height: '100%',
       width: '100%',
-      data: { id: notification.order_id }
+      data: { id: notification.data.order_id }
     }));
+    const index = this.notifications.findIndex(n => n.notification.id === notification.id);
+    this.notifications[index].seen = true;
+  }
+
+  cacheNotifications() {
+    localStorage.setItem('notifications', JSON.stringify(this.notifications));
   }
 }

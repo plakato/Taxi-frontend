@@ -20,7 +20,7 @@
 </div>
 
 <!--When there is at least one order. -->
-<div *ngIf="myOrders.ordersEventSource.value.length!==0" class="queue-container">
+<div *ngIf="myOrders.ordersEventSource.value.length>0" class="queue-container">
   <!-- First (ongoing) order. -->
   <app-driver-arriving *ngIf="active()" [order]="myOrders.ordersEventSource.value[0]"></app-driver-arriving>
 

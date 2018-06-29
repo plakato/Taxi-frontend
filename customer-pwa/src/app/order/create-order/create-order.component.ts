@@ -38,6 +38,7 @@ export class CreateOrderComponent implements OnInit {
 
   startChosen() {
     if (this.start.coords != null) {
+      if (this.orderService.newOrder == null) { this.orderService.newOrder =   {} as any; }
       this.orderService.newOrder.loc_start = this.start.coords;
       this.orderService.newOrder.startAddress = this.start.address;
       this.router.navigate(['order/standard/choose-finish']);

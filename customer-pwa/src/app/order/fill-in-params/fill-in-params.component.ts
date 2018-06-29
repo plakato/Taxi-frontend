@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Output, Input, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { NewOrder } from '../order.module';
 import { ErrorService } from '../../general/error/error.service';
 import { LatLngLiteral } from '@agm/core';
@@ -36,7 +36,7 @@ export class FillInParamsComponent implements OnInit {
       phone: [this.orderService.newOrder.phone, [Validators.required, Validators.pattern('\\+?(420)?([0-9]){9,12}'), Validators.maxLength(13)]],
       scheduled: [this.orderService.newOrder.scheduled_pick_up_at != null],
       date: [''],
-      time: ['', [Validators.pattern('[0-2]?[0-9]:[0-5][0-9]')]], // TODO: validate that time is in the future.
+      time: ['', [Validators.pattern('[0-2]?[0-9]:[0-5][0-9]')]], 
       note: [this.orderService.newOrder.note == null ? '' : this.orderService.newOrder.note],
       flightNumber: [this.orderService.newOrder.flight_number],
       VIP: [this.orderService.newOrder.VIP == null ? false : this.orderService.newOrder.VIP]
@@ -135,5 +135,4 @@ export class FillInParamsComponent implements OnInit {
     // Set hours so that only days are compared, not time.
     return d.setHours(0, 0, 0, 0) >= (new Date(Date.now()).setHours(0, 0, 0, 0));
   }
-
 }

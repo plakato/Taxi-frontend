@@ -18,6 +18,7 @@ import { Notification } from '../../order/order.module';
 export class DispatchingMenuComponent implements OnInit {
   isExpanded = false;
   isAdmin: boolean;
+  lastUnreadNotificationCount = 0;
 
   constructor( private authService: AuthenticationService,
               private notificationService: NotificationService ) { }
@@ -32,20 +33,28 @@ export class DispatchingMenuComponent implements OnInit {
   }
 
   getUnreadNotificationCount(): number {
-    return this.notificationService.driversNotifications.filter(n => n.seen === false).length;
+    const count = this.notificationService.notifications.filter(n => n.seen === false).length;
+    if (count !== this.lastUnreadNotificationCount && count !== 0) {
+      // Play notification sound.
+      const audio = new Audio('../../../assets/audio/chimes-glassy.mp3');
+      audio.load();
+      audio.play();
+    }
+    this.lastUnreadNotificationCount = count;
+    return count;
   }
 
   getNotifications() {
-    return this.notificationService.driversNotifications;
+    return this.notificationService.notifications;
   }
 
   openNotificationTray() {
-    this.notificationService.driversNotifications.forEach(n => n.seen = true);
+    this.notificationService.notifications.forEach(n => n.seen = true);
   }
 
   resolveNotification(notification: Notification) {
-    const index = this.notificationService.driversNotifications.findIndex(n => n.notification.id === notification.id);
-    this.notificationService.driversNotifications.splice(index, 1);
+    const index = this.notificationService.notifications.findIndex(n => n.notification.id === notification.id);
+    this.notificationService.notifications.splice(index, 1);
   }
 
 }

@@ -15,7 +15,7 @@ import { OrderService } from '../../shared/order.service';
   styleUrls: ['./driver-new-order.component.scss']
 })
 export class DriverNewOrderComponent implements OnInit {
-  order: Order;
+  order: Order = null;
 
   constructor(public dialogRef: MatDialogRef<DriverNewOrderComponent>,
              @Inject(MAT_DIALOG_DATA) public data: any,
@@ -24,7 +24,7 @@ export class DriverNewOrderComponent implements OnInit {
               private orderService: OrderService ) { }
 
   ngOnInit() {
-    // Mock an order.
+   /* // Mock an order.
     const locStart: LatLngLiteral = {lat: 48.610292, lng: 21.333021};
     const locFinish: LatLngLiteral = {lat: 21.365282, lng: 54.285364};
     this.order = {
@@ -42,11 +42,11 @@ export class DriverNewOrderComponent implements OnInit {
       VIP: false,
       flightNumber: null,
       scheduled_pick_up_at: new Date('2018-04-05T11:12:52.051Z')
-    };
-   /* const This = this;
+    };*/
+    const This = this;
     this.orderService.get(this.data.id).subscribe(
-      order => This.order = order
-    );*/
+      order => {This.order = order;}
+    );
 
     // Play notification sound.
     const audio = new Audio('../../../assets/audio/chimes-glassy.mp3');
@@ -57,15 +57,13 @@ export class DriverNewOrderComponent implements OnInit {
   acceptOrder() {
     this.driverService.acceptOrder(this.data.id).subscribe(
       order => {
-        // this.router.navigate(['drivers']);
         this.dialogRef.close(); }
     );
-   // this.router.navigate(['drivers']);
-    // this.myOrders.addOrder(this.order);
   }
 
   refuseOrder() {
-
+    //TODO
+    this.dialogRef.close(); 
   }
 
 }

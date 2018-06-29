@@ -41,18 +41,15 @@ export class MyOrdersService {
           const newOrders = [];
           This.orderService.fillInInfo(orders)
             .finally(() => {
-              // This.ordersData = newOrders.filter(order => order.status !== Status.finished).sort(this.compareByStartTime);
-              // for testing purposes only
-              This.ordersData = newOrders;
-              This.ordersData[0].status = Status.driverArrived;
-              /*if (This.ordersData.length > 0 && This.ordersData[0].status === Status.driverConfirmed) {
+              This.ordersData = newOrders.filter(order => order.status !== Status.finished).sort(this.compareByStartTime);
+              if (This.ordersData.length > 0 && This.ordersData[0].status === Status.driverConfirmed) {
                 This.orderService.arriving(This.ordersData[0].id).subscribe(
                   order => {
                     This.ordersData[0] = order;
                     This.ordersEventSource.next(This.ordersData);
                   }
                 );
-              } else if (This.ordersData.length > 0 && This.ordersData[0].status === Status.created){ //debug purposes
+              }/* else if (This.ordersData.length > 0 && This.ordersData[0].status === Status.created){ //debug purposes
                 This.driverService.acceptOrder(This.ordersData[0].id).subscribe();
               } */
               This.ordersEventSource.next(This.ordersData);

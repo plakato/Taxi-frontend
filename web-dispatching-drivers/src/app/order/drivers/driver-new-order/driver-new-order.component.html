@@ -8,7 +8,7 @@
   </div>
 
 
-    <app-static-marker-map placeholder="Místo vyzvednutí" [markerCoords]="order?.loc_start"></app-static-marker-map>
+    <app-static-marker-map placeholder="Místo vyzvednutí" [editable]="false" [markerCoords]="order?.loc_start"></app-static-marker-map>
 
   <div class="row">
     <mat-icon class="red" (click)="refuseOrder()">clear</mat-icon>

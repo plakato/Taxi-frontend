@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Input, NgZone, Output } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, NgZone, Output, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { LatLngLiteral, MapsAPILoader } from '@agm/core';
 import { MapService } from '../map.service';
@@ -15,7 +15,7 @@ import { TrackDriverService } from '../track-driver.service';
   templateUrl: './static-marker-map.component.html',
   styleUrls: ['./static-marker-map.component.scss']
 })
-export class StaticMarkerMapComponent implements OnInit {
+export class StaticMarkerMapComponent implements OnInit, OnDestroy {
     map: any;
     addressControl: FormControl;
     editing = false;
@@ -150,4 +150,9 @@ export class StaticMarkerMapComponent implements OnInit {
       }
     }
   
+    ngOnDestroy() {
+      if (this.trackDriverID !== null) {
+        this.driverTracking.stopTracking();
+      }
+    }
   }
