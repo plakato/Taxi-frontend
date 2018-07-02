@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material';
 import { DriverNewOrderComponent } from '../drivers/driver-new-order/driver-new-order.component';
 import { BehaviorSubject } from 'rxjs';
 import { not } from '@angular/compiler/src/output/output_ast';
+import { OrderService } from './order.service';
 
 @Injectable()
 export class NotificationService {
@@ -17,7 +18,8 @@ export class NotificationService {
   notifications: Array<{notification: Notification, seen: boolean}>;
 
   constructor(private http: HttpClient,
-              private dialog: MatDialog) { 
+              private dialog: MatDialog,
+              private orderService: OrderService ) { 
     window.addEventListener('beforeunload', () => {this.cacheNotifications();});    
     const storedNotifications = localStorage.getItem('notifications');
     if (storedNotifications !== 'undefined' && storedNotifications !== 'null') {
@@ -58,13 +60,19 @@ export class NotificationService {
   }
 
   notifyAboutNewOrder(notification: any) {
-    setTimeout(() => this.dialog.open(DriverNewOrderComponent, {
-      maxWidth: '100vw',
-      maxHeight: '100vh',
-      height: '100%',
-      width: '100%',
-      data: { id: notification.data.order_id }
-    }));
+    const This = this;
+    this.orderService.get(notification.data.order_id).subscribe(
+      order => {
+        setTimeout(() => This.dialog.open(DriverNewOrderComponent, {
+          maxWidth: '100vw',
+          maxHeight: '100vh',
+          height: '100%',
+          width: '100%',
+          data: { order: order}
+        }));}
+    );
+
+
     const index = this.notifications.findIndex(n => n.notification.id === notification.id);
     this.notifications[index].seen = true;
   }

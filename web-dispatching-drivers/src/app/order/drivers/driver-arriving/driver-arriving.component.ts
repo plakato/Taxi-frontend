@@ -4,6 +4,7 @@ import { OrderService } from '../../shared/order.service';
 import { Router } from '@angular/router';
 import { Status } from '../../dispatching/order-history/order-history.component';
 import { ErrorService } from '../../../general/error/error.service';
+import { MyOrdersService } from '../../shared/my-orders.service';
 
 @Component({
   selector: 'app-driver-arriving',
@@ -19,7 +20,8 @@ export class DriverArrivingComponent implements OnInit {
 
   constructor(private orderService: OrderService,
               private router: Router,
-              private errorService: ErrorService) { }
+              private errorService: ErrorService,
+              private myOrders: MyOrdersService) { }
 
   ngOnInit() {
     // this.editingAddress = (this.order.address_finish == null) ? true : false;
@@ -80,7 +82,8 @@ export class DriverArrivingComponent implements OnInit {
       this.addressEditingWarning();
       return;
     }
-    this.orderService.finish(this.order.id).subscribe();
+    const This = this;
+    this.orderService.finish(this.order.id).subscribe(sucess => This.myOrders.removeOrder(This.order.id));
     // TODO: listen to answer.
   }
 

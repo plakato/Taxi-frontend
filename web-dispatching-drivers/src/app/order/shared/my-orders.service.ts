@@ -40,7 +40,24 @@ export class MyOrdersService {
           const orders = res.queue;
           const newOrders = [];
           This.orderService.fillInInfo(orders)
-            .finally(() => {
+            .finally(() => {debugger;
+              This.ordersData = newOrders.filter(order => order.status !== Status.finished).sort(this.compareByStartTime);
+              if (This.ordersData.length > 0 && This.ordersData[0].status === Status.driverConfirmed) {
+                This.orderService.arriving(This.ordersData[0].id).subscribe(
+                  order => {
+                    This.ordersData[0] = order;
+                    This.ordersEventSource.next(This.ordersData);
+                  }
+                );
+              }
+              This.ordersEventSource.next(This.ordersData);
+            })  
+          .subscribe(
+            order => {
+                newOrders.push(order);
+              },
+            err => {},
+            () => {debugger;
               This.ordersData = newOrders.filter(order => order.status !== Status.finished).sort(this.compareByStartTime);
               if (This.ordersData.length > 0 && This.ordersData[0].status === Status.driverConfirmed) {
                 This.orderService.arriving(This.ordersData[0].id).subscribe(
@@ -53,14 +70,6 @@ export class MyOrdersService {
                 This.driverService.acceptOrder(This.ordersData[0].id).subscribe();
               } */
               This.ordersEventSource.next(This.ordersData);
-            })  
-          .subscribe(
-            order => {
-                newOrders.push(order);
-              },
-            err => {},
-            () => {
-              
             }
           );
         });
@@ -94,6 +103,11 @@ export class MyOrdersService {
     );
   }
 
+  removeOrder(orderID: number) {
+    const index = this.ordersData.findIndex(o => o.id === orderID);
+    this.ordersData.splice(index,1);
+    this.ordersEventSource.next(this.ordersData);
+  }
 }
 
 interface MyOrdersResponse {

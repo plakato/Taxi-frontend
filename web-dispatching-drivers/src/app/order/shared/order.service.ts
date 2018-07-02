@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Order } from '../order.module';
 import { Observable } from 'rxjs/Observable';
-import { mergeMap } from 'rxjs/operators';
+import { mergeMap, map } from 'rxjs/operators';
 import { from } from 'rxjs/observable/from';
 import { of } from 'rxjs/observable/of';
 import { DriverService } from '../../driver/shared/driver.service';
@@ -11,6 +11,7 @@ import { CarRetrievalService } from '../../car/shared/car-retrieval.service';
 import { OrderExtended } from '../dispatching/order-history/order-history.component';
 import { CustomerService } from './customer.service';
 import { LatLngLiteral } from '@agm/core';
+import { MyOrdersService } from './my-orders.service';
 
 @Injectable()
 export class OrderService {
@@ -18,7 +19,7 @@ export class OrderService {
   constructor( private http: HttpClient,
               private driverService: DriverService,
               private carService: CarRetrievalService,
-              private customerService: CustomerService ) { }
+              private customerService: CustomerService) { }
 
   private fillOrderDriver(order: OrderExtended): Observable<OrderExtended> {
     if (order.driver_id == null) {

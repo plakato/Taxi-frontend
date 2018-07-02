@@ -17,7 +17,15 @@ export class WaitForConfirmationComponent implements OnInit {
               private errorService: ErrorService,
               private dialog: MatDialog) { }
 
-  ngOnInit() {
+  ngOnInit() {debugger;
+    const order = localStorage.getItem('currentOrder');
+    if (order !== 'undefined' && order !== 'null') {
+      this.orderService.startWatchingOrder(JSON.parse(order).id);
+    } else {
+      if (this.orderService.currentOrder.value != null) {
+        this.orderService.startWatchingOrder(this.orderService.currentOrder.value.id);
+      }
+    }
   }
 
   cancelOrder() {

@@ -16,7 +16,7 @@ export class OrderService implements OnInit {
   private interval;
 
   constructor(private http: HttpClient,
-              private router: Router) {
+              private router: Router) {this.clearCache();
     this.initializeOrder();    
     window.addEventListener('beforeunload', () => {this.cacheOrder();});    
     let newO = localStorage.getItem('newOrder');
@@ -83,22 +83,20 @@ export class OrderService implements OnInit {
   }
 
   startWatchingOrder(id: number) {
-    if (this.interval == null) {
-      this.interval = window.setInterval(() => this.getOrder(id), Constants.ORDER_GETTING_INTERVAL);      
-    }
+    this.interval = null;
+    this.interval = window.setInterval(() => this.getOrder(id), Constants.ORDER_GETTING_INTERVAL);      
   }
 
   getOrder(id: number) {
     const This = this;
     this.http.get<Order>('orders/' + id).subscribe(
       order => {
-        // React to change in status.
-        if (order.status !== This.currentOrderData.status) {
           switch (order.status) {
             case Status.driverConfirmed: {
               This.router.navigate(['order/confirmed-by-driver']);
               break;
             }
+            case Status.driverArrived:
             case Status.driverArriving: {
               This.router.navigate(['order/watch-driver-arrive']);
               break;
@@ -108,18 +106,16 @@ export class OrderService implements OnInit {
               break;
             }
             case Status.canceled: {
-              This.stopWatchingOrder();
+              This.stopWatchingOrder(This);
               This.router.navigate(['order/canceled']);
               break;
             }
             case Status.finished: {
-              This.stopWatchingOrder();
-              this.clearCache();
+              This.stopWatchingOrder(This);
+              (This) => This.clearCache();
               This.router.navigate(['order/finished']);
               break;
             }
-            
-          }
         }
         This.fillOrderVehicle(order).subscribe(o => {
           This.currentOrderData = o;
@@ -129,16 +125,16 @@ export class OrderService implements OnInit {
     );
   }
 
-  stopWatchingOrder() {
-    window.clearInterval(this.interval);
+  stopWatchingOrder(This) {
+    window.clearInterval(This.interval);
   }
 
   cancelCurrentOrder() {
     const This = this;
-    this.clearCache();
+    (This) => This.clearCache();
     return this.http.patch('orders/' + this.currentOrderData.id + '/cancel', '').pipe(tap(
       success => {
-        This.stopWatchingOrder();
+        This.stopWatchingOrder(This);
       }
     ));
   }
@@ -169,7 +165,7 @@ export class OrderService implements OnInit {
   }
 
   getCar(id: number): Observable<Car> {
-    if (this.currentOrderData.vehicle != null) {
+    if (this.currentOrderData !== null && this.currentOrderData.vehicle != null) {
       return of(this.currentOrderData.vehicle);
     } else {
       return this.http.get<Car>('vehicles/' + id);

@@ -43,10 +43,6 @@ export class DriverNewOrderComponent implements OnInit {
       flightNumber: null,
       scheduled_pick_up_at: new Date('2018-04-05T11:12:52.051Z')
     };*/
-    const This = this;
-    this.orderService.get(this.data.id).subscribe(
-      order => {This.order = order;}
-    );
 
     // Play notification sound.
     const audio = new Audio('../../../assets/audio/chimes-glassy.mp3');
@@ -55,7 +51,7 @@ export class DriverNewOrderComponent implements OnInit {
   }
 
   acceptOrder() {
-    this.driverService.acceptOrder(this.data.id).subscribe(
+    this.driverService.acceptOrder(this.data.order.id).subscribe(
       order => {
         this.dialogRef.close(); }
     );

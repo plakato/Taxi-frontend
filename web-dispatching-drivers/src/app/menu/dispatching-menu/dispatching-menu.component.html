@@ -69,7 +69,17 @@
     </mat-nav-list>
   </mat-drawer>
 
-  <div class="drawer-content">
-    <router-outlet></router-outlet>
-  </div>
+  <!-- Dispatcher's phone orders -->
+
+  <mat-sidenav-container >
+    <mat-sidenav mode="side" position="end" class="phone-orders" opened>
+      <app-dispatchers-phone-orders></app-dispatchers-phone-orders>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div class="drawer-content">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  
 </mat-drawer-container>

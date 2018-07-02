@@ -6,17 +6,18 @@ import {
   MatButtonModule,
   MatToolbarModule,
   MatCardModule, 
-//  MatBadgeModule,
   MatDividerModule,
-  MatMenuModule} from '@angular/material';
+  MatMenuModule,
+  MatBadgeModule} from '@angular/material';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatBadgeModule } from '@angular/material/badge';
 import { DispatchingMenuComponent } from './dispatching-menu/dispatching-menu.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { RouterModule } from '@angular/router';
 import { DriverMenuComponent } from './driver-menu/driver-menu.component';
 import { OrderModule } from '../order/order.module';
 import { DriverArrivingComponent } from '../order/drivers/driver-arriving/driver-arriving.component';
+import { DispatchersPhoneOrdersService } from '../order/shared/data-source/dispatchers-phone-orders.service';
+import { DispatchersPhoneOrdersComponent } from '../order/dispatching/dispatchers-phone-orders/dispatchers-phone-orders.component';
 
 @NgModule({
   imports: [
@@ -36,7 +37,7 @@ import { DriverArrivingComponent } from '../order/drivers/driver-arriving/driver
   ],
   exports: [
   ],
-  entryComponents: [DriverArrivingComponent],
+  entryComponents: [DriverArrivingComponent, DispatchersPhoneOrdersComponent],
   declarations: [DispatchingMenuComponent, DriverMenuComponent]
 })
 export class MenuModule {}

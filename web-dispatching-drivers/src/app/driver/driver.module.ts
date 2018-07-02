@@ -8,6 +8,7 @@ import { ShiftService } from './shared/shift.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule, MatIconModule, MatButtonModule } from '@angular/material';
 import { MapModule } from '../map/map.module';
+import { DriversArrivalsComponent } from './drivers-arrivals/drivers-arrivals.component';
 
 @NgModule({
   imports: [
@@ -19,7 +20,7 @@ import { MapModule } from '../map/map.module';
     MatButtonModule
   ],
   exports: [ ListAllDriversComponent ],
-  declarations: [ ListAllDriversComponent ],
+  declarations: [ ListAllDriversComponent, DriversArrivalsComponent ],
   providers: [ DriverService, ShiftService ]
 })
 export class DriverModule { }
