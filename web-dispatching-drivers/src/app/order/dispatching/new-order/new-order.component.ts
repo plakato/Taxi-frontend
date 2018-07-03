@@ -105,7 +105,7 @@ export class NewOrderComponent implements OnInit {
         customer => getThis.customer = customer,
         err => {
           if (err.status === 404) {
-            getThis.customer = { telephone: getThis.newOrderForm.get('phoneNumber').value,
+            getThis.customer = { telephone: formattedNumber,
                                 id: null, name: null, note: null};
           }
         }
