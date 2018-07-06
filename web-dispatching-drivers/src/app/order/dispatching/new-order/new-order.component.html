@@ -95,8 +95,9 @@
       <button mat-raised-button *ngIf="group.value === 'airport' && !selectingDriver"
           (click)="selectingDriver = true">Zvolit řidiče</button>
       <button mat-raised-button *ngIf="group.value === 'classic' && !selectingDriver"
-          (click)="selectingDriver = true">Spočíst řidiče</button>
-      <app-list-all-drivers *ngIf="selectingDriver" (selectedDriver)="selectDriver($event)"></app-list-all-drivers>
+          (click)="calculateDriver()">Spočíst řidiče</button>
+      <app-list-all-drivers *ngIf="selectingDriver && group.value === 'airport'" (selectedDriver)="selectDriver($event)"></app-list-all-drivers>
+      <app-drivers-arrivals *ngIf="selectingDriver && group.value === 'classic'" (selectedDriver)="selectDriver($event)"></app-drivers-arrivals>
     </div>
   </div>
 

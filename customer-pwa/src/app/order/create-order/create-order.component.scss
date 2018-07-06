@@ -37,6 +37,11 @@
       padding-right: 10px;
       justify-content: space-between;
   
+        p {
+          display: flex;
+          flex-grow: 1;
+          align-items: center;
+        }
       img {
         height: 50px;
       }

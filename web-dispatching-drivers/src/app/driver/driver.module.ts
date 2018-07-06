@@ -6,9 +6,10 @@ import { ListAllDriversComponent } from './list-all-drivers/list-all-drivers.com
 import { DriverService } from './shared/driver.service';
 import { ShiftService } from './shared/shift.service';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatSelectModule, MatIconModule, MatButtonModule } from '@angular/material';
+import { MatSelectModule, MatIconModule, MatButtonModule, MatCardModule } from '@angular/material';
 import { MapModule } from '../map/map.module';
 import { DriversArrivalsComponent } from './drivers-arrivals/drivers-arrivals.component';
+import { DriversArrivalsService } from './shared/drivers-arrivals.service';
 
 @NgModule({
   imports: [
@@ -17,11 +18,12 @@ import { DriversArrivalsComponent } from './drivers-arrivals/drivers-arrivals.co
     MapModule,
     MatSelectModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatCardModule
   ],
-  exports: [ ListAllDriversComponent ],
+  exports: [ ListAllDriversComponent, DriversArrivalsComponent ],
   declarations: [ ListAllDriversComponent, DriversArrivalsComponent ],
-  providers: [ DriverService, ShiftService ]
+  providers: [ DriverService, ShiftService, DriversArrivalsService ]
 })
 export class DriverModule { }
 

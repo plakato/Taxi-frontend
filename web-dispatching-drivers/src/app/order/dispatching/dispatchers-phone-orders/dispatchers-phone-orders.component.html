@@ -1,24 +1,23 @@
 <h2>Mé telefonické objednávky</h2>
 <div *ngFor="let order of ordersService.orders.value" class="order-container" 
-      [ngClass]="{'green': getDelay(order) < 5, 'orange': getDelay(order) >= 5 && getDelay(order) <= 15, 'red': getDelay(order) > 15}"
-      *ngIf="">
-  <div class="row">
-    <mat-icon>person</mat-icon>
-    <div class="row wrap">
+      [ngClass]="{'green': getDelay(order) < 5, 'orange': getDelay(order) >= 5 && getDelay(order) <= 15, 'red': getDelay(order) > 15}">
+  <div class="space padd">
+    <div class="row">
+        <mat-icon>person</mat-icon>      
         <div>{{order.customer.name == null ? 'neznámy' : order.customer.name}}</div>
-        <div class="end">{{order.customer.telephone}}</div>
     </div>
+    <div>{{order.customer.telephone}}</div>
   </div>  
 
-  <div class="row"><mat-icon>local_taxi</mat-icon>{{order.driver == null ? '' : order.driver.name}}</div>
+  <div class="row padd"><mat-icon>local_taxi</mat-icon>{{order.driver == null ? '' : order.driver.name}}</div>
 
-  <div class="row">
-    <div>
+  <div class="space padd">
+    <div class="row">
       <mat-icon>access_time</mat-icon>  
-    </div>
-    <div>
-      {{order.arrived_time_est | date:'HH:mm'}}
-    </div>
+      <div>
+        {{order.arrived_time_est | date:'HH:mm'}}
+      </div>
+    </div>    
     <div class="end">
       zpoždění {{getDelay(order)}} min
     </div>

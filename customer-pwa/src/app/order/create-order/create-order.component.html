@@ -20,21 +20,24 @@
     <div *ngIf="url === '/order/standard/fill-in-info'" class="grow">
         <div>
             <mat-card>
-                <div class="cardContent" *ngIf="driversArrivalService.arrivals.length !== 0">   
+                <div class="cardContent"> <!-- *ngIf="driversArrivalService.arrivals.length !== 0">   -->
                     <div class="column">
                         <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" i18n-alt alt="Fotka řidiče">
                         <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" i18n-alt alt="Fotka auta">                
                     </div> 
-                    <div class="column">
-                        <p i18n>
-                                {{getSelectedDriver()}} je u Vás za 
+                    <div class="column arrival-time">
+                        <p i18n >
+                            Driver 3
+                            je u Vás 
+                            za 21 minut.
+                                <!--{{getSelectedDriver()}} je u Vás za 
                                 {{getSelectedArrivalTime()}} 
-                                { getSelectedArrivalTime(), plural, =1 {minutu} few {minuty} other {minut} }.
+                                { getSelectedArrivalTime(), plural, =1 {minutu} few {minuty} other {minut} }. -->
                         </p>
                         <button mat-button *ngIf="signedIn" (click)="changeDriver()" i18n>Změnit řidiče</button>
                     </div>                               
                 </div> 
-                <div class="cardContent" *ngIf="driversArrivalService.arrivals.length === 0" i18n>Nenašli se žádní řidiči.</div>               
+                <!--<div class="cardContent" *ngIf="driversArrivalService.arrivals.length === 0" i18n>Nenašli se žádní řidiči.</div>     -->          
             </mat-card>
         </div>
         <app-fill-in-params ></app-fill-in-params>        

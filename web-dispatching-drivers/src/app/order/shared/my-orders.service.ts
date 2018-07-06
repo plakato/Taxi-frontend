@@ -40,7 +40,7 @@ export class MyOrdersService {
           const orders = res.queue;
           const newOrders = [];
           This.orderService.fillInInfo(orders)
-            .finally(() => {debugger;
+            .finally(() => {
               This.ordersData = newOrders.filter(order => order.status !== Status.finished).sort(this.compareByStartTime);
               if (This.ordersData.length > 0 && This.ordersData[0].status === Status.driverConfirmed) {
                 This.orderService.arriving(This.ordersData[0].id).subscribe(
@@ -57,7 +57,7 @@ export class MyOrdersService {
                 newOrders.push(order);
               },
             err => {},
-            () => {debugger;
+            () => {
               This.ordersData = newOrders.filter(order => order.status !== Status.finished).sort(this.compareByStartTime);
               if (This.ordersData.length > 0 && This.ordersData[0].status === Status.driverConfirmed) {
                 This.orderService.arriving(This.ordersData[0].id).subscribe(

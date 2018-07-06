@@ -8,14 +8,19 @@
         display: flex;
         align-items: center;  
         justify-content: flex-start;
-        padding: 3px 0px;
 
         mat-icon {
             margin-right: 5px;
         }
-        .end {
-            margin-left: auto;
-        }
+
+    }
+    .padd {
+        padding: 3px 0px;        
+    }
+    .space {
+        display: flex;
+        align-items: center;  
+        justify-content: space-between;
     }
 }
 

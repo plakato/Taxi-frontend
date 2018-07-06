@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class OrderService implements OnInit {
-  public newOrder: Order = {} as any;
+  public newOrder: Order;
   private currentOrderData: Order;  
   public currentOrder: BehaviorSubject<Order> = new BehaviorSubject(this.currentOrderData);
   private interval;
@@ -22,6 +22,8 @@ export class OrderService implements OnInit {
     let newO = localStorage.getItem('newOrder');
     if (newO != 'undefined' && newO !== 'null') {
       this.newOrder = JSON.parse(newO);
+    } else {
+      this.newOrder = {} as any;
     }
     let currentO = localStorage.getItem('currentOrder');
     if (currentO != 'undefined') {

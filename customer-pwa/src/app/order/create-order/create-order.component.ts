@@ -25,7 +25,7 @@ export class CreateOrderComponent implements OnInit {
 
     // On refresh request new arrival times and drivers.
     if (this.url === '/order/standard/fill-in-info') {
-      this.driversArrivalService.get(this.start.coords, this.finish.coords); //TODO      
+      //this.driversArrivalService.getArrivals(this.start.coords, this.finish.coords); //TODO      
     }
   }
 
@@ -50,7 +50,7 @@ export class CreateOrderComponent implements OnInit {
   finishChosen() {
     this.orderService.newOrder.loc_finish = this.finish.coords;
     this.orderService.newOrder.finishAddress = this.finish.address;
-    this.driversArrivalService.get(this.start.coords, this.finish.coords); //TODO
+    //this.driversArrivalService.get(this.start.coords, this.finish.coords); //TODO
     this.router.navigate(['order/standard/fill-in-info']);
   }
 

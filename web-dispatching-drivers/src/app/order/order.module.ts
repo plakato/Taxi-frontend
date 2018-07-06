@@ -41,6 +41,7 @@ import { DriverArrivingComponent } from './drivers/driver-arriving/driver-arrivi
 import { EnqueuedOrderComponent } from './drivers/enqueued-order/enqueued-order.component';
 import { DispatchersPhoneOrdersComponent } from './dispatching/dispatchers-phone-orders/dispatchers-phone-orders.component';
 import { DispatchersPhoneOrdersService } from './shared/data-source/dispatchers-phone-orders.service';
+import { DriversArrivalsComponent } from '../driver/drivers-arrivals/drivers-arrivals.component';
 
 
 @NgModule({
@@ -79,7 +80,7 @@ import { DispatchersPhoneOrdersService } from './shared/data-source/dispatchers-
     DispatchersPhoneOrdersComponent],
   providers: [CustomerService, OrderService, OrdersPollingService, MyOrdersService, CzechPaginatorIntl, NotificationService, DispatchersPhoneOrdersService],
   exports: [DriverArrivingComponent, EnqueuedOrderComponent, DispatchersPhoneOrdersComponent],
-  entryComponents: [ ListAllDriversComponent, CancelOrderDialogComponent ]
+  entryComponents: [ ListAllDriversComponent, CancelOrderDialogComponent, DriversArrivalsComponent ]
 })
 export class OrderModule { }
 

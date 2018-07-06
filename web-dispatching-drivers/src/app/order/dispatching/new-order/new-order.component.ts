@@ -6,6 +6,7 @@ import { OrderService } from '../../shared/order.service';
 import { MatSnackBar } from '@angular/material';
 import { LatLngLiteral } from '@agm/core';
 import { ListAllDriversComponent } from '../../../driver/list-all-drivers/list-all-drivers.component';
+import { ErrorService } from '../../../general/error/error.service';
 
 @Component({
   selector: 'app-new-order',
@@ -30,21 +31,39 @@ export class NewOrderComponent implements OnInit {
   constructor( private fb: FormBuilder,
           private customerService: CustomerService,
           private orderService: OrderService,
-          private snackbar: MatSnackBar ) { }
+          private snackbar: MatSnackBar,
+          private errorService: ErrorService ) { }
 
   ngOnInit() {
     this.initializeForm();
   }
 
-  confirmOrder() {
+  confirmOrder(): boolean {
+    const order = this.getOrder();
+    if (order == null) 
+    {
+      return false;
+    }
+    // Send order.
+    this.orderService.createOrder(order).subscribe(
+      res => { this.snackbar.open('Objednávka úspěšně vytvořena!', '', {duration: 2000});
+              this.initializeForm(); 
+              return true;},
+      err => {this.snackbar.open(err, 'OK', {duration: 2000});
+              return false;}
+    );
+
+  }
+
+  getOrder(): Order {
     // Check validity.
     if (this.newOrderForm.invalid) {
       this.snackbar.open('Zadaná data nejsou validní.', '', {duration: 2000});
-      return;
+      return null;
     }
     if (this.fromLatLng == null) {
       this.snackbar.open('Startovní adresa je povinná.', '', {duration: 2000});
-      return;
+      return null;
     }
     // Construct order.
     const order: Order = this.newOrderForm.value;
@@ -60,13 +79,7 @@ export class NewOrderComponent implements OnInit {
     order.loc_finish = this.toLatLng;
     order.driver_id = this.driverID;
     order.contact_telephone = this.customer.telephone;
-    // Send order.
-    this.orderService.createOrder(order).subscribe(
-      res => { this.snackbar.open('Objednávka úspěšně vytvořena!', '', {duration: 2000});
-              this.initializeForm(); },
-      err => this.snackbar.open(err, 'OK', {duration: 2000})
-    );
-
+    return order;
   }
 
   selectDriver(driverID: number) {
@@ -110,6 +123,16 @@ export class NewOrderComponent implements OnInit {
           }
         }
       );
+    }
+  }
+
+  calculateDriver() {
+    const order = this.getOrder();
+    if (order == null) {
+      this.errorService.showMessageToUser('Nejsou zadány všechny potřebné informace pro spočtení řidiče.');
+    } else {
+      localStorage.setItem('currentOrder', JSON.stringify(order));
+      this.selectingDriver = true;
     }
   }
 

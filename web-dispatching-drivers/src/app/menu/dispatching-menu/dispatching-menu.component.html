@@ -13,8 +13,8 @@
     <button mat-menu-item *ngIf="getNotifications().length === 0">Nemáte žádné notifikace.</button>
 
     <!-- One notification -->
-    <div mat-menu-item *ngFor="let notification of getNotifications()"class="notification">
-        <p>{{notification.notification.subject}}</p>
+    <div mat-menu-item class="notification"> <!--*ngFor="let notification of getNotifications()"> -->
+        <p>Petr Moucha nepřichází!<!--{{notification.notification.subject}}--></p>
         <button mat-icon-button (click)="resolveNotification(notification)">
           <mat-icon>check</mat-icon>
         </button>

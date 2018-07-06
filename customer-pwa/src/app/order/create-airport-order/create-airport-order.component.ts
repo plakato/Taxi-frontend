@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ErrorService } from '../../general/error/error.service';
 import { OrderService } from '../order.service';
 import { LatLngLiteral } from '@agm/core';
+import { Constants } from '../../../assets/const';
 
 @Component({
   selector: 'app-create-airport-order',
@@ -29,9 +30,11 @@ export class CreateAirportOrderComponent implements OnInit {
       if (this.goingToAirport) {
         this.orderService.newOrder.loc_start = this.endpoint.coords;
         this.orderService.newOrder.startAddress = this.endpoint.address;
+        this.orderService.newOrder.loc_finish = Constants.DEFAULT_AIRPORT_ADDRESS;        
       } else {
         this.orderService.newOrder.loc_finish = this.endpoint.coords;
         this.orderService.newOrder.finishAddress = this.endpoint.address;
+        this.orderService.newOrder.loc_start = Constants.DEFAULT_AIRPORT_ADDRESS;                
       }
       
       this.orderService.sendNewOrder().subscribe(
