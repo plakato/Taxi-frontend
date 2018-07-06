@@ -1,10 +1,22 @@
 .container {
     min-height: calc(100vh - 20px);
     display: flex;
+    flex-direction: column;
     
+    mat-card {
+        margin: 5px;
+    }
     .center-on-page {
         flex-grow: 1;
         margin: auto;
         text-align: center;
     }    
+
+    .space {
+        margin-top: 40px;
+    }
+}
+
+img {
+    max-width: 100px;
 }

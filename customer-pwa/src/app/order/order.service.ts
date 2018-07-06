@@ -148,7 +148,7 @@ export class OrderService implements OnInit {
   }
 
   getScheduledOrders() {
-    return this.http.get<Order[]>('orders/?page=1&per_page=100&scheduled');
+    return this.http.get<{items: Order[]}>('orders/?page=1&per_page=100&scheduled').pipe(map(result => result.items));
   }
 
   private fillOrderVehicle(order: Order): Observable<Order>  {

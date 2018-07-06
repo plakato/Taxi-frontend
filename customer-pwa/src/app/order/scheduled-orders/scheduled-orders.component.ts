@@ -18,7 +18,7 @@ export class ScheduledOrdersComponent implements OnInit {
     const This = this;
     this.orderService.getScheduledOrders().subscribe(
       orders => {
-        This.orders = orders;
+        This.orders.push(...orders);
       },
       err => This.errorService.showMessageToUser('Nezdařilo se načítat Vaše objednávky.')
     );
