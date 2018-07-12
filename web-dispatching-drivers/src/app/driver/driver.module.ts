@@ -10,6 +10,8 @@ import { MatSelectModule, MatIconModule, MatButtonModule, MatCardModule } from '
 import { MapModule } from '../map/map.module';
 import { DriversArrivalsComponent } from './drivers-arrivals/drivers-arrivals.component';
 import { DriversArrivalsService } from './shared/drivers-arrivals.service';
+import { SelectingDriverComponent } from './selecting-driver/selecting-driver.component';
+import { DriverSelectedComponent } from './driver-selected/driver-selected.component';
 
 @NgModule({
   imports: [
@@ -21,8 +23,8 @@ import { DriversArrivalsService } from './shared/drivers-arrivals.service';
     MatButtonModule,
     MatCardModule
   ],
-  exports: [ ListAllDriversComponent, DriversArrivalsComponent ],
-  declarations: [ ListAllDriversComponent, DriversArrivalsComponent ],
+  exports: [ ListAllDriversComponent, SelectingDriverComponent ],
+  declarations: [ ListAllDriversComponent, DriversArrivalsComponent, SelectingDriverComponent, DriverSelectedComponent ],
   providers: [ DriverService, ShiftService, DriversArrivalsService ]
 })
 export class DriverModule { }

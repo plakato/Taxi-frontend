@@ -4,6 +4,7 @@
     border-style: solid;
     border-width: 1px;
     padding: 10px;
+    margin-bottom: 10px;
     .row {
         display: flex;
         align-items: center;  
@@ -11,6 +12,9 @@
 
         mat-icon {
             margin-right: 5px;
+        }
+        .marg-right {
+            margin-right: 10px;
         }
 
     }
@@ -26,4 +30,12 @@
 
 .green {
     color: mat-color(map-get($yellow-app-theme, accent));
+}
+
+.orange {
+    color: $yellow-app-caution;
+}
+
+.red {
+    color: mat-color(map-get($yellow-app-theme, warn));
 }

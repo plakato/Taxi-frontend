@@ -1,15 +1,8 @@
 <h1>Termínované objednávky</h1>
 
-<!-- Filter -->
-<div>
-  <mat-form-field>
-     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-  </mat-form-field>
-</div>
-
 <div class="table mat-elevation-z8">
 
-  <mat-table [dataSource]="dataSource" matSort>
+  <mat-table [dataSource]="dataSource" matSorts>
 
     <!-- Driver Column -->
     <ng-container matColumnDef="driver">

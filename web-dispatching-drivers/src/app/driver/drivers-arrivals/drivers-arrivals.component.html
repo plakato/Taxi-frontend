@@ -1,6 +1,6 @@
 <div class="container column">
 
-  <mat-card *ngFor="let arrival of arrivals" class="arrival" (click)="selectDriver(arrival.driver.id)">
+  <mat-card *ngFor="let arrival of arrivalsService.arrivals" class="arrival" (click)="selectDriver(arrival.driver.id)">
       <mat-card-content class="row">
         <div class="avatar">
           <img src="{{arrival.driver.image}}" alt="Fotka řidiče"/>          

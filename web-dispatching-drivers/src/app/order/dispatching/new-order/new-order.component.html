@@ -46,7 +46,7 @@
   <!-- Form continues -->
   <div class="twoColumns">
     <div class="column formControls">
-      <div class="controlsInColumn">
+      <div class="controlsInColumn margin-right">
         <!-- Passengers -->
         <mat-form-field>
           <input matInput type="number" formControlName="passengers" placeholder="Počet osob"
@@ -97,7 +97,7 @@
       <button mat-raised-button *ngIf="group.value === 'classic' && !selectingDriver"
           (click)="calculateDriver()">Spočíst řidiče</button>
       <app-list-all-drivers *ngIf="selectingDriver && group.value === 'airport'" (selectedDriver)="selectDriver($event)"></app-list-all-drivers>
-      <app-drivers-arrivals *ngIf="selectingDriver && group.value === 'classic'" (selectedDriver)="selectDriver($event)"></app-drivers-arrivals>
+      <app-selecting-driver *ngIf="selectingDriver && group.value === 'classic'" (selectedDriver)="selectDriver($event)"></app-selecting-driver>
     </div>
   </div>
 

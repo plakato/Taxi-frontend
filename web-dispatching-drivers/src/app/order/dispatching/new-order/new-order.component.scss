@@ -50,6 +50,10 @@ app-list-all-drivers {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+
+      .margin-right {
+        margin-right: 20px;
+      }
     }
   }
 }

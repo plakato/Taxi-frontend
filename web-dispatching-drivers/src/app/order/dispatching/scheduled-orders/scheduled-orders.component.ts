@@ -46,12 +46,6 @@ export class ScheduledOrdersComponent implements AfterViewInit {
                       pageSize: this.dataSource.paginator.pageSize, length: null});
   }
 
-  applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
-    this.dataSource.filter = filterValue;
-  }
-
   onPageChange(event: PageEvent) {
     const params: OrderRequestParams = new OrderRequestParams(event.pageIndex, event.pageSize);
     params.scheduled = true;
@@ -88,7 +82,7 @@ export class ScheduledOrdersComponent implements AfterViewInit {
     });
   }
 
-  changeDriver(order: Order, newDriverID: number, control: ListAllDriversComponent) {debugger;
+  changeDriver(order: Order, newDriverID: number, control: ListAllDriversComponent) {debugger;//TODO
     this.orderService.updateDriver(order.id, newDriverID)/*.subscribe(
       success => {},
       err => {
