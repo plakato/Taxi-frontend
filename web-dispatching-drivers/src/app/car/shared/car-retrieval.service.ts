@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { Car } from '../car.module';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { ErrorService } from '../../general/error/error.service';
 
 @Injectable()
 export class CarRetrievalService {
@@ -12,7 +13,8 @@ export class CarRetrievalService {
   public readonly cars: Observable<Array<Car>> = this.carsEventSource.asObservable().map( map => Array.from(map.values()));
   private carsData: Map<number, Car> = new Map();
 
-  constructor( private http: HttpClient) {
+  constructor( private http: HttpClient,
+              private errorService: ErrorService) {
     this.loadInitialData();
    }
 
@@ -26,6 +28,7 @@ export class CarRetrievalService {
   }
 
   add(car: Car) {
+    const This = this;
     this.http.post<Car>('vehicles', JSON.stringify(
       { vehicle: {
           name: car.name,
@@ -36,11 +39,11 @@ export class CarRetrievalService {
           available: car.available
     }})).subscribe(
       res => {
-        this.carsData[res.id] = res;
-        this.carsEventSource.next(this.carsData);
+        This.carsData[res.id] = res;
+        This.carsEventSource.next(this.carsData);
       },
       err => {
-        // TODO: errorz
+        This.errorService.showMessageToUser('Vytvoření auta se nezdařilo.');
       }
     );
   }
@@ -83,13 +86,14 @@ export class CarRetrievalService {
   }
 
   delete(carID) {
+    const This = this;
     this.http.delete('vehicles/' + carID) .subscribe(
       res => {
-        this.carsData.delete(carID);
-        this.carsEventSource.next(this.carsData);
+        This.carsData.delete(carID);
+        This.carsEventSource.next(this.carsData);
       },
       err => {
-        // TODO
+        This.errorService.showMessageToUser('Smazání auta se nezdařilo.');
       });
   }
 }

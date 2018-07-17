@@ -102,7 +102,9 @@ export class OrderService {
   }
 
   updateDriver(orderID: number, driverID: number) {
-    // TODO, can be null - when driver is deselected
+    return this.http.patch('orders/' + orderID, JSON.stringify({
+      driver: {id: driverID}
+    }));
   }
 
   get(orderID: number) {

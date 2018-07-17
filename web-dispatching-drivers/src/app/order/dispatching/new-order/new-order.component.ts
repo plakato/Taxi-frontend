@@ -95,7 +95,7 @@ export class NewOrderComponent implements OnInit {
       passengers: ['1', [Validators.required, Validators.min(1)]],
       flightNumber: [''],
       date: [ now, Validators.required],
-      time: [ '', Validators.pattern('[0-2]?[0-9]:[0-5][0-9]')], // TODO: validate that time is in the future.
+      time: [ '', Validators.pattern('[0-2]?[0-9]:[0-5][0-9]')],
       note: [''],
       VIP: [false]
     });

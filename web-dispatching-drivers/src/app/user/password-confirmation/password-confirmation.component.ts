@@ -4,6 +4,7 @@ import { MatSnackBar, ErrorStateMatcher } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Validators, FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { DirtyErrorStateMatcher } from '../../reusable/error-state-matcher/error-state-matcher.module';
+import { ErrorService } from '../../general/error/error.service';
 
 @Component({
   selector: 'app-password-confirmation',
@@ -23,7 +24,8 @@ export class PasswordConfirmationComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private snackBar: MatSnackBar,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private errorService: ErrorService) {
   }
 
   ngOnInit() {
@@ -39,19 +41,20 @@ export class PasswordConfirmationComponent implements OnInit {
       this.snackBar.open('Vyplňte správně všechny údaje!', 'OK', {duration: 2000});
       return;
     }
+    const This = this;
     this.loading = true;
     const confirmation_token = this.route.snapshot.paramMap.get('confirmation_token');
     this.authenticationService.confirm(this.passwordForm.get('password').value, confirmation_token)
         .subscribe(
           data => {
             console.log(data);
-            this.router.navigate(['/login']);
-            // TODO: inform about successful confirmation
+            This.router.navigate(['/login']);
+            This.errorService.showMessageToUser('Vaše heslo bylo potvrzeno.');
           },
           err => {
-            this.loading = false;
+            This.loading = false;
             err.error.errors.forEach(pair => {
-              this.snackBar.open(Object.values(pair)[0].toString(), 'OK');
+              This.snackBar.open(Object.values(pair)[0].toString(), 'OK');
             });
             if (err.error instanceof Error) {
               // A client-side or network error occurred. Handle it accordingly.

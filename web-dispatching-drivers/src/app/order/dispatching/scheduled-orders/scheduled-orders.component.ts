@@ -82,12 +82,12 @@ export class ScheduledOrdersComponent implements AfterViewInit {
     });
   }
 
-  changeDriver(order: Order, newDriverID: number, control: ListAllDriversComponent) {debugger;//TODO
-    this.orderService.updateDriver(order.id, newDriverID)/*.subscribe(
+  changeDriver(order: Order, newDriverID: number, control: ListAllDriversComponent) {
+    this.orderService.updateDriver(order.id, newDriverID).subscribe(
       success => {},
       err => {
         control.selectDriver(order.driver);
         this.errorService.showMessageToUser('Změna řidiče se nezdařila.'); }
-    )*/;
+    );
   }
 }

@@ -58,8 +58,10 @@ export class DriverNewOrderComponent implements OnInit {
   }
 
   refuseOrder() {
-    //TODO
-    this.dialogRef.close(); 
+    const This = this;
+    this.driverService.refuseOrder(this.data.order.id).subscribe(
+      success => This.dialogRef.close()
+    )
   }
 
 }

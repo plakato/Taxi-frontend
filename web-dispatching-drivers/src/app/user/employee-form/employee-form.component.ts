@@ -26,7 +26,7 @@ export class EmployeeFormComponent implements OnInit {
   ngOnInit() {
     // Initialize form with validators.
     this.roles = this.fb.group({
-      dispatcher: [false], // TODO validate - at least one check checked
+      dispatcher: [false], 
       driver: [false],
       admin: [false]
     });

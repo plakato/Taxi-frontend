@@ -84,12 +84,14 @@ export class DriverArrivingComponent implements OnInit {
     }
     const This = this;
     this.orderService.finish(this.order.id).subscribe(sucess => This.myOrders.removeOrder(This.order.id));
-    // TODO: listen to answer.
   }
 
   markAsFraud() {
-    this.orderService.fraud(this.order.id).subscribe();
-    // TODO: listen to answer.
+    const This = this;
+    this.orderService.fraud(this.order.id).subscribe(
+      sucess => This.myOrders.removeOrder(This.order.id),
+      err => This.errorService.showMessageToUser('Objednávku nebylo možné označit jako propal.')
+    );
   }
 
   addressEditingWarning() {

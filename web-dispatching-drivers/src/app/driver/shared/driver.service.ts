@@ -41,4 +41,8 @@ export class DriverService {
       return result;
     }
   }
+
+  refuseOrder(orderID: number) {
+    return this.http.patch('orders/' + orderID + '/refuse', '');
+  }
 }
