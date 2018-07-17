@@ -19,7 +19,8 @@
     <!-- Fill in other info -->
     <div *ngIf="url === '/order/standard/fill-in-info'" class="grow">
         <div>
-            <mat-card>
+            <app-driver-selected [signedIn]="signedIn" [arrival]="getSelectedArrival()"></app-driver-selected>
+            <!-- <mat-card>
                 <div class="cardContent" *ngIf="driversArrivalService.arrivals.length !== 0">   
                     <div class="column">
                         <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" i18n-alt alt="Fotka řidiče">
@@ -35,7 +36,7 @@
                     </div>                               
                 </div> 
                 <div class="cardContent" *ngIf="driversArrivalService.arrivals.length === 0" i18n>Nenašli se žádní řidiči.</div>           
-            </mat-card>
+            </mat-card> -->
         </div>
         <app-fill-in-params ></app-fill-in-params>        
     </div>

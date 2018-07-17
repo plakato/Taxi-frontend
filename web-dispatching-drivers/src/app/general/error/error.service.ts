@@ -16,16 +16,20 @@ export class ErrorService {
   notifyUser(error) {
     // Handle network errors, they have different structure.
     if (error instanceof HttpErrorResponse) {debugger;
+
       if (error.error instanceof ErrorEvent) {
          // A client-side or network error occurred.
-      this.snackbar.open(error.error.error, 'OK', { duration: 2000});
+          this.snackbar.open(error.error.error, 'OK', { duration: 2000});
       } else if (error.error instanceof ProgressEvent) {
         this.snackbar.open(error.statusText, 'OK', {duration: 2000});
       } else {
         // Show user what errors is server giving us.
         if (error.error.errors != null) {
+         // Does not throw 404 when server is asked for information on non-existing customer.
+         if (error.status !== 404 || error.url.match('\\/customers\\/\\+') === null) {
           error.error.errors.forEach(pair => {
           this.snackbar.open(Object.values(pair)[0].toString(), 'OK', {duration: 2000}); });
+         }
         } else {
           this.snackbar.open(error.error.error, 'OK', {duration: 2000});
         }

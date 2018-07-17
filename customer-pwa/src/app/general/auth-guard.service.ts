@@ -38,14 +38,25 @@ export class LoggedOutGuardService implements CanActivate {
   }
 
   checkLoggedOut(url: string): boolean {
-    const current = JSON.parse(localStorage.getItem('currentUser'));
-   if (current === null) {
-     return true;
-   }
-  // Navigate to the home page.
-  // TODO
+    const currentJSON = localStorage.getItem('currentUser');
+    if ( currentJSON !== 'undefined' && currentJSON != 'null') {
+      const current = JSON.parse(currentJSON);
+     // Navigate to the home page.
+      this.navigateToHomePage();
+    }
+   
 
-  return false;
+  return true;
+  }
+
+  navigateToHomePage() {
+    const currentJSON = localStorage.getItem('currentOrder');
+    if ( currentJSON !== 'undefined' && currentJSON != 'null') {
+      const current = JSON.parse(currentJSON);
+      this.router.navigate(['order/standard/wait-for-confirmation']);
+    } else {
+      this.router.navigate(['new-order'])
+    }
   }
 
 }

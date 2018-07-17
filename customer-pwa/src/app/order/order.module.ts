@@ -11,7 +11,6 @@ import { StaticMarkerMapComponent } from '../map/static-marker-map/static-marker
 import { MapModule } from '../map/map.module';
 import { LatLngLiteral } from '@agm/core';
 import { CreateAirportOrderComponent } from './create-airport-order/create-airport-order.component';
-import { ChangeDriverComponent } from './change-driver/change-driver.component';
 import { OrderCreatedComponent } from './ongoing-order/order-created/order-created.component';
 import { ReusableModule } from '../reusable/reusable.module';
 import { WaitForConfirmationComponent } from './ongoing-order/wait-for-confirmation/wait-for-confirmation.component';
@@ -23,6 +22,8 @@ import { Status } from './order.service';
 import { MarkedFraudComponent } from './ongoing-order/marked-fraud/marked-fraud.component';
 import { OrderConfirmedByDriverComponent } from './ongoing-order/order-confirmed-by-driver/order-confirmed-by-driver.component';
 import { ScheduledOrdersComponent } from './scheduled-orders/scheduled-orders.component';
+import { ChangeDriverComponent } from './driver/change-driver/change-driver.component';
+import { DriverSelectedComponent } from './driver/driver-selected/driver-selected.component';
 
 @NgModule({
   imports: [
@@ -43,7 +44,9 @@ import { ScheduledOrdersComponent } from './scheduled-orders/scheduled-orders.co
     MatToolbarModule,
     MatMenuModule
   ],
-  declarations: [NewOrderComponent, FillInParamsComponent, CreateOrderComponent, CreateAirportOrderComponent, ChangeDriverComponent, OrderCreatedComponent, WaitForConfirmationComponent, CanceledOrderComponent, OrderFinishedComponent, WatchDriverArriveComponent, MarkedFraudComponent, OrderConfirmedByDriverComponent, ScheduledOrdersComponent],
+  declarations: [NewOrderComponent, FillInParamsComponent, CreateOrderComponent, CreateAirportOrderComponent, ChangeDriverComponent, 
+                OrderCreatedComponent, WaitForConfirmationComponent, CanceledOrderComponent, OrderFinishedComponent, WatchDriverArriveComponent, 
+                MarkedFraudComponent, OrderConfirmedByDriverComponent, ScheduledOrdersComponent, DriverSelectedComponent],
   entryComponents: [YesCancelDialogComponent]
 })
 export class OrderModule { }

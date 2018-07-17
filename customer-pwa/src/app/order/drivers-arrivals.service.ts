@@ -10,7 +10,13 @@ import { Order } from './order.module';
 export class DriversArrivalsService {
   arrivals: DriverArrival[] = [];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    const orderJSON = localStorage.getItem('newOrder');
+    if (orderJSON !== 'undefined' && orderJSON != 'null') {
+      const order = JSON.parse(orderJSON);
+      this.getArrivals(order).subscribe();
+    }
+   }
 
   getArrivals(order: Order) {
     if (order == null) {
@@ -49,7 +55,8 @@ export class DriversArrivalsService {
     if (arrival == null) {
       return null;
     } else {
-      return Math.trunc((arrival.arrived_time_est.valueOf() - Date.now()) / 1000);
+      const arrivalDate = new Date(arrival.arrived_time_est);
+      return Math.trunc((arrivalDate.valueOf() - Date.now()) / 1000);
     }
   }
 }

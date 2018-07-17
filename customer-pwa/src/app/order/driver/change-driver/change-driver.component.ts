@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Location} from '@angular/common';
-import { DriversArrivalsService } from '../drivers-arrivals.service';
-import { OrderService } from '../order.service';
 import { Router } from '@angular/router';
+import { DriversArrivalsService } from '../../drivers-arrivals.service';
+import { OrderService } from '../../order.service';
 
 @Component({
   selector: 'app-change-driver',

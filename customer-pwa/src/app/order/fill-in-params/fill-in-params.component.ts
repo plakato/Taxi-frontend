@@ -78,7 +78,7 @@ export class FillInParamsComponent implements OnInit {
   }
 
   // Returns true if successful.
-  setParams(): boolean {debugger;
+  setParams(): boolean {
     // Set phone number
     if (this.orderForm.get('phone').valid) {
       let formattedNumber = this.orderForm.get('phone').value;
@@ -105,7 +105,7 @@ export class FillInParamsComponent implements OnInit {
     // Set up other params.
     if (this.orderForm.valid) {
       const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-      this.orderService.newOrder.driverID = 10; //TODO
+      this.orderService.newOrder.driverID = this.orderService.newOrder.driverID;
       this.orderService.newOrder.passenger_count = this.orderForm.get('persons').value;
       this.orderService.newOrder.note =   this.orderForm.get('note').value; 
       this.orderService.newOrder.VIP = this.orderForm.get('VIP').value;

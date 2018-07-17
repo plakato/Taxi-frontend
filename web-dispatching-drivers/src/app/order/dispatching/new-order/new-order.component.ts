@@ -108,17 +108,17 @@ export class NewOrderComponent implements OnInit {
   }
 
   phoneNumberChanged() {
+    const This = this;    
     if (this.newOrderForm.get('phoneNumber').valid) {
       let formattedNumber = this.newOrderForm.get('phoneNumber').value;
       if (formattedNumber[0] !== '+') {
         formattedNumber = '+420' + formattedNumber;
       }
-      const getThis = this;
       this.customerService.getCustomer(formattedNumber).subscribe(
-        customer => getThis.customer = customer,
+        customer => This.customer = customer,
         err => {
           if (err.status === 404) {
-            getThis.customer = { telephone: formattedNumber,
+            This.customer = { telephone: formattedNumber,
                                 id: null, name: null, note: null};
           }
         }

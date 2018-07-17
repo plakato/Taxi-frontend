@@ -8,7 +8,6 @@ import { PasswordRecoveryComponent } from './authentication/password-recovery/pa
 import { NewPasswordComponent } from './authentication/new-password/new-password.component';
 import { CreateOrderComponent } from './order/create-order/create-order.component';
 import { CreateAirportOrderComponent } from './order/create-airport-order/create-airport-order.component';
-import { ChangeDriverComponent } from './order/change-driver/change-driver.component';
 import { OrderCreatedComponent } from './order/ongoing-order/order-created/order-created.component';
 import { WaitForConfirmationComponent } from './order/ongoing-order/wait-for-confirmation/wait-for-confirmation.component';
 import { CanceledOrderComponent } from './order/ongoing-order/canceled-order/canceled-order.component';
@@ -17,6 +16,7 @@ import { WatchDriverArriveComponent } from './order/ongoing-order/watch-driver-a
 import { MarkedFraudComponent } from './order/ongoing-order/marked-fraud/marked-fraud.component';
 import { OrderConfirmedByDriverComponent } from './order/ongoing-order/order-confirmed-by-driver/order-confirmed-by-driver.component';
 import { ScheduledOrdersComponent } from './order/scheduled-orders/scheduled-orders.component';
+import { ChangeDriverComponent } from './order/driver/change-driver/change-driver.component';
 
 const appRoutes: Routes = [
   { path: 'new-order', component: NewOrderComponent, canActivate: [AuthGuardService] },

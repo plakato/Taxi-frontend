@@ -17,7 +17,6 @@ export class OrderService implements OnInit {
 
   constructor(private http: HttpClient,
               private router: Router) {this.clearCache();
-    this.initializeOrder();    
     window.addEventListener('beforeunload', () => {this.cacheOrder();});    
     let newO = localStorage.getItem('newOrder');
     if (newO != 'undefined' && newO !== 'null') {
@@ -26,7 +25,7 @@ export class OrderService implements OnInit {
       this.newOrder = {} as any;
     }
     let currentO = localStorage.getItem('currentOrder');
-    if (currentO != 'undefined') {
+    if (currentO != 'undefined' && currentO != 'null') {
       this.currentOrderData = JSON.parse(currentO);
       this.currentOrder.next(this.currentOrderData);
     }

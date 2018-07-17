@@ -2,13 +2,13 @@
   <mat-card *ngFor="let arrival of arrivalService.arrivals" (click)="change(arrival.driver.id)">
       <div class="cardContent">   
           <div class="column">
-              <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" i18n-alt alt="Fotka řidiče">
-              <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" i18n-alt alt="Fotka auta">                
+              <img src="{{arrival?.driver.image}}" i18n-alt alt="Fotka řidiče">
+              <img src="{{arrival?.vehicle.image}}" i18n-alt alt="Fotka auta">                
           </div> 
           <div class="column">
               <p>{{arrival.driver.name}}</p>
-              <p>{{arrival.car.name}}</p>
-              <p i18n>Přijde za {{arrivalService.getMinutes(arrival)}} minut.</p>              
+              <p>{{arrival.vehicle.name}}</p>
+              <p i18n>Přijde za {{arrivalService.getMinutes(arrival.driver.id)}} min.</p>              
           </div>                               
       </div>       
   </mat-card>

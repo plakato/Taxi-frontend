@@ -22,11 +22,6 @@ export class CreateOrderComponent implements OnInit {
               private orderService: OrderService,
               private driversArrivalService: DriversArrivalsService) { 
     this.url = this.router.url;
-
-    // On refresh request new arrival times and drivers.
-    if (this.url === '/order/standard/fill-in-info') {
-      //this.driversArrivalService.getArrivals(this.start.coords, this.finish.coords); //TODO      
-    }
   }
 
   ngOnInit() {
@@ -50,7 +45,6 @@ export class CreateOrderComponent implements OnInit {
   finishChosen() {
     this.orderService.newOrder.loc_finish = this.finish.coords;
     this.orderService.newOrder.finishAddress = this.finish.address;
-    //this.driversArrivalService.get(this.start.coords, this.finish.coords); //TODO
     this.router.navigate(['order/standard/fill-in-info']);
   }
 
@@ -84,6 +78,16 @@ export class CreateOrderComponent implements OnInit {
       return this.driversArrivalService.getMinutes(this.driversArrivalService.arrivals[0].driver.id);
     } else {
       return this.driversArrivalService.getMinutes(chosen);
+    }
+  }
+
+  getSelectedArrival() {
+    const chosen = this.orderService.newOrder.driverID;
+    if (chosen == null) {
+      return this.driversArrivalService.arrivals === [] ? null : this.driversArrivalService.arrivals[0];
+    } else {
+      const This = this;
+      return this.driversArrivalService.arrivals.find(arr => arr.driver.id === This.orderService.newOrder.driverID);
     }
   }
 

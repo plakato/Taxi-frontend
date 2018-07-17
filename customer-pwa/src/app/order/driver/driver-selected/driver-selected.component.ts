@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { DriversArrivalsService } from '../shared/drivers-arrivals.service';
+import { DriversArrivalsService } from '../../drivers-arrivals.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-driver-selected',
@@ -11,7 +12,8 @@ export class DriverSelectedComponent implements OnInit {
     @Input() arrival;
     @Input() signedIn = false;
   
-    constructor(private arrivalsService: DriversArrivalsService) { }
+    constructor(private arrivalsService: DriversArrivalsService,
+                private router: Router) { }
   
     ngOnInit() {
     }
@@ -24,5 +26,10 @@ export class DriverSelectedComponent implements OnInit {
         return Math.trunc((arrived.valueOf() - Date.now()) / 1000);
       }
   }
-  
+
+  change() {
+    this.router.navigate(['order/standard/change-driver'])
+  }
+
+
 }
