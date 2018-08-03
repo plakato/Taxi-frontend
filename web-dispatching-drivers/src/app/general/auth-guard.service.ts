@@ -40,7 +40,7 @@ export class LoggedOutGuardService implements CanActivate {
 
   checkLoggedOut(url: string): boolean {
     const current = JSON.parse(localStorage.getItem('currentUser'));
-   if (current === null) {
+   if (current == null) {
      return true;
    }
   // Navigate to the home page.

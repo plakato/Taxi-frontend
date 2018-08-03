@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Order } from '../order.module';
 import { Observable } from 'rxjs/Observable';
-import { mergeMap, map } from 'rxjs/operators';
+import { mergeMap, map, switchMap, catchError } from 'rxjs/operators';
 import { from } from 'rxjs/observable/from';
 import { of } from 'rxjs/observable/of';
 import { DriverService } from '../../driver/shared/driver.service';

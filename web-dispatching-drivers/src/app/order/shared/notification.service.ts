@@ -19,10 +19,10 @@ export class NotificationService {
 
   constructor(private http: HttpClient,
               private dialog: MatDialog,
-              private orderService: OrderService ) { 
-    window.addEventListener('beforeunload', () => {this.cacheNotifications();});    
+              private orderService: OrderService ) {
+    window.addEventListener('beforeunload', () => {this.cacheNotifications(); });
     const storedNotifications = localStorage.getItem('notifications');
-    if (storedNotifications !== 'undefined' && storedNotifications !== 'null') {
+    if (storedNotifications !== 'undefined' && storedNotifications !== 'null' && storedNotifications) {
       this.notifications = JSON.parse(storedNotifications);
     } else {
       this.notifications = [];
@@ -44,10 +44,10 @@ export class NotificationService {
                 case 'driver_new_order':
                       this.notifyAboutNewOrder(n);
                       break;
-                case 'dispatching': 
+                case 'dispatching':
                       break;
               }
-            }           
+            }
           });
         }
       );
