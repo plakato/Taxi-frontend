@@ -73,8 +73,10 @@ export class DriverArrivingComponent implements OnInit {
   }
 
   customerNotHere() {
-    this.orderService.customerNotHere(this.order.id).subscribe();
-    this.customerAbsent = true;
+    const This = this;
+    this.orderService.customerNotHere(this.order.id).subscribe(
+      success => {This.customerAbsent = true; }
+    );
   }
 
   finished() {

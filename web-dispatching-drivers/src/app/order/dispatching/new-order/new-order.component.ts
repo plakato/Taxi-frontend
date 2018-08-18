@@ -18,8 +18,8 @@ export class NewOrderComponent implements OnInit {
   fromAirportEnabled = true;
   selectingDriver = false;
   customer: Customer;
-  fromLatLng: LatLngLiteral;
-  toLatLng: LatLngLiteral;
+  startLoc: {latlng: LatLngLiteral, address: string};
+  finishLoc: {latlng: LatLngLiteral, address: string};
   driverID: number = null;
 
   // Filter for datepicker - only later than today can be selected.
@@ -40,14 +40,14 @@ export class NewOrderComponent implements OnInit {
 
   confirmOrder(): boolean {
     const order = this.getOrder();
-    if (order == null) 
+    if (order == null)
     {
       return false;
     }
     // Send order.
     this.orderService.createOrder(order).subscribe(
       res => { this.snackbar.open('Objednávka úspěšně vytvořena!', '', {duration: 2000});
-              this.initializeForm(); 
+              this.initializeForm();
               return true;},
       err => {this.snackbar.open(err, 'OK', {duration: 2000});
               return false;}
@@ -61,7 +61,7 @@ export class NewOrderComponent implements OnInit {
       this.snackbar.open('Zadaná data nejsou validní.', '', {duration: 2000});
       return null;
     }
-    if (this.fromLatLng == null) {
+    if (this.startLoc == null) {
       this.snackbar.open('Startovní adresa je povinná.', '', {duration: 2000});
       return null;
     }
@@ -75,8 +75,10 @@ export class NewOrderComponent implements OnInit {
           pickUp.setMinutes(Number(time[1]));
           order.scheduled_pick_up_at = pickUp;
         }
-    order.loc_start = this.fromLatLng;
-    order.loc_finish = this.toLatLng;
+    order.loc_start = this.startLoc.latlng;
+    order.loc_finish = this.finishLoc.latlng;
+    order.address_start = this.startLoc.address;
+    order.address_finish = this.finishLoc.address;
     order.driver_id = this.driverID;
     order.contact_telephone = this.customer.telephone;
     return order;
@@ -108,7 +110,7 @@ export class NewOrderComponent implements OnInit {
   }
 
   phoneNumberChanged() {
-    const This = this;    
+    const This = this;
     if (this.newOrderForm.get('phoneNumber').valid) {
       let formattedNumber = this.newOrderForm.get('phoneNumber').value;
       if (formattedNumber[0] !== '+') {

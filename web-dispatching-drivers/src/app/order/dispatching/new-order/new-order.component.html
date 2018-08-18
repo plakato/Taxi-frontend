@@ -33,13 +33,13 @@
           [airport]="group.value === 'airport'"
           [airportEnabled]="fromAirportEnabled"
           (airportSelectedOutput)="enableFromAirport($event)"
-          (selectedAddress)="fromLatLng=$event"
+          (selectedAddress)="startLoc=$event"
           class="column"></app-map>
   <app-map placeholder="Kam"
           [airport]="group.value === 'airport'"
           [airportEnabled]="!fromAirportEnabled"
           (airportSelectedOutput)="enableFromAirport(!$event)"
-          (selectedAddress)="toLatLng=$event"
+          (selectedAddress)="finishLoc=$event"
           class="column"></app-map>
 </div>
 

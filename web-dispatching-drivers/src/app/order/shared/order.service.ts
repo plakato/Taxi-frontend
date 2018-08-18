@@ -72,6 +72,8 @@ export class OrderService {
     return this.http.post('orders', JSON.stringify(
       {
         order: {
+          address_start: order.address_start,
+          address_finish: order.address_finish,
           customer_telephone: order.contact_telephone,
           driver_id: order.driver_id,
           dispatcher_id: user.id,
@@ -130,13 +132,13 @@ export class OrderService {
 
   pickedUpCustomer(orderID: number) {
     const This = this;
-    return this.http.patch<OrderExtended>('/orders/' + orderID + '/picked_up', '').map(
+    return this.http.patch<OrderExtended>('orders/' + orderID + '/picked_up', '').map(
       o => This.fillInInfo([o])
     );
   }
 
   customerNotHere(orderID: number) {
-    return this.http.patch('/orders/' + orderID + 'customer_not_on_its_place', '');
+    return this.http.patch('orders/' + orderID + '/customer_not_on_its_place', '');
   }
 
   changeDropOffTime(orderID: number, newTime: Date) {

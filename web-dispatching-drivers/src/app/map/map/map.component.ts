@@ -22,7 +22,7 @@ export class MapComponent implements OnInit {
   @Input() airport: boolean;
   @Input() airportEnabled: boolean;
   @Output() airportSelectedOutput = new EventEmitter<boolean>();
-  @Output() selectedAddress = new EventEmitter<LatLngLiteral>();
+  @Output() selectedAddress = new EventEmitter<{latlng: LatLngLiteral, address: string}>();
 
 
   constructor(
@@ -60,7 +60,7 @@ export class MapComponent implements OnInit {
           // Set latitude, longitude.
           const newLatLng = {lat: place.geometry.location.lat(), lng: place.geometry.location.lng()};
           this.map.center = newLatLng;
-          this.selectedAddress.emit(newLatLng);
+          this.selectedAddress.emit({latlng: newLatLng, address: place.formatted_address});
         });
       });
     });
@@ -75,7 +75,10 @@ export class MapComponent implements OnInit {
     this.mapService.getAddress(event).subscribe(
       result => { if (result.formatted_address) {
                       this.addressControl.setValue(result.formatted_address);
-                      this.selectedAddress.emit(event); }},
+                      this.selectedAddress.emit(
+                        { latlng: event,
+                          address: result.formatted_address}
+                        ); }},
       err => console.log(err)
     );
     // Deselect airport if address was changed.

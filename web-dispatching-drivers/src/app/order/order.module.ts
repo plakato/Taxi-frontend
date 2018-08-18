@@ -78,7 +78,8 @@ import { DriversArrivalsComponent } from '../driver/drivers-arrivals/drivers-arr
     TimeEditingComponent,
     EnqueuedOrderComponent,
     DispatchersPhoneOrdersComponent],
-  providers: [CustomerService, OrderService, OrdersPollingService, MyOrdersService, CzechPaginatorIntl, NotificationService, DispatchersPhoneOrdersService],
+  providers: [CustomerService, OrderService, OrdersPollingService, MyOrdersService, CzechPaginatorIntl, NotificationService,
+    DispatchersPhoneOrdersService],
   exports: [DriverArrivingComponent, EnqueuedOrderComponent, DispatchersPhoneOrdersComponent],
   entryComponents: [ ListAllDriversComponent, CancelOrderDialogComponent, DriversArrivalsComponent ]
 })
@@ -100,6 +101,8 @@ export interface Order {
   vehicle: Car;
   loc_start: LatLngLiteral;
   loc_finish: LatLngLiteral;
+  address_start: string;
+  address_finish: string;
 
   passengers: number;
   note: string;

@@ -14,6 +14,10 @@ export class ErrorService {
   // This is not recommended to use from ErrorHandler, because it doesn't trigger
   // change event which causes snackbar not to open properly.
   notifyUser(error) {
+    if (error.status === 500) {
+      this.snackbar.open('Nastala chyba na straně servru.', 'OK', { duration: 2000});
+      return;
+    }
     // Handle network errors, they have different structure.
     if (error instanceof HttpErrorResponse) {debugger;
 
