@@ -8,7 +8,7 @@
     <ng-container matColumnDef="driver">
       <mat-header-cell *matHeaderCellDef> Řidič </mat-header-cell>
       <mat-cell *matCellDef="let order" (click)="editingDriver=!editingDriver" class="action">
-        <app-list-all-drivers [firstSelected]="order.driver" (selectedDriver)="changeDriver(order, $event, this)" class="edit-driver"></app-list-all-drivers>
+        <app-list-all-drivers [firstSelected]="order.driver" (selectedDriver)="changeDriver(order, $event)" class="edit-driver"></app-list-all-drivers>
       </mat-cell>
     </ng-container>
 

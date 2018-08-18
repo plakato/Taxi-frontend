@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { MatPaginator, MatSort, MatTableDataSource, MatPaginatorIntl, PageEvent } from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatPaginatorIntl, PageEvent } from '@angular/material';
 import { Order, Customer } from '../../order.module';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { OrdersPollingService, OrderRequestParams } from '../../shared/data-source/orders-polling.service';
@@ -26,7 +26,6 @@ export class OrderHistoryComponent implements OnInit, AfterViewInit {
   totalOrdersCount: BehaviorSubject<number> = new BehaviorSubject(0);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
 
   // Filter for datepicker - only today or earlier can be selected.
   filterTodayOrEarlier = (d: Date): boolean => {
@@ -47,12 +46,11 @@ export class OrderHistoryComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     /**
-     * Set the paginator and sort after the view init since this component will
-     * be able to query its view for the initialized paginator and sort.
+     * Set the paginator after the view init since this component will
+     * be able to query its view for the initialized paginator.
      */
     this.paginator._intl = new CzechPaginatorIntl();
     this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
 
     this.onPageChange({pageIndex: this.dataSource.paginator.pageIndex,
                       pageSize: this.dataSource.paginator.pageSize, length: null});

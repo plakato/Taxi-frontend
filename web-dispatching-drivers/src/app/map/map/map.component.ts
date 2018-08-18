@@ -60,10 +60,21 @@ export class MapComponent implements OnInit {
           // Set latitude, longitude.
           const newLatLng = {lat: place.geometry.location.lat(), lng: place.geometry.location.lng()};
           this.map.center = newLatLng;
-          this.selectedAddress.emit({latlng: newLatLng, address: place.formatted_address});
+          this.selectedAddress.emit({
+            latlng: newLatLng,
+            address: this.getFormattedAddress(place)});
         });
       });
     });
+  }
+
+  getFormattedAddress(place: google.maps.places.PlaceResult) {
+    const route = place.address_components.find(comp => comp.types.indexOf('route') > -1);
+    const premise = place.address_components.find(comp => comp.types.indexOf('premise') > -1);
+    const city = place.address_components.find(comp => comp.types.indexOf('political') > -1);
+    return (route != null ? (route.long_name + (premise != null ? ' ' : ', ')) : '') +
+            (premise != null ? premise.long_name + ', ' : '') +
+           city.long_name;
   }
 
   initializeMap(map) {
@@ -74,10 +85,10 @@ export class MapComponent implements OnInit {
   mapCenterChanged(event) {
     this.mapService.getAddress(event).subscribe(
       result => { if (result.formatted_address) {
-                      this.addressControl.setValue(result.formatted_address);
+                      this.addressControl.setValue(this.getFormattedAddress(result));
                       this.selectedAddress.emit(
                         { latlng: event,
-                          address: result.formatted_address}
+                          address: this.getFormattedAddress(result)}
                         ); }},
       err => console.log(err)
     );

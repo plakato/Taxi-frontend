@@ -106,7 +106,7 @@ export class OrderService {
   updateDriver(orderID: number, driverID: number) {
     return this.http.patch('orders/' + orderID, JSON.stringify({
       order: {
-        driver: {id: driverID}
+        driver_id: driverID
       }
     }));
   }

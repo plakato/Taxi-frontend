@@ -1,7 +1,7 @@
 <mat-form-field>
-  <mat-select placeholder="Řidič" [formControl]="driverControl">
-      <mat-option (click)="selectDriver(null)">--</mat-option>
-      <mat-option *ngFor="let driver of drivers" [value]="driver" (click)="selectDriver(driver)">
+  <mat-select placeholder="Řidič" [formControl]="driverControl" (selectionChange)="selectDriver($event.value)">
+      <mat-option>--</mat-option>
+      <mat-option *ngFor="let driver of drivers" [value]="driver" >
           {{driver.name}}
       </mat-option>
   </mat-select>

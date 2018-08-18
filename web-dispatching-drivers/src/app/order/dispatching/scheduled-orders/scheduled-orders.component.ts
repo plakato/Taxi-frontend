@@ -25,6 +25,7 @@ export class ScheduledOrdersComponent implements AfterViewInit {
   totalOrdersCount: BehaviorSubject<number> = new BehaviorSubject(0);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(ListAllDriversComponent) listDrivers;
 
   constructor(private ordersPollingService: OrdersPollingService,
               private orderService: OrderService,
@@ -80,11 +81,12 @@ export class ScheduledOrdersComponent implements AfterViewInit {
     });
   }
 
-  changeDriver(order: Order, newDriverID: number, control: ListAllDriversComponent) {
+  changeDriver(order: Order, newDriverID: number) {
+    const This = this;
     this.orderService.updateDriver(order.id, newDriverID).subscribe(
       success => {},
       err => {
-        control.selectDriver(order.driver);
+        This.listDrivers.driverControl.setValue(order.driver);
         this.errorService.showMessageToUser('Změna řidiče se nezdařila.'); }
     );
   }
