@@ -36,6 +36,7 @@ export class DriverMenuComponent implements OnInit, OnDestroy {
       this.trackingLocation.startSharingLocation();
       this.myOrders.startPollingOrders();
       this.notifications.startPollingNotifications();
+      this.checkDriverOnPause();
     }
   }
 
@@ -45,6 +46,14 @@ export class DriverMenuComponent implements OnInit, OnDestroy {
       err =>  this.errorService.showMessageToUser('Odhlásení se nezdařilo.')
     );
   }
+
+  checkDriverOnPause() {
+    const This = this;
+    this.shiftService.isOnPause().subscribe(result => {
+      This.pause = result;
+    });
+  }
+
 
   getEnqueuedOrders(): OrderExtended[] {
     return this.myOrders.ordersEventSource.value.slice(1);

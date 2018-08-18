@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, AfterViewInit, Inject } from '@angular/core';
-import { MatTableDataSource, MatSort, MatPaginatorIntl, MatPaginator, PageEvent, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatPaginatorIntl, MatPaginator, PageEvent, MatDialog } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { Order } from '../../order.module';
 import { OrderService } from '../../shared/order.service';
@@ -25,7 +25,6 @@ export class ScheduledOrdersComponent implements AfterViewInit {
   totalOrdersCount: BehaviorSubject<number> = new BehaviorSubject(0);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
 
   constructor(private ordersPollingService: OrdersPollingService,
               private orderService: OrderService,
@@ -35,12 +34,11 @@ export class ScheduledOrdersComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     /**
-     * Set the paginator and sort after the view init since this component will
-     * be able to query its view for the initialized paginator and sort.
+     * Set the paginator after the view init since this component will
+     * be able to query its view for the initialized paginator.
      */
     this.paginator._intl = new CzechPaginatorIntl();
     this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
 
     this.onPageChange({pageIndex: this.dataSource.paginator.pageIndex,
                       pageSize: this.dataSource.paginator.pageSize, length: null});

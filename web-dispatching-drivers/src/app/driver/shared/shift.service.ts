@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { LocationTrackingService } from '../../map/location-tracking.service';
 import { MyOrdersService } from '../../order/shared/my-orders.service';
 import { NotificationService } from '../../order/shared/notification.service';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable()
 export class ShiftService {
@@ -33,6 +34,17 @@ export class ShiftService {
         // Polling notifications will stop automatically.
         this.myOrders.stopPollingOrders();
       }
+    );
+  }
+
+  isOnPause(): Observable<boolean> {
+    return this.http.get('shifts/current').map( (result: any) => {
+      if (result.shift == null) {
+        return false;
+      } else {
+        return result.shift.pause;
+      }},
+      err => false
     );
   }
 

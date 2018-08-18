@@ -28,8 +28,8 @@
   <!-- Next orders in queue. -->
   <div class="queue">
     <app-enqueued-order *ngFor="let order of getEnqueuedOrders()" [order]="order"></app-enqueued-order>
-  </div>
-  <div *ngIf="pause">
-    <mat-card class="pause">PAUZA</mat-card>
+    <div *ngIf="pause">
+      <mat-card class="pause">PAUZA</mat-card>
+    </div>
   </div>
 </div>

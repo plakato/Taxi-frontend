@@ -103,7 +103,8 @@ export class StaticMarkerMapComponent implements OnInit {
     submitNewAddress() {
       this.editing = false;
       this.addressControl.disable();
-      this.newAddress.emit(this.map.center);
+      this.newAddress.emit({lat: this.map.center.lat(),
+                            lng: this.map.center.lng()});
       this.setMapOnLocation(this.map.center);
     }
 

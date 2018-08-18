@@ -53,15 +53,15 @@ export class DriverNewOrderComponent implements OnInit {
   acceptOrder() {
     this.driverService.acceptOrder(this.data.order.id).subscribe(
       order => {
-        this.dialogRef.close(); }
+        this.dialogRef.close('accept'); }
     );
   }
 
   refuseOrder() {
     const This = this;
     this.driverService.refuseOrder(this.data.order.id).subscribe(
-      success => This.dialogRef.close()
-    )
+      success => This.dialogRef.close('decline')
+    );
   }
 
 }

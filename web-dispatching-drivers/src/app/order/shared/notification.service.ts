@@ -38,7 +38,7 @@ export class NotificationService {
       .subscribe(
         notifications => {
           notifications.forEach(n => {
-            if (this.notifications.findIndex(not => not.notification.id === n.id) === -1) {
+            if (this.notifications.findIndex(notif => notif.notification.id === n.id) === -1) {
               this.notifications.push({notification: n, seen: false});
               switch (n.subject) {
                 case 'driver_new_order':
@@ -69,7 +69,13 @@ export class NotificationService {
           height: '100%',
           width: '100%',
           data: { order: order}
-        }));}
+        }).afterClosed()
+              .subscribe(result => {
+                if (result === 'accept') {
+                  const i = This.notifications.findIndex(notification);
+                  This.notifications[i].seen = true;
+                }
+        })); }
     );
 
 
