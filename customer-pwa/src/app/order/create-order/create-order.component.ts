@@ -20,7 +20,7 @@ export class CreateOrderComponent implements OnInit {
   constructor(private router: Router,
               private errorService: ErrorService,
               private orderService: OrderService,
-              private driversArrivalService: DriversArrivalsService) { 
+              private driversArrivalService: DriversArrivalsService) {
     this.url = this.router.url;
   }
 
@@ -33,7 +33,7 @@ export class CreateOrderComponent implements OnInit {
 
   startChosen() {
     if (this.start.coords != null) {
-      if (this.orderService.newOrder == null) { this.orderService.newOrder =   {} as any; }
+      if (this.orderService.newOrder == null) { this.orderService.newOrder = {} as any; }
       this.orderService.newOrder.loc_start = this.start.coords;
       this.orderService.newOrder.startAddress = this.start.address;
       this.router.navigate(['order/standard/choose-finish']);
@@ -55,9 +55,9 @@ export class CreateOrderComponent implements OnInit {
   }
 
   newFinish(newAddress) {
-    // To keep the reference.    
+    // To keep the reference.
     this.finish.coords = newAddress.coords;
-    this.finish.address = newAddress.address;  
+    this.finish.address = newAddress.address;
   }
 
   changeDriver() {

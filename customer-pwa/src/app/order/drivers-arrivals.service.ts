@@ -12,7 +12,7 @@ export class DriversArrivalsService {
 
   constructor(private http: HttpClient) {
     const orderJSON = localStorage.getItem('newOrder');
-    if (orderJSON !== 'undefined' && orderJSON != 'null') {
+    if (orderJSON !== 'undefined' && orderJSON !== 'null') {
       const order = JSON.parse(orderJSON);
       this.getArrivals(order).subscribe();
     }
@@ -25,7 +25,7 @@ export class DriversArrivalsService {
     const This = this;
     return this.http.post<DriverArrival[]>('orders/drivers_arrivals', JSON.stringify({
       order: {
-        customer_telephone: order.contact_telephone,  
+        customer_telephone: order.contact_telephone,
         driver_id: '',
         dispatcher_id: order.dispatcher_id,
         loc_start: {
@@ -34,7 +34,7 @@ export class DriversArrivalsService {
         },
         loc_finish: {
           lat: order.loc_finish.lat,
-          lng: order.loc_finish.lng 
+          lng: order.loc_finish.lng
         },
         passenger_count: order.passenger_count,
         note: order.note,

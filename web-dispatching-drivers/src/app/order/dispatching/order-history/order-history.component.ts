@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatPaginator, MatTableDataSource, MatPaginatorIntl, PageEvent } from '@angular/material';
 import { Order, Customer } from '../../order.module';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -39,8 +39,8 @@ export class OrderHistoryComponent implements OnInit, AfterViewInit {
   ngOnInit()  {
     const today = new Date(Date.now());
     this.intervalForm = this.fb.group({
-      sinceDate: [''],
-      untilDate: [today]
+      sinceDate: ['', Validators.required],
+      untilDate: [today, Validators.required]
     });
   }
 
@@ -66,6 +66,9 @@ export class OrderHistoryComponent implements OnInit, AfterViewInit {
   }
 
   filterByTime(clear: boolean) {
+    if (this.intervalForm.invalid) {
+      return;
+    }
     if (clear) {
       this.orderData = [];
       this.ordersEventSource.next(this.orderData);

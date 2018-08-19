@@ -25,7 +25,7 @@ const appRoutes: Routes = [
   { path: 'password-recovery', component: PasswordRecoveryComponent },
   { path: 'order', canActivate: [AuthGuardService],
       children: [
-        { path: 'standard', 
+        { path: 'standard',
             children: [
               { path: 'choose-start', component: CreateOrderComponent },
               { path: 'choose-finish', component: CreateOrderComponent },
@@ -39,13 +39,13 @@ const appRoutes: Routes = [
               { path: 'choose-start', component: CreateAirportOrderComponent },
               { path: 'choose-finish', component: CreateAirportOrderComponent },
               { path: 'fill-in-info', component: CreateAirportOrderComponent },
-              { path: 'created', component: OrderCreatedComponent }                     
+              { path: 'created', component: OrderCreatedComponent }
             ]},
-        { path: 'confirmed-by-driver', component: OrderConfirmedByDriverComponent },            
+        { path: 'confirmed-by-driver', component: OrderConfirmedByDriverComponent },
         { path: 'watch-driver-arrive', component: WatchDriverArriveComponent },
         { path: 'canceled', component: CanceledOrderComponent },
         { path: 'finished', component: OrderFinishedComponent },
-        { path: 'fraud', component: MarkedFraudComponent }        
+        { path: 'fraud', component: MarkedFraudComponent }
         ]},
   { path: 'orders/scheduled', component: ScheduledOrdersComponent },
   { path: 'login', component: LoginComponent },

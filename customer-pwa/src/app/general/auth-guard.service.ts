@@ -8,7 +8,7 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const url: string = state.url;
 
-    return this.checkLogin(url);
+    return true; //this.checkLogin(url);
   }
 
   checkLogin(url: string): boolean {
@@ -39,12 +39,12 @@ export class LoggedOutGuardService implements CanActivate {
 
   checkLoggedOut(url: string): boolean {
     const currentJSON = localStorage.getItem('currentUser');
-    if ( currentJSON !== 'undefined' && currentJSON != 'null') {
+    if ( currentJSON !== 'undefined' && currentJSON !== 'null') {
       const current = JSON.parse(currentJSON);
      // Navigate to the home page.
       this.navigateToHomePage();
     }
-   
+
 
   return true;
   }

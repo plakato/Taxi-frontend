@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { MatPaginatorIntl, PageEvent, MatPaginator, MatSort, MatTableDataSource, MatDialog } from '@angular/material';
+import { MatPaginatorIntl, PageEvent, MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
 import { OrdersPollingService, OrderRequestParams } from '../../shared/data-source/orders-polling.service';
 import { CzechPaginatorIntl } from '../../shared/data-source/czech-paginator-intl.service';
 import { Order } from '../../order.module';
@@ -25,7 +25,6 @@ export class OrdersTableComponent implements OnInit {
   @Input() params: OrderRequestParams;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
 
   constructor(private ordersPollingService: OrdersPollingService,
               private dialog: MatDialog,
@@ -34,13 +33,12 @@ export class OrdersTableComponent implements OnInit {
 
   ngOnInit() {
     /**
-     * Set the paginator and sort after the view init since this component will
-     * be able to query its view for the initialized paginator and sort.
+     * Set the paginator after the view init since this component will
+     * be able to query its view for the initialized paginator.
      */
     this.paginator._intl = new CzechPaginatorIntl();
     this.paginator.pageSize = 10;
     this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
 
     this.onPageChange({pageIndex: this.dataSource.paginator.pageIndex,
                       pageSize: this.dataSource.paginator.pageSize, length: null});
@@ -52,7 +50,7 @@ export class OrdersTableComponent implements OnInit {
     const This = this;
     this.ordersPollingService.loadPage(this.params).subscribe(
       res => {
-        let iterator = 0; 
+        let iterator = 0;
         this.totalOrdersCount.next(res.totalCount);
         res.item.subscribe(
           order => {

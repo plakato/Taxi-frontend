@@ -8,16 +8,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./driver-selected.component.scss']
 })
 export class DriverSelectedComponent implements OnInit {
-  
+
     @Input() arrival;
     @Input() signedIn = false;
-  
+
     constructor(private arrivalsService: DriversArrivalsService,
                 private router: Router) { }
-  
+
     ngOnInit() {
     }
-  
+
     getMinutesToArrival(): number {
       if (this.arrival == null) {
         return null;
