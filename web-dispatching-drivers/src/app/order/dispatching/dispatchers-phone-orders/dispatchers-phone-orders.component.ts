@@ -9,7 +9,7 @@ import { DatePipe } from '@angular/common';
 })
 export class DispatchersPhoneOrdersComponent implements OnInit {
 
-  constructor(private ordersService: DispatchersPhoneOrdersService) { }
+  constructor(public ordersService: DispatchersPhoneOrdersService) { }
 
   ngOnInit() {
     this.ordersService.startPollingDispatchersOrders();
