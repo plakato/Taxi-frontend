@@ -1,6 +1,6 @@
 <h1>Nová objednávka</h1>
 
-<form novalidate [formGroup]="newOrderForm">
+<form novalidate [formGroup]="newOrderForm" (sumbit)="confirmOrder()">
 
   <div>
     <!-- Phone number -->
@@ -103,8 +103,7 @@
 
 
   <div>
-    <button mat-raised-button color="primary" class="confirm" type="submit"
-      (click)="confirmOrder()">Potvrdit objednávku</button>
+    <button mat-raised-button color="primary" class="confirm" type="submit">Potvrdit objednávku</button>
   </div>
 
   </form>
