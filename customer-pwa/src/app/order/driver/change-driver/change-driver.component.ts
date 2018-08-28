@@ -12,7 +12,7 @@ import { OrderService } from '../../order.service';
 export class ChangeDriverComponent implements OnInit {
   chosenID: number;
 
-  constructor(private arrivalService: DriversArrivalsService,
+  constructor(public arrivalService: DriversArrivalsService,
               private orderService: OrderService,
               private location: Location) { }
 
