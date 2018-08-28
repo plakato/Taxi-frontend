@@ -5,5 +5,5 @@
 
     <app-employee-form #form (employeeSubmitted)="addEmployee($event)"></app-employee-form>
 
-    <button mat-raised-button class="addButton" (click)="form.submit(clear = true)">Přidat</button>
+    <button mat-raised-button class="addButton" (click)="form.submit(true)">Přidat</button>
 </mat-expansion-panel>
