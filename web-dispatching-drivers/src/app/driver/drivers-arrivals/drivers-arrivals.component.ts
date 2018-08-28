@@ -12,7 +12,7 @@ export class DriversArrivalsComponent implements OnInit {
   // Emits null when an error occured.
   @Output() selectedDriver: EventEmitter<number> = new EventEmitter();
 
-  constructor(private arrivalsService: DriversArrivalsService) { }
+  constructor(public arrivalsService: DriversArrivalsService) { }
 
   ngOnInit() {
   }
