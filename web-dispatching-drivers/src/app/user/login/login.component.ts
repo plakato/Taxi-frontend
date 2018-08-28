@@ -3,6 +3,7 @@ import { debug } from 'util';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../shared/authentication.service';
 import { MatSnackBar } from '@angular/material';
+import { ShiftService } from '../../driver/shared/shift.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private authenticationService: AuthenticationService,
     private router: Router,
-    private snackbar: MatSnackBar) {
+    private snackbar: MatSnackBar,
+    private shiftService: ShiftService) {
   }
 
   ngOnInit() {
@@ -37,6 +39,7 @@ export class LoginComponent implements OnInit {
 
             if (data.employee_roles.indexOf('dispatcher') > -1 ||
                 data.employee_roles.indexOf('admin') > -1) {
+                  this.shiftService.dispatcherStartShift().subscribe();
                   this.router.navigate(['dispatching/orders/new']);
                 } else
                 if (data.employee_roles.indexOf('driver') > -1) {

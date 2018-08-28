@@ -116,6 +116,7 @@ export interface Notification {
   id: number;
   subject: string;
   data: object;
+  seen_at: Date;
 }
 
 

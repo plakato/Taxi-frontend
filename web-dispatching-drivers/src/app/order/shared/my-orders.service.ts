@@ -93,7 +93,7 @@ export class MyOrdersService {
 
   removeOrder(orderID: number) {
     const index = this.ordersData.findIndex(o => o.id === orderID);
-    this.ordersData.splice(index,1);
+    this.ordersData.splice(index, 1);
     this.ordersEventSource.next(this.ordersData);
   }
 }

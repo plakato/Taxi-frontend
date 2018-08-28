@@ -29,19 +29,19 @@
     <!-- Estimated pick up time Column -->
     <ng-container matColumnDef="estPickUpTime">
       <mat-header-cell *matHeaderCellDef>Předpokladaný čas naložení</mat-header-cell>
-      <mat-cell *matCellDef="let order"> {{order.picked_up_time_est | date: 'HH:mm'}} </mat-cell>
+      <mat-cell *matCellDef="let order"> {{order.picked_up_time_est | date: 'dd.MM.yyyy\nHH:mm'}} </mat-cell>
     </ng-container>
 
     <!-- Estimated drop off time Column -->
     <ng-container matColumnDef="estDropOffTime">
       <mat-header-cell *matHeaderCellDef>Předpokladaný čas vyložení</mat-header-cell>
-      <mat-cell *matCellDef="let order"> {{order.arrived_time_orig_est | date: 'HH:mm'}} </mat-cell>
+      <mat-cell *matCellDef="let order"> {{order.arrived_time_orig_est | date: 'dd.MM.yyyy\nHH:mm'}} </mat-cell>
     </ng-container>
 
     <!-- Drop off time Column -->
     <ng-container matColumnDef="dropOffTime">
       <mat-header-cell *matHeaderCellDef>Čas vyložení</mat-header-cell>
-      <mat-cell *matCellDef="let order"> {{order.arrived_time| date: 'HH:mm'}} </mat-cell>
+      <mat-cell *matCellDef="let order"> {{order.arrived_time| date: 'dd.MM.yyyy\nHH:mm'}} </mat-cell>
     </ng-container>
 
     <!-- Order type Column -->

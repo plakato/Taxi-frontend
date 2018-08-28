@@ -15,7 +15,7 @@ import { OrderService } from './order.service';
 @Injectable()
 export class NotificationService {
   private timer: Subscription;
-  notifications: Array<{notification: Notification, seen: boolean}>;
+  notifications: Array<{notification: Notification, resolved: boolean}>;
 
   constructor(private http: HttpClient,
               private dialog: MatDialog,
@@ -39,7 +39,11 @@ export class NotificationService {
         notifications => {
           notifications.forEach(n => {
             if (this.notifications.findIndex(notif => notif.notification.id === n.id) === -1) {
-              this.notifications.push({notification: n, seen: false});
+              const threeHoursOld = new Date(Date.now());
+              threeHoursOld.setTime(threeHoursOld.getTime() - 3 * 60 * 60 * 1000);
+              const tooOld = (n.seen_at == null || n.seen_at >= threeHoursOld) ? false : true;
+              const resolved = tooOld ? true : false;
+              this.notifications.push({notification: n, resolved: resolved});
               switch (n.subject) {
                 case 'driver_new_order':
                       this.notifyAboutNewOrder(n);
@@ -73,14 +77,14 @@ export class NotificationService {
               .subscribe(result => {
                 if (result === 'accept') {
                   const i = This.notifications.findIndex(notification);
-                  This.notifications[i].seen = true;
+                  This.notifications[i].resolved = true;
                 }
         })); }
     );
 
 
-    const index = this.notifications.findIndex(n => n.notification.id === notification.id);
-    this.notifications[index].seen = true;
+   /* const index = this.notifications.findIndex(n => n.notification.id === notification.id);
+    this.notifications[index].resolved = true;*/
   }
 
   cacheNotifications() {

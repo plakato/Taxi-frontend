@@ -4,6 +4,7 @@ import { LocationTrackingService } from '../../map/location-tracking.service';
 import { MyOrdersService } from '../../order/shared/my-orders.service';
 import { NotificationService } from '../../order/shared/notification.service';
 import { Observable } from 'rxjs/internal/Observable';
+import { DispatchersPhoneOrdersService } from '../../order/shared/data-source/dispatchers-phone-orders.service';
 
 @Injectable()
 export class ShiftService {
@@ -11,7 +12,8 @@ export class ShiftService {
   constructor( private http: HttpClient,
               private locationTracking: LocationTrackingService,
               private notifications: NotificationService,
-              private myOrders: MyOrdersService ) { }
+              private myOrders: MyOrdersService,
+              private dispatcherOrders: DispatchersPhoneOrdersService ) { }
 
   startShiftWithCar(carID: number) {
     return this.http.post('shifts/start', JSON.stringify({
@@ -26,6 +28,14 @@ export class ShiftService {
     );
   }
 
+  dispatcherStartShift() {
+    return this.http.post('shifts/start', '')
+    .map(
+      success => {
+        this.notifications.startPollingNotifications();
+      });
+  }
+
   endShift() {
     return this.http.post('shifts/end', JSON.stringify({})).map(
       success => {
@@ -33,6 +43,7 @@ export class ShiftService {
         this.locationTracking.stopSharingLocation();
         // Polling notifications will stop automatically.
         this.myOrders.stopPollingOrders();
+        this.dispatcherOrders.stopPollingDispatchersOrders();
       }
     );
   }

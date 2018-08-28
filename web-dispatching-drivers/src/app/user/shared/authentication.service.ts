@@ -6,6 +6,7 @@ import 'rxjs/add/operator/map';
 import { Router } from '@angular/router';
 import { User } from '../user.module';
 import { tap } from 'rxjs/operators';
+import { ShiftService } from '../../driver/shared/shift.service';
 
 
 
@@ -13,7 +14,8 @@ import { tap } from 'rxjs/operators';
 export class AuthenticationService {
     constructor(
       private http: HttpClient,
-      private router: Router) { }
+      private router: Router,
+      private shiftService: ShiftService) { }
 
     login(email: string, password: string) {
         return this.http.post<User>('employees/login', JSON.stringify({ email: email, password: password }))
@@ -32,10 +34,24 @@ export class AuthenticationService {
     }
 
     logout() {
-        // remove user from local storage to log user out
-        localStorage.removeItem('currentUser');
-        // change to login screen
-        this.router.navigate(['login']);
+      const userSaved = localStorage.getItem('currentUser');
+      if (userSaved != null &&
+          userSaved !== 'null' &&
+          userSaved !== 'undefined') {
+            this.shiftService.endShift().subscribe(
+              success => {
+                // remove user from local storage to log user out
+                localStorage.removeItem('currentUser');
+                // change to login screen
+                this.router.navigate(['login']);
+              }
+            );
+          } else {
+            // remove user from local storage to log user out
+            localStorage.removeItem('currentUser');
+            // change to login screen
+            this.router.navigate(['login']);
+          }
     }
 
     confirm(password: string, token: string) {

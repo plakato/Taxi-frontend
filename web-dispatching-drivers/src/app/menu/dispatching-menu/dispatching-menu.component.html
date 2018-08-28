@@ -6,12 +6,12 @@
   <span class="spacer"></span>
 
   <!-- Notifications -->
-  <button mat-icon-button [matMenuTriggerFor]="notifications" (click)="openNotificationTray()">
-  <mat-icon  [matBadgeHidden]="getUnreadNotificationCount() === 0" class="toolbar_span"
-              matBadge="{{getUnreadNotificationCount()}}" matBadgeColor="warn">notifications</mat-icon>
+  <button mat-icon-button [matMenuTriggerFor]="notifications">
+  <mat-icon  [matBadgeHidden]="getNotificationCount() === 0" class="toolbar_span"
+              matBadge="{{getNotificationCount()}}" matBadgeColor="warn">notifications</mat-icon>
   </button>
   <mat-menu #notifications="matMenu">
-    <button mat-menu-item *ngIf="getNotifications().length === 0">Nemáte žádné notifikace.</button>
+    <button mat-menu-item *ngIf="getNotificationCount() === 0">Nemáte žádné notifikace.</button>
 
     <!-- One notification -->
     <div mat-menu-item class="notification" *ngFor="let notification of getNotifications()">

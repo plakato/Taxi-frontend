@@ -19,7 +19,7 @@ export class ErrorService {
       return;
     }
     // Handle network errors, they have different structure.
-    if (error instanceof HttpErrorResponse) {debugger;
+    if (error instanceof HttpErrorResponse) {
 
       if (error.error instanceof ErrorEvent) {
          // A client-side or network error occurred.
@@ -39,7 +39,7 @@ export class ErrorService {
         }
     }
     // Different error occured, let user know.
-  } else {debugger;
+  } else {
       const message = error.message ? error.message : error.toString();
       this.snackbar.open(message, 'OK', { duration: 2000});
     }

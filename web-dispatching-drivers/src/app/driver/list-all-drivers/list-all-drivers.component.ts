@@ -1,7 +1,8 @@
-import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input, AfterViewInit } from '@angular/core';
 import { DriverService } from '../shared/driver.service';
 import { FormControl, Validators } from '@angular/forms';
 import { Driver } from '../driver.module';
+import { timeout } from 'rxjs/operators';
 
 @Component({
   selector: 'app-list-all-drivers',
@@ -10,7 +11,7 @@ import { Driver } from '../driver.module';
 })
 export class ListAllDriversComponent implements OnInit {
 
-  driverControl = new FormControl('', Validators.required);
+  driverControl = new FormControl('');
   drivers: Driver[];
   @Input() firstSelected: Driver = null;
   @Output() selectedDriver = new EventEmitter<number>();
@@ -20,14 +21,15 @@ export class ListAllDriversComponent implements OnInit {
 
   ngOnInit() {
     this.driverService.getAllDrivers().subscribe(
-      drivers => this.drivers = drivers,
+      drivers => {
+        this.drivers = drivers;
+        this.driverControl.setValue(this.firstSelected.id); },
       err => this.drivers = []
     );
-    this.driverControl.setValue(this.firstSelected);
   }
 
-  selectDriver(driver: Driver) {
-    this.selectedDriver.emit(driver == null ? null : driver.id);
+  selectDriver(id: number) {
+    this.selectedDriver.emit(id == null ? null : id);
   }
 
 }

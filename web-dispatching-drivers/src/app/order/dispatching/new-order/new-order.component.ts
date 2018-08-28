@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { CustomerService } from '../../shared/customer.service';
 import { Customer, Order } from '../../order.module';
 import { OrderService } from '../../shared/order.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MAT_CHIPS_DEFAULT_OPTIONS } from '@angular/material';
 import { LatLngLiteral } from '@agm/core';
 import { ListAllDriversComponent } from '../../../driver/list-all-drivers/list-all-drivers.component';
 import { ErrorService } from '../../../general/error/error.service';
@@ -21,6 +21,7 @@ export class NewOrderComponent implements OnInit {
   startLoc: {latlng: LatLngLiteral, address: string};
   finishLoc: {latlng: LatLngLiteral, address: string};
   driverID: number = null;
+  @ViewChild('group') typeSelector: any;
 
   // Filter for datepicker - only later than today can be selected.
   filterLaterThanToday = (d: Date): boolean => {
@@ -39,32 +40,30 @@ export class NewOrderComponent implements OnInit {
   }
 
   confirmOrder(): boolean {
+    if (!this.isOrderValid()) {
+      return false;
+    }
     const order = this.getOrder();
-    if (order == null)
-    {
+    if (order == null) {
       return false;
     }
     // Send order.
     this.orderService.createOrder(order).subscribe(
       res => { this.snackbar.open('Objednávka úspěšně vytvořena!', '', {duration: 2000});
               this.initializeForm();
-              return true;},
+              return true; },
       err => {this.snackbar.open(err, 'OK', {duration: 2000});
-              return false;}
+              return false; }
     );
 
   }
 
   getOrder(): Order {
-    // Check validity.
-    if (this.newOrderForm.invalid) {
-      this.snackbar.open('Zadaná data nejsou validní.', '', {duration: 2000});
+    if (this.driverID == null) {
+      this.snackbar.open('Je nutné zvolit řidiče.', '', {duration: 2000});
       return null;
     }
-    if (this.startLoc == null) {
-      this.snackbar.open('Startovní adresa je povinná.', '', {duration: 2000});
-      return null;
-    }
+
     // Construct order.
     const order: Order = this.newOrderForm.value;
     if (this.newOrderForm.get('time').value !== '' &&
@@ -84,16 +83,33 @@ export class NewOrderComponent implements OnInit {
     return order;
   }
 
+  isOrderValid(): boolean {
+    if (this.newOrderForm.invalid) {
+      this.snackbar.open('Zadaná data nejsou validní.', '', {duration: 2000});
+      return false;
+    }
+    if (this.startLoc == null) {
+      this.snackbar.open('Startovní adresa je povinná.', '', {duration: 2000});
+      return false;
+    }
+    if (this.typeSelector.value === 'airport' &&
+        (this.newOrderForm.get('time').value === '' ||
+        this.newOrderForm.get('date').value === '')) {
+          this.snackbar.open('Pro letištní objednávku je čas povinný!', '', {duration: 2000});
+          return false;
+    }
+    return true;
+  }
+
   selectDriver(driverID: number) {
     this.driverID = driverID;
   }
 
   initializeForm() {
     const now = new Date(Date.now());
-    // const timeNow = `${now.getHours()}:${now.getMinutes()}`;
     this.newOrderForm = this.fb.group({
       phoneNumber: ['', [Validators.required, Validators.pattern('\\+?(420)?([0-9]){9,12}'), Validators.maxLength(13)]],
-      name: [''],
+      name: [{value: '', disabled: true}],
       passengers: ['1', [Validators.required, Validators.min(1)]],
       flightNumber: [''],
       date: [ now, Validators.required],
@@ -129,11 +145,8 @@ export class NewOrderComponent implements OnInit {
   }
 
   calculateDriver() {
-    const order = this.getOrder();
-    if (order == null) {
-      this.errorService.showMessageToUser('Nejsou zadány všechny potřebné informace pro spočtení řidiče.');
-    } else {
-      localStorage.setItem('currentOrder', JSON.stringify(order));
+    if (this.isOrderValid()) {
+      // localStorage.setItem('currentOrder', JSON.stringify(order));
       this.selectingDriver = true;
     }
   }

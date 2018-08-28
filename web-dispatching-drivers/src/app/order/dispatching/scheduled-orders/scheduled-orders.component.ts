@@ -54,7 +54,12 @@ export class ScheduledOrdersComponent implements AfterViewInit {
       res => {
         let iterator = 0;
         this.totalOrdersCount.next(res.totalCount);
-        res.item.subscribe(
+        res.item
+        .finally(() => {
+          This.orderData.splice(iterator);
+          This.ordersEventSource.next(This.orderData);
+        })
+        .subscribe(
           order => {
             This.orderData.splice((params.page - 1) * params.per_page + iterator++, 1, order);
             this.ordersEventSource.next(This.orderData);

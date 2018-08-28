@@ -27,7 +27,7 @@ export class DispatchersPhoneOrdersService {
       .subscribe(orders => {
         This.ordersData = orders;
         This.orders.next(this.ordersData);
-      })
+      });
   }
 
   stopPollingDispatchersOrders() {

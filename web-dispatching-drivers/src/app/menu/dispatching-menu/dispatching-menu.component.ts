@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   MatIcon,
   MatSidenav,
@@ -9,38 +9,41 @@ import { AuthenticationService } from '../../user/shared/authentication.service'
 import { User } from '../../user/user.module';
 import { NotificationService } from '../../order/shared/notification.service';
 import { Notification } from '../../order/order.module';
+import { StoredUserData } from '../../user/login/login.component';
+import { ShiftService } from '../../driver/shared/shift.service';
 
 @Component({
   selector: 'app-dispatching-menu',
   templateUrl: './dispatching-menu.component.html',
   styleUrls: ['./dispatching-menu.component.scss']
 })
-export class DispatchingMenuComponent implements OnInit {
+export class DispatchingMenuComponent implements OnInit, OnDestroy {
   isExpanded = false;
   isAdmin: boolean;
-  lastUnreadNotificationCount = 0;
+  lastNotificationCount = 0;
 
   constructor( private authService: AuthenticationService,
-              private notificationService: NotificationService ) { }
+              private notificationService: NotificationService) { }
 
   ngOnInit() {
     const user = JSON.parse(localStorage.getItem('currentUser'));
     this.isAdmin = (user.roles.indexOf('admin') > -1);
+    this.notificationService.startPollingNotifications();
   }
 
   logout() {
     this.authService.logout();
   }
 
-  getUnreadNotificationCount(): number {
-    const count = this.notificationService.notifications.filter(n => n.seen === false).length;
-    if (count !== this.lastUnreadNotificationCount && count !== 0) {
+  getNotificationCount(): number {
+    const count = this.notificationService.notifications.filter(n => n.resolved === false).length;
+    if (count !== this.lastNotificationCount && count !== 0) {
       // Play notification sound.
       const audio = new Audio('../../../assets/audio/chimes-glassy.mp3');
       audio.load();
       audio.play();
     }
-    this.lastUnreadNotificationCount = count;
+    this.lastNotificationCount = count;
     return count;
   }
 
@@ -48,13 +51,18 @@ export class DispatchingMenuComponent implements OnInit {
     return this.notificationService.notifications;
   }
 
-  openNotificationTray() {
-    this.notificationService.notifications.forEach(n => n.seen = true);
-  }
 
   resolveNotification(notification: Notification) {
     const index = this.notificationService.notifications.findIndex(n => n.notification.id === notification.id);
-    this.notificationService.notifications.splice(index, 1);
+    this.notificationService.notifications[index].resolved = true;
+  }
+
+  ngOnDestroy() {
+    // If this component looses its parent properties, this can be put in appComponent.
+    const currUser: StoredUserData = JSON.parse(localStorage.getItem('currentUser'));
+    if (currUser == null || currUser.roles.indexOf('dispatcher') > -1) {
+      this.notificationService.stopPollingNotifications();
+    }
   }
 
 }
