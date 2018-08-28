@@ -29,6 +29,7 @@
 
       <!-- Admin -->
       <mat-checkbox formControlName="admin">Admin</mat-checkbox>
+      <mat-error *ngIf="employeeForm.get('roles').hasError('forbiddenRoleCombination')">Tato kombinace rolí neni povolena.</mat-error>
     </div>
 
   </div>

@@ -1,5 +1,5 @@
 <div class="basic-padding container">
-    
+
     <!-- Choose start -->
     <div class="grow" *ngIf="url === '/order/standard/choose-start'">
         <app-static-marker-map i18n-placeholder placeholder="Zvolte start" (newAddress)="newStart($event)" editable="true"></app-static-marker-map>
@@ -20,24 +20,7 @@
     <div *ngIf="url === '/order/standard/fill-in-info'" class="grow">
         <div>
             <app-driver-selected [signedIn]="signedIn" [arrival]="getSelectedArrival()"></app-driver-selected>
-            <!-- <mat-card>
-                <div class="cardContent" *ngIf="driversArrivalService.arrivals.length !== 0">   
-                    <div class="column">
-                        <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" i18n-alt alt="Fotka řidiče">
-                        <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" i18n-alt alt="Fotka auta">                
-                    </div> 
-                    <div class="column arrival-time">
-                        <p i18n >
-                                {{getSelectedDriver()}} je u Vás za 
-                                {{getSelectedArrivalTime()}} 
-                                { getSelectedArrivalTime(), plural, =1 {minutu} few {minuty} other {minut} }.
-                        </p>
-                        <button mat-button *ngIf="signedIn" (click)="changeDriver()" i18n>Změnit řidiče</button>
-                    </div>                               
-                </div> 
-                <div class="cardContent" *ngIf="driversArrivalService.arrivals.length === 0" i18n>Nenašli se žádní řidiči.</div>           
-            </mat-card> -->
         </div>
-        <app-fill-in-params ></app-fill-in-params>        
+        <app-fill-in-params ></app-fill-in-params>
     </div>
 </div>

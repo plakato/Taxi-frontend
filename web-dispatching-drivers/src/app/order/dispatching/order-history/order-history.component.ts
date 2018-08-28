@@ -27,11 +27,23 @@ export class OrderHistoryComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  // Filter for datepicker - only today or earlier can be selected.
-  filterTodayOrEarlier = (d: Date): boolean => {
+  // Filter for datepicker - only today or earlier upper filter boundary can be selected.
+  filterTodayOrEarlierThanUntilDate = (d: Date): boolean => {
     // Set hours so that only days are compared, not time.
-    return d.setHours(0, 0, 0, 0) <= (new Date(Date.now()).setHours(0, 0, 0, 0));
+    const today = d.setHours(0, 0, 0, 0);
+    const until = this.intervalForm.get('untilDate').value;
+    return today <= (new Date(Date.now()).setHours(0, 0, 0, 0)) &&
+           (until === '' || today <= (new Date(until).setHours(0, 0, 0, 0)));
   }
+
+  filterTodayOrEarlierThanSinceDate = (d: Date): boolean => {
+    // Set hours so that only days are compared, not time.
+    const today = d.setHours(0, 0, 0, 0);
+    const since = this.intervalForm.get('sinceDate').value;
+    return today <= (new Date(Date.now()).setHours(0, 0, 0, 0)) &&
+           (since === '' || today >= (new Date(since).setHours(0, 0, 0, 0)));
+  }
+
 
   constructor(private fb: FormBuilder,
               private ordersPollingService: OrdersPollingService ) { }

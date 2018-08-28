@@ -27,7 +27,7 @@ export class TrackDriverService {
     const This = this;
     this.http.get<LocationResponse>('driver_locations/' + this.id + '/current').subscribe(
       result => {
-        This.locationData = result.loc;console.log(This.locationData);
+        This.locationData = result.loc;
         This.locationSubject.next(This.locationData);
       }
     );

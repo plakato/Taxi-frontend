@@ -11,21 +11,21 @@ import { Router } from '@angular/router';
 })
 export class OrderService implements OnInit {
   public newOrder: Order;
-  private currentOrderData: Order;  
+  private currentOrderData: Order;
   public currentOrder: BehaviorSubject<Order> = new BehaviorSubject(this.currentOrderData);
   private interval;
 
   constructor(private http: HttpClient,
               private router: Router) {this.clearCache();
-    window.addEventListener('beforeunload', () => {this.cacheOrder();});    
-    let newO = localStorage.getItem('newOrder');
-    if (newO != 'undefined' && newO !== 'null') {
+    window.addEventListener('beforeunload', () => {this.cacheOrder(); });
+    const newO = localStorage.getItem('newOrder');
+    if (newO !== 'undefined' && newO !== 'null') {
       this.newOrder = JSON.parse(newO);
     } else {
       this.newOrder = {} as any;
     }
-    let currentO = localStorage.getItem('currentOrder');
-    if (currentO != 'undefined' && currentO != 'null') {
+    const currentO = localStorage.getItem('currentOrder');
+    if (currentO !== 'undefined' && currentO !== 'null') {
       this.currentOrderData = JSON.parse(currentO);
       this.currentOrder.next(this.currentOrderData);
     }
@@ -38,6 +38,7 @@ export class OrderService implements OnInit {
 
   ngOnInit() {
    // localStorage.setItem('newOrder', JSON.stringify(this.newOrder));
+   window.addEventListener('beforeunload', () => {this.cacheOrder(); });
 
   }
 
@@ -47,7 +48,7 @@ export class OrderService implements OnInit {
 
   cacheOrder() {
     localStorage.setItem('newOrder', JSON.stringify(this.newOrder));
-    localStorage.setItem('currentOrder', JSON.stringify(this.currentOrderData));    
+    localStorage.setItem('currentOrder', JSON.stringify(this.currentOrderData));
   }
 
   sendNewOrder() {
@@ -71,7 +72,7 @@ export class OrderService implements OnInit {
           contact_telephone: this.newOrder.contact_phone,
           VIP: this.newOrder.VIP,
           flight_number: this.newOrder.flight_number,
-          scheduled_pick_up_at: this.newOrder.scheduled_pick_up_at == null? null: this.newOrder.scheduled_pick_up_at.toISOString()
+          scheduled_pick_up_at: this.newOrder.scheduled_pick_up_at == null ? null : this.newOrder.scheduled_pick_up_at.toISOString()
         }
       }
     )).pipe(tap(order => {
@@ -85,7 +86,7 @@ export class OrderService implements OnInit {
 
   startWatchingOrder(id: number) {
     this.interval = null;
-    this.interval = window.setInterval(() => this.getOrder(id), Constants.ORDER_GETTING_INTERVAL);      
+    this.interval = window.setInterval(() => this.getOrder(id), Constants.ORDER_GETTING_INTERVAL);
   }
 
   getOrder(id: number) {
@@ -120,7 +121,7 @@ export class OrderService implements OnInit {
         }
         This.fillOrderVehicle(order).subscribe(o => {
           This.currentOrderData = o;
-          This.currentOrder.next(This.currentOrderData);      
+          This.currentOrder.next(This.currentOrderData);
         });
       }
     );
@@ -141,7 +142,7 @@ export class OrderService implements OnInit {
   }
 
   clearCache() {
-    localStorage.setItem('currentOrder', null);    
+    localStorage.setItem('currentOrder', null);
     this.currentOrderData = null;
     this.currentOrder.next(this.currentOrderData);
   }
@@ -155,7 +156,7 @@ export class OrderService implements OnInit {
       return of(order);
     } else {
       return this.getCar(order.vehicle_id).pipe(
-        map(car => { 
+        map(car => {
            const o = order;
            o.vehicle = car;
            return o;

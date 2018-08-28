@@ -37,7 +37,7 @@
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
-    <div *ngIf='dataSource.data.length === 0' class="empty-label">Nenanšli se žádní zaměstnanci.</div>
+    <div *ngIf='dataSource.data.length === 0' class="empty-label">Nenašli se žádní zaměstnanci.</div>
   </div>
 
 <app-add-new-employee></app-add-new-employee>

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, AfterViewChecked, EventEmitter, Output } from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder, AbstractControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { User } from '../user.module';
 import { ActivatedRoute } from '@angular/router';
@@ -26,10 +26,10 @@ export class EmployeeFormComponent implements OnInit {
   ngOnInit() {
     // Initialize form with validators.
     this.roles = this.fb.group({
-      dispatcher: [false], 
+      dispatcher: [false],
       driver: [false],
       admin: [false]
-    });
+    }, {validator: this.rolesCombination});
     this.employeeForm = this.fb.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
@@ -64,7 +64,7 @@ export class EmployeeFormComponent implements OnInit {
   }
 
   submit(clear: boolean) {
-    if (this.employeeForm.valid) {
+    if (this.employeeForm.valid && this.employee.image != null) {
       this.employee.employee_roles = [];
       // Set roles from checked checkboxes.
       Object.entries(this.roles.value).forEach(role => {
@@ -84,5 +84,14 @@ export class EmployeeFormComponent implements OnInit {
 
   newImageUploaded(image: string|any) {
     this.employee.image = image;
+  }
+
+  /** Custom validation function to determine that password and password confirmation are identical */
+  rolesCombination(group: AbstractControl)  {
+    if (!group.get('dispatcher').value &&
+        !group.get('driver').value) {
+      return  { 'forbiddenRoleCombination': {value: true}} ;
+    }
+    return null;
   }
 }

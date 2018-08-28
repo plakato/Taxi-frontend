@@ -53,7 +53,7 @@ export class AuthService {
   }
 
   resendConfirmationCode(phone: string) {
-    return this.http.put('customers/resend_confirmation', JSON.stringify(
+    return this.http.post('customers/resend_confirmation', JSON.stringify(
       {
         telephone: phone
       }
@@ -82,8 +82,8 @@ export class AuthService {
     areEqual(group: AbstractControl)  {
       const password = group.get('password');
       const passwordConfirmation = group.get('passwordConfirmation');
-      if (password != null && 
-          passwordConfirmation != null && 
+      if (password != null &&
+          passwordConfirmation != null &&
           password.value !== passwordConfirmation.value) {
             return  { 'passwordMismatch': {value: true}} ;
       }

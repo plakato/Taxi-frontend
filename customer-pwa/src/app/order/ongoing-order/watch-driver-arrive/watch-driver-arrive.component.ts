@@ -35,16 +35,20 @@ export class WatchDriverArriveComponent implements OnInit {
     });
   }
 
+  getDriverID(): number {
+    return this.orderService.currentOrder.value.driver_id;
+  }
+
   driverOnHisWay() {
     return this.orderService.currentOrder.value.status === Status.driverArriving;
   }
 
   driverArrived() {
-    return this.orderService.currentOrder.value.status === Status.driverArrived;    
+    return this.orderService.currentOrder.value.status === Status.driverArrived;
   }
 
   customerPickedUp() {
-    return this.orderService.currentOrder.value.status === Status.customerPickedUp;    
+    return this.orderService.currentOrder.value.status === Status.customerPickedUp;
   }
 
   getDriverArrivalTime() {
@@ -56,7 +60,7 @@ export class WatchDriverArriveComponent implements OnInit {
   }
 
   getLicencePlate() {
-    return this.orderService.currentOrder.value.vehicle.plate;    
+    return this.orderService.currentOrder.value.vehicle.plate;
   }
 
 }

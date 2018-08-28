@@ -3,7 +3,7 @@
 <form [formGroup]="intervalForm">
   <!-- From -->
   <mat-form-field>
-    <input matInput [matDatepickerFilter]="filterTodayOrEarlier" formControlName="sinceDate" [matDatepicker]="sincePicker" placeholder="Období od">
+    <input matInput [matDatepickerFilter]="filterTodayOrEarlierThanUntilDate" formControlName="sinceDate" [matDatepicker]="sincePicker" placeholder="Období od">
     <mat-error *ngIf="intervalForm.get('sinceDate').hasError('required')">Tato položka je povinná.</mat-error>
     <mat-datepicker-toggle matSuffix [for]="sincePicker"></mat-datepicker-toggle>
     <mat-datepicker #sincePicker (selectedChange)="filter = false"></mat-datepicker>
@@ -11,7 +11,7 @@
 
   <!-- To -->
   <mat-form-field class="leftMargin">
-    <input matInput [matDatepickerFilter]="filterTodayOrEarlier" formControlName="untilDate" [matDatepicker]="untilPicker" placeholder="Období do">
+    <input matInput [matDatepickerFilter]="filterTodayOrEarlierThanSinceDate" formControlName="untilDate" [matDatepicker]="untilPicker" placeholder="Období do">
     <mat-error *ngIf="intervalForm.get('untilDate').hasError('required')">Tato položka je povinná.</mat-error>
     <mat-datepicker-toggle matSuffix [for]="untilPicker"></mat-datepicker-toggle>
     <mat-datepicker #untilPicker (selectedChange)="filter = false"></mat-datepicker>

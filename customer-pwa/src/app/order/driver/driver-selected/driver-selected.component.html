@@ -1,15 +1,16 @@
 <mat-card>
   <div class="column">
       <img src="{{arrival?.driver.image}}" i18n-alt alt="Fotka řidiče">
-      <img src="{{arrival?.vehicle.image}}" i18n-alt alt="Fotka auta">                
-  </div> 
+      <img src="{{arrival?.vehicle.image}}" i18n-alt alt="Fotka auta">
+  </div>
   <div class="column arrival-time">
       <p i18n *ngIf="arrival != null">
-              {{arrival.driver.name}} je u Vás za 
+              {{arrival.driver.name}} je u Vás za
               {{getMinutesToArrival()}} min.
       </p>
-  </div>    
+  </div>
+  <div *ngIf="arrival == null" i18n>Nenašli se žádní řidiči.</div>
   <mat-card-actions>
         <button mat-button (click)="change()">ZMĚNIT</button>
-    </mat-card-actions>                           
+    </mat-card-actions>
 </mat-card>

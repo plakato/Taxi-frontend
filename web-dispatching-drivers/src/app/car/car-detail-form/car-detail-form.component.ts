@@ -50,7 +50,7 @@ export class CarDetailFormComponent implements OnInit {
    }
 
   submit() {
-    if (this.carForm.valid) {
+    if (this.carForm.valid && this.car.image != null) {
       this.editedCarSubmit.emit(this.car);
       this.carForm.reset();
       // Clear image as a part of form.reset().

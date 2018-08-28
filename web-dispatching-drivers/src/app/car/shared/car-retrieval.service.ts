@@ -39,7 +39,7 @@ export class CarRetrievalService {
           available: car.available
     }})).subscribe(
       res => {
-        This.carsData[res.id] = res;
+        This.carsData.set(res.id, res);
         This.carsEventSource.next(this.carsData);
       },
       err => {

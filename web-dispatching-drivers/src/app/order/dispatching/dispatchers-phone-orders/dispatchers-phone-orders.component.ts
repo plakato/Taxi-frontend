@@ -19,7 +19,7 @@ export class DispatchersPhoneOrdersComponent implements OnInit {
     const original = new Date(order.arrived_time_est);
     const current = new Date(order.arrived_time_orig_est);
     const timeDiff = Math.abs(current.getTime() - original.getTime());
-    return Math.ceil(timeDiff / 3600); 
+    return Math.ceil(timeDiff / 3600);
   }
 
 }

@@ -59,6 +59,6 @@ export class AuthenticationService {
     }
 
     updatePassword(id: number, newPassword: string) {
-      return this.http.put('employees/' + id, JSON.stringify({ password: newPassword }));
+      return this.http.put('employees/' + id, JSON.stringify({ employee: { password: newPassword }}));
     }
 }

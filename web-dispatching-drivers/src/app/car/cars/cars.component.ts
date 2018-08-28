@@ -25,19 +25,25 @@ export class CarsComponent implements OnInit, AfterViewInit {
     public dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute) {
-      this.carService.cars.subscribe(      
-        res => {
-          this.dataSource.data = res;
-        }
-      );
+      this.loadCars();
      }
 
   ngOnInit() {
   }
 
+  loadCars() {
+    this.carService.cars.subscribe(
+      res => {
+        this.dataSource.data = res;
+      }
+    );
+  }
+
   changeAvailable(car: Car, event: MatCheckboxChange) {
     car.available = event.checked;
-    this.carService.update(car);
+    this.carService.update(car).finally(
+      () => {this.loadCars(); }
+    ).subscribe();
   }
 
   /** Open dialog to make sure user wanted to delete this car. */
@@ -45,10 +51,7 @@ export class CarsComponent implements OnInit, AfterViewInit {
     const deleteDialog = this.dialog.open(DeleteCarDialogComponent, {
       width: '300px',
       data: {car: car}});
-    deleteDialog.afterClosed().subscribe(
-      res => {
-        console.log('The dialog was closed:' + res);
-      });
+    deleteDialog.afterClosed().subscribe();
   }
 
   editCar(car: Car) {
