@@ -15,7 +15,7 @@ export class DriverSelectedComponent implements OnInit {
     constructor(private arrivalsService: DriversArrivalsService,
                 private router: Router) { }
 
-    ngOnInit() {debugger;
+    ngOnInit() {
     }
 
     getMinutesToArrival(): number {

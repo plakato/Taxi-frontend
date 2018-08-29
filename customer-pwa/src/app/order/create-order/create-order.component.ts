@@ -45,6 +45,7 @@ export class CreateOrderComponent implements OnInit {
   finishChosen() {
     this.orderService.newOrder.loc_finish = this.finish.coords;
     this.orderService.newOrder.finishAddress = this.finish.address;
+    this.driversArrivalService.getArrivals(this.orderService.newOrder);
     this.router.navigate(['order/standard/fill-in-info']);
   }
 

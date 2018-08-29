@@ -114,7 +114,7 @@ export class OrderService implements OnInit {
             }
             case Status.finished: {
               This.stopWatchingOrder(This);
-              (This) => This.clearCache();
+              This.clearCache();
               This.router.navigate(['order/finished']);
               break;
             }
@@ -133,7 +133,7 @@ export class OrderService implements OnInit {
 
   cancelCurrentOrder() {
     const This = this;
-    (This) => This.clearCache();
+    this.clearCache();
     return this.http.patch('orders/' + this.currentOrderData.id + '/cancel', '').pipe(tap(
       success => {
         This.stopWatchingOrder(This);
