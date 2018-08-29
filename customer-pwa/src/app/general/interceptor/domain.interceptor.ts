@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class DomainInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const newReq = req.clone({url: 'http://api.taxiali.local/v2/' + req.url});
+    const newReq = req.clone({url: 'http://api.taxiali.local/v2/' /*'http://localhost:8081/v2/'*/ + req.url});
     return next.handle(newReq);
   }
 }

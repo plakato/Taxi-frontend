@@ -19,15 +19,15 @@ export class DriversArrivalsService {
    }
 
   getArrivals(order: Order) {
-    if (order == null) {
+    if (order == null || order.loc_start == null) {
       return from([]);
     }
     const This = this;
     return this.http.post<DriverArrival[]>('orders/drivers_arrivals', JSON.stringify({
       order: {
-        customer_telephone: order.contact_telephone,
+        customer_telephone: order.phone,
+        dispatcher_id: '',
         driver_id: '',
-        dispatcher_id: order.dispatcher_id,
         loc_start: {
           lat: order.loc_start.lat,
           lng: order.loc_start.lng
@@ -36,10 +36,12 @@ export class DriversArrivalsService {
           lat: order.loc_finish.lat,
           lng: order.loc_finish.lng
         },
+        address_start: order.address_start,
+        address_finish: order.address_finish,
         passenger_count: order.passenger_count,
-        note: order.note,
-        contact_telephone: order.contact_telephone,
-        VIP: order.VIP,
+        note: order.note == null ? '' : order.note,
+        contact_telephone: order.contact_phone == null ? '' : order.contact_phone,
+        VIP: order.VIP == null ? false : order.VIP,
         flight_number: order.flight_number == null ? '' : order.flight_number,
         scheduled_pick_up_at: order.scheduled_pick_up_at == null ? '' : order.scheduled_pick_up_at.toISOString()
         }

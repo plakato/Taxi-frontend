@@ -16,7 +16,7 @@
     <!-- One notification -->
     <div mat-menu-item class="notification" *ngFor="let notification of getNotifications()">
         <p>{{notification.notification.subject}}</p>
-        <button mat-icon-button (click)="resolveNotification(notification)">
+        <button mat-icon-button (click)="resolveNotification(notification.notification.id)">
           <mat-icon>check</mat-icon>
         </button>
     </div>

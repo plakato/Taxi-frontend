@@ -48,12 +48,12 @@ export class DispatchingMenuComponent implements OnInit, OnDestroy {
   }
 
   getNotifications() {
-    return this.notificationService.notifications;
+    return this.notificationService.notifications.filter(n => n.resolved === false);
   }
 
 
-  resolveNotification(notification: Notification) {
-    const index = this.notificationService.notifications.findIndex(n => n.notification.id === notification.id);
+  resolveNotification(id: number) {
+    const index = this.notificationService.notifications.findIndex(n => n.notification.id === id);
     this.notificationService.notifications[index].resolved = true;
   }
 
