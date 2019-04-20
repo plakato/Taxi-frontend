@@ -1,0 +1,5 @@
+<div *ngIf="!selecting">
+  <app-driver-selected [arrival]="getSelected()" [signedIn]="true" (selectThisDriver)="select"></app-driver-selected>
+  <button mat-raised-button (click)="selecting = true">Změnit</button>  
+</div>
+<app-drivers-arrivals *ngIf="selecting" (selectedDriver)="selectDriver($event)"></app-drivers-arrivals>

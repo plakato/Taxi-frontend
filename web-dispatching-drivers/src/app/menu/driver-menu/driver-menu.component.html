@@ -1,0 +1,35 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <div class="space-children">
+      <mat-icon (click)="logout()">lock</mat-icon>
+      <mat-icon (click)="pauseShift()">restaurant</mat-icon>
+      <!-- <mat-icon>time_to_leave</mat-icon> -->
+      <a href="tel:0949476160"><mat-icon>phone</mat-icon></a>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<!-- When there are no orders. -->
+<div class="center" *ngIf="myOrders.ordersEventSource.value?.length===0 && !pause">
+  <div class="margin-bottom">Momentálne nemáte žádné objednávky.</div>
+</div>
+<!-- When being on a break. -->
+<div class="center" *ngIf="myOrders.ordersEventSource.value?.length===0 && pause">
+  <div class="margin-bottom">Máte pauzu! Oddýchnite si ;)</div>
+  <button mat-raised-button class="margin-bottom" (click)="resumeShift()">Ukončiť pauzu</button>
+</div>
+
+<!--When there is at least one order. -->
+<div *ngIf="myOrders.ordersEventSource.value.length>0" class="queue-container">
+  <!-- First (ongoing) order. -->
+  <app-driver-arriving *ngIf="active()" [order]="myOrders.ordersEventSource.value[0]"></app-driver-arriving>
+
+
+  <!-- Next orders in queue. -->
+  <div class="queue">
+    <app-enqueued-order *ngFor="let order of getEnqueuedOrders()" [order]="order"></app-enqueued-order>
+    <div *ngIf="pause">
+      <mat-card class="pause">PAUZA</mat-card>
+    </div>
+  </div>
+</div>

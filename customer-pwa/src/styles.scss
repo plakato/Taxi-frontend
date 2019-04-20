@@ -1,0 +1,18 @@
+/* You can add global styles to this file, and also import other style files */
+@import "yellow-app-theme.scss";
+@import './_variables.scss';
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px $yellow-app-dark-background inset;
+  -webkit-text-fill-color: white !important;
+}
+
+body{
+    color: white;
+    padding: 0;
+    margin:0 ;
+}
+
+.basic-padding {
+  padding: 10px 20px;
+}

@@ -1,0 +1,15 @@
+.leftMargin {
+  margin-left: 20px;
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+}
+
+.empty-label {
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}

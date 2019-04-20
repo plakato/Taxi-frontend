@@ -1,0 +1,67 @@
+<h1>Termínované objednávky</h1>
+
+<div class="table mat-elevation-z8">
+
+  <mat-table [dataSource]="dataSource">
+
+    <!-- Driver Column -->
+    <ng-container matColumnDef="driver">
+      <mat-header-cell *matHeaderCellDef> Řidič </mat-header-cell>
+      <mat-cell *matCellDef="let order" (click)="editingDriver=!editingDriver" class="action">
+        <app-list-all-drivers [firstSelected]="order.driver" (selectedDriver)="changeDriver(order, $event)" class="edit-driver"></app-list-all-drivers>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Car Column -->
+    <ng-container matColumnDef="car">
+      <mat-header-cell *matHeaderCellDef> Auto </mat-header-cell>
+      <mat-cell *matCellDef="let order"> {{order.vehicle == null ? '---' : order.vehicle.name}} </mat-cell>
+    </ng-container>
+
+    <!-- Start Column -->
+    <ng-container matColumnDef="start">
+      <mat-header-cell *matHeaderCellDef> Start </mat-header-cell>
+      <mat-cell *matCellDef="let order"> {{order.address_start == null ? '---' : order.address_start}} </mat-cell>
+    </ng-container>
+
+    <!-- Finish Column -->
+    <ng-container matColumnDef="finish">
+      <mat-header-cell *matHeaderCellDef> Cíl </mat-header-cell>
+      <mat-cell *matCellDef="let order"> {{order.address_finish == null ? '---': order.address_finish}} </mat-cell>
+    </ng-container>
+
+    <!-- Pick up date Column -->
+    <ng-container matColumnDef="pickUpDate">
+      <mat-header-cell *matHeaderCellDef>Datum naložení </mat-header-cell>
+      <mat-cell *matCellDef="let order"> {{order.scheduled_pick_up_at | date: 'dd.MM.yyyy'}} </mat-cell>
+    </ng-container>
+
+    <!-- Pick up time Column -->
+    <ng-container matColumnDef="pickUpTime">
+      <mat-header-cell *matHeaderCellDef>Čas naložení </mat-header-cell>
+      <mat-cell *matCellDef="let order"> {{order.scheduled_pick_up_at | date: 'HH:mm'}} </mat-cell>
+    </ng-container>
+
+    <!-- Note Column -->
+    <ng-container matColumnDef="note">
+      <mat-header-cell *matHeaderCellDef> Poznámka </mat-header-cell>
+      <mat-cell *matCellDef="let order"> {{order.note}} </mat-cell>
+    </ng-container>
+
+    <!-- Action Column -->
+    <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef> Akce </mat-header-cell>
+      <mat-cell *matCellDef="let order">
+        <mat-icon class="red action" matTooltip="Zrušit" (click)="cancelOrder(order)">close</mat-icon>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;">
+    </mat-row>
+  </mat-table>
+
+  <div *ngIf="this.dataSource.data.length === 0" class="empty-label">Nenašly se žádné objednávky.</div>
+  <mat-paginator [pageSizeOptions]="[10, 25, 100, 200]"
+                 (page)="onPageChange($event)" [length]="totalOrdersCount.value"></mat-paginator>
+</div>

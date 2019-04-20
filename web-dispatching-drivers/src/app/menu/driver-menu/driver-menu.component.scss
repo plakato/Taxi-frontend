@@ -1,0 +1,43 @@
+@import '../../../_variables.scss';
+
+.space-children {
+  display: flex;
+  justify-content: space-around;
+  flex-grow: 1;
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  @media (max-width: 600px) {
+    min-height: calc(100vh - 56px);
+  }
+  height: calc(100vh - 64px);
+}
+
+.margin-bottom {
+  margin-bottom: 30px;
+}
+
+a {
+  color: inherit;
+}
+
+.queue-container {
+  padding: 10px 20px;
+
+  .queue {
+    min-height: calc(100vh - 20px);
+  }
+
+  .pause {
+    margin-top: 20px;
+    text-align: center;
+    background-color: $accent-yellow;
+    color: $yellow-app-dark-background;
+  }
+
+}

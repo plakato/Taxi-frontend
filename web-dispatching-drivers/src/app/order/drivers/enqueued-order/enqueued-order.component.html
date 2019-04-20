@@ -1,0 +1,19 @@
+<mat-card>
+  <div class="row-container">
+
+    <div class="left col-container">
+      <p>
+        <mat-icon>location_on</mat-icon>
+        {{order?.address_start}}
+      </p>
+      <p>Zákazník: {{order?.customer?.name == null? 'anonym': order?.customer?.name}}</p>
+      <p>Poznámka: {{order?.note}}</p>
+    </div>
+
+    <div class="right col-container">
+      <p class="center-text">Nákladka</p>
+      <p class="large-font center-text">{{order?.arrived_time_est | date: 'HH:mm'}}</p>
+    </div>
+
+  </div>
+</mat-card>

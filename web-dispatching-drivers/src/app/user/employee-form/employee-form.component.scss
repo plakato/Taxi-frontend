@@ -1,0 +1,35 @@
+
+
+// Divs composition
+
+.inputFormContainer {
+  float: left;
+  flex-grow: 1;
+  max-width: 700px;
+}
+
+form {
+  display: flex;
+  align-items: start;
+  flex-wrap: wrap;
+}
+
+
+// Components styling
+
+mat-form-field {
+  display: block;
+}
+
+mat-checkbox {
+  display: block;
+  margin-bottom: 20px;
+}
+
+
+// Hide spinner in number type input.
+.no-spinners::-webkit-outer-spin-button,
+.no-spinners::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

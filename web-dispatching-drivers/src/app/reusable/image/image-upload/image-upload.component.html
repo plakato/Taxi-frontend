@@ -1,0 +1,9 @@
+<div class="imageUploadDiv">
+  <button mat-raised-button *ngIf="image==null" class="choose_picture_button"
+    type="button" onclick="document.getElementById('imageUpload').click()">
+    Zvolit obrázek
+  </button>
+  <input type="file" id="imageUpload" name="imageUpload" (click)="clearInput(($event).target)" (change)="onImageLoad($event)" #fileInput/>
+  <img src="{{image}}" *ngIf="image!=null" alt="uploaded_img" class="uploadedImage"/>
+  <mat-icon *ngIf="image != null" class="closeImageIcon" (click)="deleteUploadedImage()">close</mat-icon>
+</div>

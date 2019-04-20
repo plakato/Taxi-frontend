@@ -1,0 +1,27 @@
+.container {
+    height: 100vh;
+    display: flex; 
+    flex-direction: column;
+
+    p {
+        text-align: center;
+        margin: 5px 0px;
+    }
+
+    .map {
+        flex-grow: 1;
+        display: flex;
+    
+        app-static-marker-map {
+            flex-grow: 1;
+        }
+    }
+
+    .details {
+        display: flex;
+        flex-direction: row;
+        padding: 10px;
+        justify-content: space-around;
+    }
+    
+}

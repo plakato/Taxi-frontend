@@ -1,0 +1,47 @@
+<form [formGroup]="carForm">
+
+  <div class="inputFormContainer">
+    <!-- Name -->
+    <mat-form-field>
+        <input matInput type="text" formControlName="name"  placeholder="Jméno"
+        [(ngModel)]="car.name" required/>
+        <mat-error *ngIf="carForm.get('name').hasError('required')">
+                    Tato položka je povinná.</mat-error>
+      </mat-form-field>
+
+    <!-- Number -->
+    <mat-form-field>
+        <input matInput type="number"  formControlName="number"  placeholder="Číslo" class="no-spinners"
+          [(ngModel)]="car.number" required/>
+        <mat-error *ngIf="carForm.get('number').hasError('required')">
+                    Tato položka je povinná.</mat-error>
+      </mat-form-field>
+
+    <!-- Plate -->
+    <mat-form-field>
+        <input matInput type="text"  formControlName="plate"  placeholder="SPZ"
+        [(ngModel)]="car.plate" required/>
+        <mat-error *ngIf="carForm.get('plate').hasError('pattern')">
+            SPZ může obsahovat pouze čísla, kapitálky a znaky -:</mat-error>
+        <mat-error *ngIf="carForm.get('plate').hasError('required')">
+            Tato položka je povinná.</mat-error>
+        </mat-form-field>
+
+    <!-- Max persons -->
+    <mat-form-field>
+        <input matInput type="number"  formControlName="max_persons"  placeholder="Max. osob" class="no-spinners"
+        [(ngModel)]="car.max_persons" required/>
+        <mat-error *ngIf="carForm.get('max_persons').hasError('required')">
+            Tato položka je povinná.</mat-error>
+        <mat-error *ngIf="carForm.get('max_persons').hasError('min')">
+            Počet osob musí být alespoň 1.</mat-error>
+      </mat-form-field>
+
+    <!-- Available -->
+    <mat-checkbox formControlName="available" [(ngModel)]="car.available">Dostupné na jízdu</mat-checkbox>
+  </div>
+
+
+    <app-image-upload [image]="originalImage" (newImageUploaded)="newImageUploaded($event)"></app-image-upload>
+
+</form>

@@ -1,0 +1,6 @@
+<h1>Upravit auto</h1>
+
+<app-car-detail-form #form (editedCarSubmit)="saveChanges($event)">
+</app-car-detail-form>
+
+<button mat-raised-button (click)="form.submit()">Uložit změny</button>

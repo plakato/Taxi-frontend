@@ -1,0 +1,6 @@
+@import '../../../../yellow-app-theme.scss';
+
+.yes {
+  background-color: mat-color(map-get($yellow-app-theme, warn));
+}
+

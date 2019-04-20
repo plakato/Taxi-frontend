@@ -1,0 +1,29 @@
+  <div class="address-with-plane">
+    <mat-form-field class="address" >
+      <input matInput type="text" placeholder="{{placeholder}}"  [formControl]="addressControl"
+        autocorrect="off" autocapitalize="off" spellcheck="off"
+        (click)="address.select()"
+        (change)="addressEdited()" #address/>
+    </mat-form-field>
+    <div *ngIf="airport">
+      <mat-icon *ngIf="airportSelected && airportEnabled" (click)="airportSelected=false;" class="selected">airplanemode_active</mat-icon>
+      <mat-icon *ngIf="!airportSelected || !airportEnabled" (click)="selectAirport()">airplanemode_active</mat-icon>
+    </div>
+  </div>
+
+<div class="map-with-marker">
+  <div class="map">
+      <agm-map
+      [latitude]="map?.center.lat" [longitude]="map?.center.lng"
+      [zoom]=15
+      [zoomControl]=true [streetViewControl]=false
+      (mapReady)="initializeMap($event)"
+      (centerChange)="mapCenterChanged($event)">
+  <!-- <agm-circle *ngIf="false"
+      [latitude]="center.lat" [longitude]="center.lng" [radius]="15"
+      [clickable]=false [fillColor]="'rgb(255, 229, 0)'" ></agm-circle> -->
+    </agm-map>
+  </div>
+
+  <div class="marker"><mat-icon>location_on</mat-icon> </div>
+</div>

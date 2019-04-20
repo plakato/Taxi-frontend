@@ -1,0 +1,9 @@
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+      <mat-panel-title>Přidat nového zaměstnance </mat-panel-title>
+  </mat-expansion-panel-header>
+
+    <app-employee-form #form (employeeSubmitted)="addEmployee($event)"></app-employee-form>
+
+    <button mat-raised-button class="addButton" (click)="form.submit(true)">Přidat</button>
+</mat-expansion-panel>

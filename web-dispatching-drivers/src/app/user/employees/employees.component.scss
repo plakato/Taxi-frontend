@@ -1,0 +1,30 @@
+@import '~@angular/material/theming';
+@import '../../../yellow-app-theme.scss';
+
+.container {
+  height: 100%;
+  max-width: 1000px;
+}
+
+.empty-label {
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+mat-cell {
+  overflow: visible;
+}
+
+img {
+  max-width: 50px;
+}
+
+.red {
+  color: mat-color(map-get($yellow-app-theme, warn));
+}
+
+mat-icon {
+  cursor: pointer;
+}
+

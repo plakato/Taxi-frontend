@@ -1,0 +1,26 @@
+<div class="container">
+  <h1 class="title">Můj profil - {{user?.name}}</h1>
+
+  <div class="profileBodyContainer">
+
+    <div class="imageColumnContainer">
+      <div class="imageContainer">
+        <img src="{{user?.image}}" alt="profilový obrázek"/>
+        <label class="noImageSelected" *ngIf="user?.image === null">Nevybrán žádný obrázek.</label>
+      </div>
+      <button mat-raised-button onclick="document.getElementById('profilePictureInputFile').click()">Změnit obrázek</button>
+      <input type="file" id="profilePictureInputFile" (click)="clearInput(($event).target)" (change)="onImageLoad($event)"/>
+    </div>
+
+    <div class="profileInfoContainer">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>Změnit heslo</mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-new-password-input [passwordForm]="passwordForm"></app-new-password-input>
+        <button mat-raised-button (click)="changePassword()">Změnit heslo</button>
+      </mat-expansion-panel>
+    </div>
+
+  </div>
+</div>

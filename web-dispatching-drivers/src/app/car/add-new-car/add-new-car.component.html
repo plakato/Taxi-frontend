@@ -1,0 +1,8 @@
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+      <mat-panel-title>Přidat nové auto </mat-panel-title>
+  </mat-expansion-panel-header>
+
+    <app-car-detail-form #form (editedCarSubmit)="addCar($event)"></app-car-detail-form>
+    <button mat-raised-button class="addButton" (click)="form.submit()">Přidat</button>
+</mat-expansion-panel>

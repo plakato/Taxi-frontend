@@ -1,0 +1,20 @@
+mat-card {
+    margin-top: 10px;
+
+    .cardContent {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        .column {
+        display: flex;
+        flex-direction: column;
+        padding-right: 10px;
+        justify-content: space-between;
+    
+        img {
+            height: 50px;
+        }
+        }
+    }
+}

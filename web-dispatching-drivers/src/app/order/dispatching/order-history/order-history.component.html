@@ -1,0 +1,103 @@
+<h1>Historie objednávek</h1>
+
+<form [formGroup]="intervalForm">
+  <!-- From -->
+  <mat-form-field>
+    <input matInput [matDatepickerFilter]="filterTodayOrEarlierThanUntilDate" formControlName="sinceDate" [matDatepicker]="sincePicker" placeholder="Období od">
+    <mat-error *ngIf="intervalForm.get('sinceDate').hasError('required')">Tato položka je povinná.</mat-error>
+    <mat-datepicker-toggle matSuffix [for]="sincePicker"></mat-datepicker-toggle>
+    <mat-datepicker #sincePicker (selectedChange)="filter = false"></mat-datepicker>
+  </mat-form-field>
+
+  <!-- To -->
+  <mat-form-field class="leftMargin">
+    <input matInput [matDatepickerFilter]="filterTodayOrEarlierThanSinceDate" formControlName="untilDate" [matDatepicker]="untilPicker" placeholder="Období do">
+    <mat-error *ngIf="intervalForm.get('untilDate').hasError('required')">Tato položka je povinná.</mat-error>
+    <mat-datepicker-toggle matSuffix [for]="untilPicker"></mat-datepicker-toggle>
+    <mat-datepicker #untilPicker (selectedChange)="filter = false"></mat-datepicker>
+  </mat-form-field>
+  <button class="leftMargin" mat-raised-button (click)="filterByTime(true)">Filtrovat</button>
+</form>
+
+
+
+<div class="table mat-elevation-z8">
+
+  <mat-table [dataSource]="dataSource">
+
+    <!-- Driver Column -->
+    <ng-container matColumnDef="driver">
+      <mat-header-cell *matHeaderCellDef> Řidič </mat-header-cell>
+      <mat-cell *matCellDef="let order"> {{order.driver == null ? '---' : order.driver.name}} </mat-cell>
+    </ng-container>
+
+    <!-- Car Column -->
+    <ng-container matColumnDef="car">
+      <mat-header-cell *matHeaderCellDef> Auto </mat-header-cell>
+      <mat-cell *matCellDef="let order"> {{order.vehicle == null ? '---' : order.vehicle.name}} </mat-cell>
+    </ng-container>
+
+    <!-- Start Column -->
+    <ng-container matColumnDef="start">
+      <mat-header-cell *matHeaderCellDef> Start </mat-header-cell>
+      <mat-cell *matCellDef="let order"> {{order.address_start == null ? '---' : order.address_start}} </mat-cell>
+    </ng-container>
+
+    <!-- Finish Column -->
+    <ng-container matColumnDef="finish">
+      <mat-header-cell *matHeaderCellDef> Cíl </mat-header-cell>
+      <mat-cell *matCellDef="let order"> {{order.address_finish == null ? '---' : order.address_finish}} </mat-cell>
+    </ng-container>
+
+    <!-- Order created Column -->
+    <ng-container matColumnDef="orderCreatedTime">
+      <mat-header-cell *matHeaderCellDef> Vytvoření objednávky </mat-header-cell>
+      <mat-cell *matCellDef="let order"> {{order.created_at | date: 'dd.MM.yyyy HH:mm'}} </mat-cell>
+    </ng-container>
+
+    <!-- Pick up time Column -->
+    <ng-container matColumnDef="pickUpTime">
+      <mat-header-cell *matHeaderCellDef>Čas naložení </mat-header-cell>
+      <mat-cell *matCellDef="let order"> {{order.picked_up_time | date: 'dd.MM.yyyy HH:mm'}} </mat-cell>
+    </ng-container>
+
+    <!-- Drop off time Column -->
+    <ng-container matColumnDef="dropOffTime">
+      <mat-header-cell *matHeaderCellDef> Čas vyložení </mat-header-cell>
+      <mat-cell *matCellDef="let order"> {{order.finish_time | date: 'dd.MM.yyyy HH:mm'}} </mat-cell>
+    </ng-container>
+
+    <!-- Customer Column -->
+    <ng-container matColumnDef="customer">
+      <mat-header-cell *matHeaderCellDef> Zákazník </mat-header-cell>
+      <mat-cell *matCellDef="let order"> {{order.customer.name == null ? 'anonym' : order.customer.name}} </mat-cell>
+    </ng-container>
+
+    <!-- How order was created Column -->
+    <ng-container matColumnDef="orderCreatedType">
+      <mat-header-cell *matHeaderCellDef> Typ objednávky </mat-header-cell>
+      <mat-cell *matCellDef="let order">
+        <mat-icon *ngIf="order.source === 'app'">phone_android</mat-icon>
+        <mat-icon *ngIf="order.source === 'dispatching'">phone</mat-icon>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Note Column -->
+    <ng-container matColumnDef="note">
+      <mat-header-cell *matHeaderCellDef> Poznámka </mat-header-cell>
+      <mat-cell *matCellDef="let order"> {{order.note}} </mat-cell>
+    </ng-container>
+
+
+
+
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;">
+    </mat-row>
+  </mat-table>
+
+  <div *ngIf="this.dataSource.data.length === 0" class="empty-label">Nenašly se žádné objednávky.</div>
+  <mat-paginator [pageSizeOptions]="[10, 25, 100, 200]"
+                (page)="onPageChange($event)" [length]="totalOrdersCount.value"></mat-paginator>
+</div>

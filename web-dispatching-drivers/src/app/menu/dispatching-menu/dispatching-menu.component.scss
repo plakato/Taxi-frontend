@@ -1,0 +1,84 @@
+@import "../../../_variables.scss";
+
+:host {
+  height: 100vh;
+  display: flex;
+  flex-flow: column;
+}
+
+.drawer-content {
+  padding: 30px;
+  position: relative;
+}
+mat-drawer{
+  width:65px;
+  min-width: auto;
+}
+.drawer-content , mat-drawer {
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -ms-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+::ng-deep .mat-drawer-content {
+  flex-grow: 1;
+}
+
+mat-toolbar {
+  .spacer {
+    flex: 1 1 auto;
+  }
+
+  .notification-icon {
+    padding-right: 40px;
+  }
+  .toolbar_span {
+    margin: 0 auto;
+  } 
+
+}
+
+.notification {
+  display: flex;
+  flex-direction: row;
+
+  button {
+    padding: 0px 20px;
+    mat-icon {
+      color: mat-color(map-get($yellow-app-theme, accent)); 
+    }
+  }
+}  
+
+mat-drawer-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 100%;
+  overflow: auto;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+
+  // & refences this selector, having class expanded and selects its children with class drawer-content
+  &.expanded{
+    mat-drawer{
+      width: 275px;
+    }
+    .drawer-content {
+      margin-left: 210px;
+    }
+  }
+
+  .phone-orders {
+    padding: 20px;
+  }
+
+  mat-sidenav-container {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;     
+  }
+}

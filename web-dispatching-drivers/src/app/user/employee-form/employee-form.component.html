@@ -1,0 +1,40 @@
+<form [formGroup]="employeeForm">
+
+  <div class="inputFormContainer">
+
+    <!-- Name -->
+    <mat-form-field>
+        <input matInput type="text" formControlName="name"  placeholder="Jméno"
+        [(ngModel)]="employee.name" required/>
+        <mat-error *ngIf="employeeForm.get('name').hasError('required')">
+                    Tato položka je povinná.</mat-error>
+      </mat-form-field>
+
+    <!-- Email -->
+    <mat-form-field>
+        <input matInput type="email"  formControlName="email"  placeholder="Email" class="no-spinners"
+          [(ngModel)]="employee.email" required/>
+        <mat-error *ngIf="employeeForm.get('email').hasError('required')">
+                    Tato položka je povinná.</mat-error>
+        <mat-error *ngIf="employeeForm.get('email').hasError('email')">
+            Tento email je nevalidní.</mat-error>
+      </mat-form-field>
+
+    <div formGroupName="roles">
+      <!-- Dispatcher -->
+      <mat-checkbox formControlName="dispatcher">Dispečer</mat-checkbox>
+
+      <!-- Driver -->
+      <mat-checkbox formControlName="driver">Řidič</mat-checkbox>
+
+      <!-- Admin -->
+      <mat-checkbox formControlName="admin">Admin</mat-checkbox>
+      <mat-error *ngIf="employeeForm.get('roles').hasError('forbiddenRoleCombination')">Tato kombinace rolí neni povolena.</mat-error>
+    </div>
+
+  </div>
+
+
+    <app-image-upload [image]="image" (newImageUploaded)="newImageUploaded($event)"></app-image-upload>
+
+</form>

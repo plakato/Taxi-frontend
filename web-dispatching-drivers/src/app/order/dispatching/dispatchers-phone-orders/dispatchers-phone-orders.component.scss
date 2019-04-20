@@ -1,0 +1,41 @@
+@import '../../../../_variables.scss';
+
+.order-container {
+    border-style: solid;
+    border-width: 1px;
+    padding: 10px;
+    margin-bottom: 10px;
+    .row {
+        display: flex;
+        align-items: center;  
+        justify-content: flex-start;
+
+        mat-icon {
+            margin-right: 5px;
+        }
+        .marg-right {
+            margin-right: 10px;
+        }
+
+    }
+    .padd {
+        padding: 3px 0px;        
+    }
+    .space {
+        display: flex;
+        align-items: center;  
+        justify-content: space-between;
+    }
+}
+
+.green {
+    color: mat-color(map-get($yellow-app-theme, accent));
+}
+
+.orange {
+    color: $yellow-app-caution;
+}
+
+.red {
+    color: mat-color(map-get($yellow-app-theme, warn));
+}

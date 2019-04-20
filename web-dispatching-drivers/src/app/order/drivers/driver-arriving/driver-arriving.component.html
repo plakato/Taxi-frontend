@@ -1,0 +1,44 @@
+<div class="container" [ngSwitch]="order?.status">
+
+  <!-- Map with start/finish address -->
+  <app-static-marker-map *ngIf="order?.status === status.driverArrived || order?.status === status.driverArriving"
+    [placeholder]="'Zákazník Vás čeká na adrese:'"
+    [markerCoords]="order?.loc_start"
+    [editable]="false">
+</app-static-marker-map>
+  <app-static-marker-map *ngSwitchCase="status.customerPickedUp"
+    [placeholder]="'Cíl:'"
+    [markerCoords]="order?.loc_finish"
+    [editable]="true"
+    (newAddress)="changeAddress($event)">
+  </app-static-marker-map>
+
+  <!-- Buttons and customer info -->
+  <div class="flex">
+    <p *ngSwitchCase="">Předpokladaný čas příjezdu:</p>
+    <app-time-editing *ngSwitchCase="status.driverArriving"
+                      [time]="order?.arrived_time_est"
+                      (timeChange)="changePickUpTime($event)">
+                      </app-time-editing>
+    <app-time-editing *ngSwitchCase="status.customerPickedUp"
+                      [time]="order?.finish_time_orig_est "
+                      (timeChange)="changeDropOffTime($event)">
+                      </app-time-editing>
+    <button mat-raised-button class="caution"
+            (click)="customerNotHere()"
+            *ngIf="order?.status === status.driverArrived && !customerAbsent">
+              Zákazník se neukazuje</button>
+    <div *ngIf="customerAbsent">
+      <p>Dispečink byl informován o nepřítomnosti zákazníka. Vyčkejte na jeho zprávu nebo označte jako propal.</p>
+      <button mat-raised-button color="warn" (click)="markAsFraud()">Označit jako propal</button>
+    </div>
+
+    <p>Zákazník: {{order?.customer?.name == null? 'anonymní': order?.customer?.name}}</p>
+    <p>Poznámka: {{order?.note}}</p>
+  </div>
+
+  <!-- Main action button -->
+    <button *ngSwitchCase="status.driverArriving"   mat-raised-button color="primary" (click)="arrived()">Jsem na místě</button>
+    <button *ngSwitchCase="status.driverArrived"    mat-raised-button color="primary" (click)="pickedUpCustomer()">Naložil jsem zákazníka</button>
+    <button *ngSwitchCase="status.customerPickedUp" mat-raised-button color="primary" (click)="finished()">Jsem v cíli</button>
+</div>

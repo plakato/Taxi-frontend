@@ -1,0 +1,12 @@
+<mat-toolbar *ngIf="loggedIn">
+      <mat-icon [matMenuTriggerFor]="menu">menu</mat-icon>        
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item [routerLink]="['/orders/scheduled']"i18n>Termínované objednávky</button>
+      </mat-menu>
+</mat-toolbar>
+<div class="basic-padding container">  
+  <p i18n>Zvolte typ objednávky:</p>
+  <button mat-raised-button color="primary" (click)="chooseStandard()" i18n>Klasická</button>
+  <button mat-raised-button color="primary" (click)="chooseAirport()" [disabled]="!loggedIn" i18n>Letištní</button>
+  <mat-icon *ngIf="loggedIn" class="bottom" (click)="logout()">lock</mat-icon>
+</div>

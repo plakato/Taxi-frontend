@@ -1,0 +1,14 @@
+
+<app-simple-form-container>
+    <h1 class="mat-display-1">Přihlášení</h1>
+    <form>
+        <mat-form-field>
+            <input matInput type="text" name="email"  [(ngModel)]="model.email" placeholder="Email"/>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput type="password"  name="password"  [(ngModel)]="model.password" placeholder="Heslo" />
+        </mat-form-field>
+        <button mat-raised-button [disabled]="loading" (click)="login()">Přihlásit</button>
+        <mat-spinner *ngIf="loading" [mode]="indeterminate" ></mat-spinner>
+    </form>
+</app-simple-form-container>

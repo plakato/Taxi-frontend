@@ -1,0 +1,14 @@
+<div class="container column">
+
+  <mat-card *ngFor="let arrival of arrivalsService.arrivals" class="arrival" (click)="selectDriver(arrival.driver.id)">
+      <mat-card-content class="row">
+        <div class="avatar">
+          <img src="{{arrival.driver.image}}" alt="Fotka řidiče"/>          
+        </div>
+        <div class="column">
+            <p>{{arrival.driver.name}}</p> 
+            <p>Přijede v {{arrival.arrived_time_est | date:'HH:mm'}}</p>                   
+        </div>
+      </mat-card-content>
+  </mat-card>
+</div>

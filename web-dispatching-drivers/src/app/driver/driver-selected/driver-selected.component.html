@@ -1,0 +1,12 @@
+<mat-card>
+  <div class="column">
+      <img src="{{arrival?.driver.image}}" i18n-alt alt="Fotka řidiče">
+      <img src="{{arrival?.vehicle.image}}" i18n-alt alt="Fotka auta">                
+  </div> 
+  <div class="column arrival-time">
+      <p i18n *ngIf="arrival != null">
+              {{arrival.driver.name}} je u Vás za 
+              {{getMinutesToArrival()}} min
+      </p>
+  </div>                               
+</mat-card>

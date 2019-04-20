@@ -1,0 +1,18 @@
+<div class="container">
+
+  <h2>Máte novú objednávku!</h2>
+
+  <div class="order-type">
+    <mat-icon>directions_car</mat-icon>
+    <div class="left-margin">Standardní objednávka</div>
+  </div>
+
+
+    <app-static-marker-map placeholder="Místo vyzvednutí" [editable]="false" [markerCoords]="data.order?.loc_start"></app-static-marker-map>
+
+  <div class="row">
+    <mat-icon class="red" (click)="refuseOrder()">clear</mat-icon>
+    <mat-icon class="green" (click)="acceptOrder()">check</mat-icon>
+  </div>
+
+</div>

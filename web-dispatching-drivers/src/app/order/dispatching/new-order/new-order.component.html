@@ -1,0 +1,109 @@
+<h1>Nová objednávka</h1>
+
+<form novalidate [formGroup]="newOrderForm" (submit)="confirmOrder()">
+
+  <div>
+    <!-- Phone number -->
+    <mat-form-field class="margin-right">
+      <input matInput type="tel" formControlName="phoneNumber" placeholder="Telefónní číslo" (change)="phoneNumberChanged()"/>
+      <mat-error *ngIf="newOrderForm.get('phoneNumber').hasError('required')">Tato položka je povinná.</mat-error>
+      <mat-error *ngIf="newOrderForm.get('phoneNumber').hasError('pattern')">Tohle není validní telefónní číslo.</mat-error>
+      <mat-error *ngIf="newOrderForm.get('phoneNumber').hasError('maxLength')">Číslo je příliš dlouhé.</mat-error>
+    </mat-form-field>
+
+    <!-- Name -->
+    <mat-form-field class="margin-right">
+      <input matInput type="text" formControlName="name" placeholder="Jméno" value="{{customer?.name}}"/>
+    </mat-form-field>
+
+    <!-- Choose normal or flight -->
+    <mat-button-toggle-group #group="matButtonToggleGroup" class="align-right">
+      <mat-button-toggle value="classic" checked="true">
+        <mat-icon>directions_car</mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle value="airport">
+        <mat-icon>airplanemode_active</mat-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+
+  <!-- Maps - from, to -->
+<div class="maps twoColumns">
+  <app-map placeholder="Odkud"
+          [airport]="group.value === 'airport'"
+          [airportEnabled]="fromAirportEnabled"
+          (airportSelectedOutput)="enableFromAirport($event)"
+          (selectedAddress)="startLoc=$event"
+          class="column"></app-map>
+  <app-map placeholder="Kam"
+          [airport]="group.value === 'airport'"
+          [airportEnabled]="!fromAirportEnabled"
+          (airportSelectedOutput)="enableFromAirport(!$event)"
+          (selectedAddress)="finishLoc=$event"
+          class="column"></app-map>
+</div>
+
+  <!-- Form continues -->
+  <div class="twoColumns">
+    <div class="column formControls">
+      <div class="controlsInColumn margin-right">
+        <!-- Passengers -->
+        <mat-form-field>
+          <input matInput type="number" formControlName="passengers" placeholder="Počet osob"
+                class="no-spinners" (click)="$event.target.select()" required/>
+          <mat-error *ngIf="newOrderForm.get('passengers').hasError('required')">Tato položka je povinná.</mat-error>
+          <mat-error *ngIf="newOrderForm.get('passengers').hasError('min')">Minimální počet osob je 1.</mat-error>
+        </mat-form-field>
+
+        <!-- Flight number -->
+        <mat-form-field *ngIf="group.value === 'airport'">
+            <input matInput type="text" formControlName="flightNumber" placeholder="Číslo letu"
+                  class="no-spinners" (click)="$event.target.select()" required/>
+            <mat-error *ngIf="newOrderForm.get('flightNumber').hasError('required')">Tato položka je povinná.</mat-error>
+        </mat-form-field>
+
+        <!-- Note -->
+        <mat-form-field>
+          <textarea matInput placeholder="Poznámka" formControlName="note" rows="3"></textarea>
+        </mat-form-field>
+
+        <!-- VIP -->
+        <mat-checkbox formControlName="VIP">VIP</mat-checkbox>
+      </div>
+
+      <div class="controlsInColumn">
+        <h4>Termínovaná objednávka</h4>
+        <!-- Date -->
+        <mat-form-field>
+          <input matInput [matDatepickerFilter]="filterLaterThanToday" formControlName="date" [matDatepicker]="picker" placeholder="Datum vyzvednutí">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="newOrderForm.get('date').hasError('required')">Tato položka je povinná.</mat-error>
+        </mat-form-field>
+
+        <!-- Time -->
+        <mat-form-field>
+            <input matInput formControlName="time" placeholder="Čas"
+                  (click)="$event.target.select()"/>
+            <mat-error *ngIf="newOrderForm.get('time').hasError('pattern')">Zadejte čas ve formátu HH:MM</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="column">
+      <!-- Choose driver -->
+      <button mat-raised-button *ngIf="group.value === 'airport' && !selectingDriver"
+          (click)="selectingDriver = true">Zvolit řidiče</button>
+      <button mat-raised-button *ngIf="group.value === 'classic' && !selectingDriver"
+          (click)="calculateDriver()">Spočíst řidiče</button>
+      <app-list-all-drivers *ngIf="selectingDriver && group.value === 'airport'" (selectedDriver)="selectDriver($event)"></app-list-all-drivers>
+      <app-selecting-driver *ngIf="selectingDriver && group.value === 'classic'" (selectedDriver)="selectDriver($event)"></app-selecting-driver>
+    </div>
+  </div>
+
+
+  <div>
+    <button mat-raised-button color="primary" class="confirm" type="submit">Potvrdit objednávku</button>
+  </div>
+
+  </form>

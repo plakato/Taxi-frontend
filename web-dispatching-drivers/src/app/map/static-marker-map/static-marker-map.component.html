@@ -1,0 +1,28 @@
+
+<mat-form-field class="address" >
+  <input matInput type="text" placeholder="{{placeholder}}"  [formControl]="addressControl"
+    autocorrect="off" autocapitalize="off" spellcheck="off" #address/>
+  <mat-icon matSuffix *ngIf="editable && !editing" (click)="editAddress()">edit</mat-icon>
+  <mat-icon matSuffix *ngIf="editable && editing" (click)="submitNewAddress()">check</mat-icon>
+</mat-form-field>
+
+<div class="map-with-marker">
+    <div class="map">
+      <agm-map
+        [latitude]="map?.center?.lat" [longitude]="map?.center?.lng"
+        [zoom]=15
+        [zoomControl]=true [streetViewControl]=false
+        (mapReady)="initializeMap($event)">
+     <agm-circle
+        [latitude]="+myPosition?.coords.latitude" [longitude]="+myPosition?.coords.longitude" [radius]="myPosition?.coords.accuracy"
+        [clickable]=false [fillColor]="'rgb(255, 229, 0)'"  ></agm-circle>
+      </agm-map>
+      <div (click)="zoomToMyLocation()" class="myLocationButton">
+        <button mat-mini-fab class="white">
+          <mat-icon>my_location</mat-icon>
+        </button>
+      </div>
+    </div>
+
+  <div class="marker" *ngIf="editing"><mat-icon>location_on</mat-icon> </div>
+</div>
